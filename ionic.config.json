@@ -1,0 +1,8 @@
+{
+  "name": "proyecto-snacks",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "6d8c2231"
+}

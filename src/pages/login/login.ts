@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
@@ -15,11 +15,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  @ViewChild('user') user;
+  @ViewChild('pass') pass;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  doLogin() {
+  	if(this.user.value == "scott" && this.pass.value == "1234"){
+  		this.navCtrl.setRoot('SidebarPage');
+  	} 
+  	else{
+		const alert = this.alertCtrl.create({
+	    title: "¡Error!",
+	    subTitle: "Usuario o contraseña incorrecto.",
+	    buttons: ['OK']
+	  });
+	  alert.present();
+  	}
   }
 
 }

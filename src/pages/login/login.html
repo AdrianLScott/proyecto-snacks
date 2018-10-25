@@ -1,5 +1,5 @@
 <!--
-  Generated template for the LoginPage page.
+  Generated template for the TestPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>login</ion-title>
+    <ion-title>Snacks</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,4 +15,25 @@
 
 <ion-content padding>
 
+	<ion-list>
+
+	  <ion-item>
+	    <ion-label floating>Usuario</ion-label>
+	    <ion-input type="text" #user></ion-input>
+	  </ion-item>
+
+	  <ion-item>
+	    <ion-label floating>Contraseña</ion-label>
+	    <ion-input type="password" #pass></ion-input>
+	  </ion-item>
+
+	</ion-list>
+	<button ion-button icon-end full (click)="doLogin()">
+		Iniciar Sesion
+	  <ion-icon name="send"></ion-icon>
+	</button>
+	<button ion-button icon-end full (click)="doRegister()">
+		Registrar
+	  <ion-icon name="register"></ion-icon>
+	</button>
 </ion-content>

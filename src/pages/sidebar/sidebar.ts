@@ -26,10 +26,11 @@ export class SidebarPage {
   @ViewChild(Nav) nav: Nav;
    
   pages: PageInterface[] = [
-    { title: 'Perfil', pageName: 'ProfilePage', tabComponent: 'ProfilePage', index: 3, icon: 'person' },
-    { title: 'Pedidos', pageName: 'CartPage', tabComponent: 'CartPage', index: 0, icon: 'cart' },
+    { title: 'Perfil', pageName: 'ProfilePage', icon: 'person' },
+    { title: 'Pedidos', pageName: 'CartPage', tabComponent: 'CartPage', index: 2, icon: 'cart' },
     { title: 'Notificaciones', pageName: 'NotificationsPage', tabComponent: 'NotificacationsPage', index: 1, icon: 'notifications' },
-    { title: 'Salir', pageName: 'StoresPage', tabComponent: 'StoresPage', index: 2, icon: 'log-out' },
+    { title: 'Tiendas', pageName: 'StoresPage', tabComponent: 'StoresPage', index: 0, icon: 'appstore' },
+    { title: 'Salir', pageName: 'LogoutPage', icon: 'log-out' },
   ];
 
   constructor(public navCtrl: NavController) {
@@ -48,7 +49,7 @@ export class SidebarPage {
     } else {
       // Tabs are not active, so reset the root page 
       // In this case: moving to or from SpecialPage
-      this.nav.setRoot(page.tabComponent, params);
+      this.nav.setRoot(page.pageName);
     }
   }
  

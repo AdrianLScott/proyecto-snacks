@@ -6,21 +6,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
-import { LogoutPage } from '../pages/logout/logout';
 import { NotificationsPage } from '../pages/notifications/notifications';
 import { CartPage } from '../pages/cart/cart';
 import { StoresPage } from '../pages/stores/stores';
-import { ProfilePage } from '../pages/profile/profile';
 
 @NgModule({
   declarations: [
     MyApp,
     LoginPage,
-    LogoutPage,
     NotificationsPage,
     CartPage,
     StoresPage,
-    ProfilePage,
   ],
   imports: [
     BrowserModule,
@@ -30,11 +26,9 @@ import { ProfilePage } from '../pages/profile/profile';
   entryComponents: [
     MyApp,
     LoginPage,
-    LogoutPage,
     NotificationsPage,
     CartPage,
     StoresPage,
-    ProfilePage,
   ],
   providers: [
     StatusBar,

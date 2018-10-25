@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { RegisterPage } from '../register/register';
 
 /**
  * Generated class for the LoginPage page.
@@ -25,7 +26,7 @@ export class LoginPage {
   }
 
   doLogin() {
-  	if(this.user.value == "scott" && this.pass.value == "1234"){
+  	if(this.user.value == "scott" && this.pass.value == "1234" || this.user.value == "cedi" && this.pass.value == "1234"){
   		this.navCtrl.setRoot('SidebarPage');
   	} 
   	else{
@@ -36,6 +37,9 @@ export class LoginPage {
 	  });
 	  alert.present();
   	}
+  }
+  registrar(){
+    this.navCtrl.push(RegisterPage);
   }
 
 }

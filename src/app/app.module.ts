@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login/login';
 import { NotificationsPage } from '../pages/notifications/notifications';
 import { CartPage } from '../pages/cart/cart';
 import { StoresPage } from '../pages/stores/stores';
+import { RegisterPage} from '../pages/register/register'
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { StoresPage } from '../pages/stores/stores';
     NotificationsPage,
     CartPage,
     StoresPage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -29,6 +31,7 @@ import { StoresPage } from '../pages/stores/stores';
     NotificationsPage,
     CartPage,
     StoresPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,

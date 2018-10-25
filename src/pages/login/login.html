@@ -8,6 +8,9 @@
 <!--
   <ion-navbar color="venados">
     <ion-title>Snacks</ion-title>
+
+  <ion-navbar>
+    <ion-title>Venados Snacks</ion-title>
   </ion-navbar>
 -->
 </ion-header>
@@ -30,12 +33,12 @@
 
 	</ion-list>
 	<button ion-button class="login" icon-end outline block color="danger" (click)="doLogin()">
+	<button ion-button full (click)="doLogin()">
 		Iniciar Sesion
-	  <ion-icon name="send"></ion-icon>
 	</button>
 
 	<button ion-button icon-end class="login" outline block color="danger" (click)="registrar()">
+	<button ion-button full (click)="doRegister()">
 		Registrar
-	  <ion-icon name="register"></ion-icon>
 	</button>
 </ion-content>

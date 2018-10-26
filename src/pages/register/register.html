@@ -6,13 +6,43 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title color="venados">Registro</ion-title>
+  <ion-navbar color="venados">
+    <ion-title >Registro</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+	<ion-list>
+
+	  <ion-item>
+	    <ion-label floating>Nombre</ion-label>
+	    <ion-input type="text"></ion-input>
+	  </ion-item>
+
+	  <ion-item>
+	    <ion-label floating>Correo</ion-label>
+	    <ion-input type="text"></ion-input>
+	  </ion-item>
+
+	  <ion-item>
+	    <ion-label floating>Contraseña</ion-label>
+	    <ion-input type="password"></ion-input>
+	  </ion-item>
+
+	</ion-list>
+
+	<ion-list>
+		<button ion-button class="register" outline block color="danger">
+			Registrar
+		</button>
+	</ion-list>
+	
+	<ion-list>
+		<button ion-button icon-end class="register" outline block color="danger" >
+			Cancelar
+		</button>
+	</ion-list>
 
 </ion-content>

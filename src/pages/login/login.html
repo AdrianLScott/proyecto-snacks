@@ -32,13 +32,16 @@
 	  </ion-item>
 
 	</ion-list>
-	<button ion-button class="login" icon-end outline block color="danger" (click)="doLogin()">
-	<button ion-button full (click)="doLogin()">
-		Iniciar Sesion
-	</button>
-
-	<button ion-button icon-end class="login" outline block color="danger" (click)="registrar()">
-	<button ion-button full (click)="doRegister()">
-		Registrar
-	</button>
+	<ion-list>
+		<button ion-button class="login" outline block color="danger" (click)="doLogin()">
+			Iniciar Sesion
+		</button>
+	</ion-list>
+	
+	<ion-list>
+		<button ion-button icon-end class="login" outline block color="danger" (click)="registrar()">
+			Registrar
+		</button>
+	</ion-list>
+	
 </ion-content>

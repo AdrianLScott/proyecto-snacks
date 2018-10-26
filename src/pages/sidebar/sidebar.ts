@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav } from 'ionic-angular';
+import { IonicPage, NavController, Nav, AlertController, App, Platform } from 'ionic-angular';
 
 import { StoresPage } from './../stores/stores';
 import { NotificationsPage } from './../notifications/notifications';
 import { CartPage } from './../cart/cart';
+import { LoginPage } from './../login/login';
 
 export interface PageInterface {
   title: string;
@@ -33,7 +34,7 @@ export class SidebarPage {
     { title: 'Salir', pageName: 'LogoutPage', icon: 'log-out' },
   ];
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public app: App, public platform: Platform) {
   }
 
   openPage(page: PageInterface) {
@@ -49,7 +50,12 @@ export class SidebarPage {
     } else {
       // Tabs are not active, so reset the root page 
       // In this case: moving to or from SpecialPage
-      this.nav.setRoot(page.pageName);
+      if(page.pageName != 'LogoutPage'){
+        this.nav.push(page.pageName);
+      }
+      else{
+        this.presentConfirm();
+      }
     }
   }
  
@@ -70,5 +76,31 @@ export class SidebarPage {
     }
     return;
   }
+
+  presentConfirm() {
+  let alert = this.alertCtrl.create({
+    title: '¡Advertencia!',
+    message: '¿Que acción desea realizar?',
+    buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+      },
+      {
+        text: 'Cerrar sesión',
+        handler: () => {
+          this.app.getRootNav().setRoot(LoginPage);
+        }
+      },{
+        text: 'Salir',
+        handler: () => {
+          this.platform.exitApp();
+        }
+      }
+    ]
+  });
+  alert.present();
+}
+
 
 }

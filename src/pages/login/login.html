@@ -23,25 +23,26 @@
 
 	  <ion-item>
 	    <ion-label floating>Usuario</ion-label>
-	    <ion-input type="text" #user></ion-input>
+	    <ion-input type="text" #user name="username"></ion-input>
 	  </ion-item>
 
 	  <ion-item>
 	    <ion-label floating>Contraseña</ion-label>
-	    <ion-input type="password" #pass></ion-input>
+	    <ion-input type="password" #pass name="password"></ion-input>
 	  </ion-item>
 
 	</ion-list>
+	
 	<ion-list>
-		<button ion-button class="login" outline block color="danger" (click)="doLogin()">
+		<button ion-button class="login" block color="danger" (click)="doLogin()">
 			Iniciar Sesion
 		</button>
 	</ion-list>
 	
 	<ion-list>
-		<button ion-button icon-end class="login" outline block color="danger" (click)="registrar()">
+		<button ion-button icon-end class="login" block color="danger" (click)="registrar()">
 			Registrar
 		</button>
 	</ion-list>
-	
+
 </ion-content>

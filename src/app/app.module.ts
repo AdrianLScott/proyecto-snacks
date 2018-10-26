@@ -10,6 +10,8 @@ import { NotificationsPage } from '../pages/notifications/notifications';
 import { CartPage } from '../pages/cart/cart';
 import { StoresPage } from '../pages/stores/stores';
 import { RegisterPage} from '../pages/register/register'
+import { Proovedor1Provider } from '../providers/proovedor1/proovedor1';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { RegisterPage} from '../pages/register/register'
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -36,7 +39,8 @@ import { RegisterPage} from '../pages/register/register'
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Proovedor1Provider
   ]
 })
 export class AppModule {}

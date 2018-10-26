@@ -15,14 +15,12 @@
 
 <ion-content class="card-background-page">
 
-	<i>
-		<ion-card>
-	    	<img src="/assets/imgs/starbucks.png"/>
-	    	<div class="card-title">Starbucks</div>
-    		<div class="card-subtitle">Café-Cupcakes</div>
+		<ion-card ion-item *ngFor = "let tienda of tiendas">
+	    	<img src="{{tienda.imagen}}"/>
+	    	<div class="card-title">{{tienda.nombre}}</div>
+    		<div class="card-subtitle">{{tienda.tipo}}</div>
   		</ion-card>
-	</i>
-	
+
 	
 </ion-content>
 

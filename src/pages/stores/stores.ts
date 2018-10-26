@@ -24,6 +24,9 @@ export class StoresPage {
   		(error)=> {console.log(error);}
   	)
   }
+  showMessage(){
+  	console.log("Hola que show");
+  }
 
 
 }

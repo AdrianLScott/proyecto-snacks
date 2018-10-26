@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav } from 'ionic-angular';
+import { Proovedor1Provider } from '../../providers/proovedor1/proovedor1';
 
 import { NotificationsPage } from './../notifications/notifications';
 import { CartPage } from './../cart/cart';
@@ -12,7 +13,16 @@ import { CartPage } from './../cart/cart';
 })
 export class StoresPage {
 
-  constructor(public navCtrl: NavController) {
+	tiendas
+
+  constructor(public navCtrl: NavController,public proovedor: Proovedor1Provider) {}
+
+  ionViewDidLoad(){
+  	this.proovedor.obtenerTiendas()
+  	.subscribe(
+  		(data)=> {this.tiendas = data;},
+  		(error)=> {console.log(error);}
+  	)
   }
 
 

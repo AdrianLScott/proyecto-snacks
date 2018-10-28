@@ -17,7 +17,7 @@ export class Proovedor1Provider {
   }
 
   obtenerTiendas(){
-  	return this.http.get(Constants.API_BASE_ROUTE+'codeigniter/index.php/aplicacionSnacks');
+  	return this.http.get(Constants.API_BASE_ROUTE+'aplicacionSnacks');
   }
 
 }

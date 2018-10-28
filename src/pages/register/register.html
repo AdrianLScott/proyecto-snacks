@@ -18,23 +18,23 @@
 
 	  <ion-item>
 	    <ion-label floating>Nombre</ion-label>
-	    <ion-input type="text"></ion-input>
+	    <ion-input type="text" #name></ion-input>
 	  </ion-item>
 
 	  <ion-item>
 	    <ion-label floating>Correo</ion-label>
-	    <ion-input type="text"></ion-input>
+	    <ion-input type="text" #email></ion-input>
 	  </ion-item>
 
 	  <ion-item>
 	    <ion-label floating>Contraseña</ion-label>
-	    <ion-input type="password"></ion-input>
+	    <ion-input type="password" #pass></ion-input>
 	  </ion-item>
 
 	</ion-list>
 
 	<ion-list>
-		<button ion-button class="register" outline block color="danger">
+		<button ion-button class="register" outline block color="danger" (click) = "doRegister()">
 			Registrar
 		</button>
 	</ion-list>

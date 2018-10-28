@@ -16,7 +16,7 @@
 <ion-content class="card-background-page">
 
 		<ion-card ion-list *ngFor = "let tienda of tiendas" (click)="showMessage()">
-	    	<img src="{{tienda.imagen}}"/>
+	    	<img src="{{tienda.logotipo}}"/>
 	    	<div class="card-title">{{tienda.nombre}}</div>
     		<div class="card-subtitle">{{tienda.tipo}}</div>
   		</ion-card>

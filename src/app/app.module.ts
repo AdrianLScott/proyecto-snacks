@@ -12,6 +12,8 @@ import { StoresPage } from '../pages/stores/stores';
 import { RegisterPage} from '../pages/register/register'
 import { Proovedor1Provider } from '../providers/proovedor1/proovedor1';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginProvider } from '../providers/login/login';
+import { RegisterProvider } from '../providers/register/register';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { HttpClientModule } from '@angular/common/http';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Proovedor1Provider
+    Proovedor1Provider,
+    LoginProvider,
+    RegisterProvider
   ]
 })
 export class AppModule {}

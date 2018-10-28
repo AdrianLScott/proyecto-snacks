@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
+import * as Constants from '../../app/main';
 
 /*
   Generated class for the Proovedor1Provider provider.
@@ -17,7 +17,7 @@ export class Proovedor1Provider {
   }
 
   obtenerTiendas(){
-  	return this.http.get('http://localhost:3000/tiendas');
+  	return this.http.get(Constants.API_BASE_ROUTE+'codeigniter/index.php/aplicacionSnacks');
   }
 
 }

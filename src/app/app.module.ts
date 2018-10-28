@@ -10,10 +10,11 @@ import { NotificationsPage } from '../pages/notifications/notifications';
 import { CartPage } from '../pages/cart/cart';
 import { StoresPage } from '../pages/stores/stores';
 import { RegisterPage} from '../pages/register/register'
-import { Proovedor1Provider } from '../providers/proovedor1/proovedor1';
+import { ProviderTiendasProvider } from '../providers/provider-tiendas/provider-tiendas';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginProvider } from '../providers/login/login';
 import { RegisterProvider } from '../providers/register/register';
+import { ProductsPage } from '../pages/products/products';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RegisterProvider } from '../providers/register/register';
     NotificationsPage,
     CartPage,
     StoresPage,
-    RegisterPage
+    RegisterPage,
+    ProductsPage
   ],
   imports: [
     BrowserModule,
@@ -36,13 +38,14 @@ import { RegisterProvider } from '../providers/register/register';
     NotificationsPage,
     CartPage,
     StoresPage,
-    RegisterPage
+    RegisterPage,
+    ProductsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Proovedor1Provider,
+    ProviderTiendasProvider,
     LoginProvider,
     RegisterProvider
   ]

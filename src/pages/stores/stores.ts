@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav } from 'ionic-angular';
-import { Proovedor1Provider } from '../../providers/proovedor1/proovedor1';
+import { ProviderTiendasProvider } from '../../providers/provider-tiendas/provider-tiendas';
+import { ProductsPage } from '../products/products';
 
 import { NotificationsPage } from './../notifications/notifications';
 import { CartPage } from './../cart/cart';
@@ -13,9 +14,9 @@ import { CartPage } from './../cart/cart';
 })
 export class StoresPage {
 
-	tiendas
+	tiendas;
 
-  constructor(public navCtrl: NavController,public proovedor: Proovedor1Provider) {}
+  constructor(public navCtrl: NavController,public proovedor: ProviderTiendasProvider) {}
 
   ionViewDidLoad(){
   	this.proovedor.obtenerTiendas()
@@ -24,8 +25,8 @@ export class StoresPage {
   		(error)=> {console.log(error);}
   	)
   }
-  showMessage(){
-  	console.log("Hola que show");
+  objetosTienda(tienda){
+  	this.navCtrl.push(ProductsPage, {tienda: tienda});
   }
 
 

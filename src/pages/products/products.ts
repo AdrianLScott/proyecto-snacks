@@ -14,8 +14,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'products.html',
 })
 export class ProductsPage {
+	tienda;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+  	this.tienda = navParams.data.tienda;
   }
 
   ionViewDidLoad() {

@@ -14,6 +14,7 @@ import { ProviderTiendasProvider } from '../providers/provider-tiendas/provider-
 import { HttpClientModule } from '@angular/common/http';
 import { LoginProvider } from '../providers/login/login';
 import { RegisterProvider } from '../providers/register/register';
+import { ProductsPage } from '../pages/products/products';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RegisterProvider } from '../providers/register/register';
     NotificationsPage,
     CartPage,
     StoresPage,
-    RegisterPage
+    RegisterPage,
+    ProductsPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { RegisterProvider } from '../providers/register/register';
     NotificationsPage,
     CartPage,
     StoresPage,
-    RegisterPage
+    RegisterPage,
+    ProductsPage
   ],
   providers: [
     StatusBar,

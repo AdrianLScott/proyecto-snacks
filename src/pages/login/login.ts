@@ -29,12 +29,12 @@ export class LoginPage {
   		this.navCtrl.setRoot('SidebarPage');
   	} 
   	else{
-		const alert = this.alertCtrl.create({
-	    title: "¡Error!",
-	    subTitle: "Usuario o contraseña incorrecto.",
-	    buttons: ['OK']
-	  });
-	  alert.present();
+  		const alert = this.alertCtrl.create({
+  	    title: "¡Error!",
+  	    subTitle: "Usuario o contraseña incorrecto.",
+  	    buttons: ['OK']
+  	  });
+  	  alert.present();
   	}
   }
   registrar(){

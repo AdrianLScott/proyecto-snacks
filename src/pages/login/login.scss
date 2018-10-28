@@ -2,4 +2,29 @@ page-login {
 		.login{
 			height: 50px;
 		}
+
+		.inputs-div{
+			margin-top: 10%;
+			margin-bottom: 10%;
+			background-color: #F6F6F6;
+			padding: 15px;
+			border-radius: 20px;
+
+		}
+
+		.input{
+			margin-bottom: 5px;
+			background-color: #F6F6F6;
+		}
+
+		.content{
+			background-color: white;
+		}
+
+		.login{
+			margin-bottom: 10px;
+			font-family: helvetica;
+			font-weight: bold;
+			font-size: 14px;
+		}
 }

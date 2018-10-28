@@ -16,21 +16,21 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="content">
 <br><br><br>
 	<img src="/assets/imgs/logo.svg">
 	<ion-list>
+		<div class="inputs-div">
+		  <ion-item class="input">
+		    <ion-label floating>Usuario</ion-label>
+		    <ion-input type="text" #user name="username"></ion-input>
+		  </ion-item>
 
-	  <ion-item>
-	    <ion-label floating>Usuario</ion-label>
-	    <ion-input type="text" #user name="username"></ion-input>
-	  </ion-item>
-
-	  <ion-item>
-	    <ion-label floating>Contraseña</ion-label>
-	    <ion-input type="password" #pass name="password"></ion-input>
-	  </ion-item>
-
+		  <ion-item class="input">
+		    <ion-label floating>Contraseña</ion-label>
+		    <ion-input type="password" #pass name="password"></ion-input>
+		  </ion-item>
+	  	</div>
 	</ion-list>
 	
 	<ion-list>

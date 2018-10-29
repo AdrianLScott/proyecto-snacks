@@ -29,10 +29,11 @@ class AplicacionSnacks extends CI_Controller {
 		echo $this->aplicacion_snacks_model->addUser($json_obj, true);
 	}
 
-	public function getProductos()
+	public function getProducts()
 	{
-		$this->load->model('productos_model');
-		$productos = $this->productos_model->getProductos();
+		$id = $this->input->get('id');
+		$this->load->model('aplicacion_snacks_model');
+		$productos = $this->aplicacion_snacks_model->getProductos($id);
 		echo json_encode($productos);
 		//$this->load->view('welcome_message');
 	}

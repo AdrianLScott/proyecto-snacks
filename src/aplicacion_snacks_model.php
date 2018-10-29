@@ -17,7 +17,7 @@ class Aplicacion_snacks_model extends CI_Model {
 	}
 
 	public function getStores(){
-		$query = $this->db->get('empresas');
+		$query = $this->db->select('*')->from('empresas')->where('estatus',1)->get();
 		return $query->result();
 	}
 
@@ -27,9 +27,9 @@ class Aplicacion_snacks_model extends CI_Model {
 		return $this->db->insert('usuarios', $data[0]);
 	}
 
-	public function getProductos()
+	public function getProductos($id)
 		{
-			$q = $this->db->get('productos');
+			$q = $this->db->select('*')->from('productos')->where('idempresa',$id)->get();
 			return $q->result();
 		}
 	

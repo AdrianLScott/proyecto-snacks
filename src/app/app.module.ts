@@ -16,6 +16,7 @@ import { LoginProvider } from '../providers/login/login';
 import { RegisterProvider } from '../providers/register/register';
 import { ProductsPage } from '../pages/products/products';
 import { UtilityProvider } from '../providers/utility/utility';
+import { ProviderProductosProvider } from '../providers/provider-productos/provider-productos';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { UtilityProvider } from '../providers/utility/utility';
     ProviderTiendasProvider,
     LoginProvider,
     RegisterProvider,
-    UtilityProvider
+    UtilityProvider,
+    ProviderProductosProvider
   ]
 })
 export class AppModule {}

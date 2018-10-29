@@ -16,16 +16,16 @@ export class StoresPage {
 
 	tiendas;
 
-  constructor(public navCtrl: NavController,public proovedor: ProviderTiendasProvider) {}
+  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider) {}
 
   ionViewDidLoad(){
-  	this.proovedor.obtenerTiendas()
+  	this.proveedor.obtenerTiendas()
   	.subscribe(
   		(data)=> {this.tiendas = data;},
   		(error)=> {console.log(error);}
   	)
   }
-  
+
   objetosTienda(tienda){
   	this.navCtrl.push(ProductsPage, {tienda: tienda});
   }

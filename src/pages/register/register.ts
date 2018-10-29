@@ -69,7 +69,7 @@ export class RegisterPage {
                     }];
     if(this.formgroup.valid){
       this.regProvider.doRegister(this.data).subscribe(
-        (response)=> {console.log(response)},
+        (response)=> {this.navCtrl.setRoot('SidebarPage')},
         (error)=> {this.utilsProvider.displayErrorConnectionToast()}
     )}
     else{

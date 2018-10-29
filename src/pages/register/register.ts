@@ -1,6 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { RegisterProvider } from '../../providers/register/register';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { UtilityProvider } from '../../providers/utility/utility';
 
 /**
  * Generated class for the RegisterPage page.
@@ -12,6 +14,8 @@ interface dataInterface {
    nombre: string;
    contraseña: string;
    correo: string;
+   idPerfil: number;
+   estatus: number;
 } 
 
 @IonicPage()
@@ -21,25 +25,53 @@ interface dataInterface {
 })
 
 export class RegisterPage {
-  @ViewChild('name') name;
-  @ViewChild('pass') pass;
-  @ViewChild('email') email;
+  //AC stands for AbstractControl
+  //FC stand for FormControl
+  formgroup: FormGroup;
+  nameAC: AbstractControl;
+  emailAC: AbstractControl;
+  passAC: AbstractControl;
   data: dataInterface[]= [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public regProvider: RegisterProvider, public alertCtrl: AlertController) {
+  validation_messages = {
+    'email': [
+        { type: 'required', message: 'Correo requerido.' },
+        { type: 'email', message: 'Correo invalido.' }
+      ],
+    'pass': [
+      { type: 'required', message: 'Contraseña requerida.' },
+      { type: 'minlength', message: 'La contraseña debe contener al menos 6 caracteres.' },
+    ],
+  }
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public regProvider: RegisterProvider, 
+              public alertCtrl: AlertController, public formbuilder: FormBuilder, public utilsProvider: UtilityProvider) {
+
+    this.formgroup = formbuilder.group({
+      pass:['',[Validators.required,Validators.minLength(6)]],
+      email:['',[Validators.required,Validators.email]]
+    });
+
+    this.passAC = this.formgroup.controls['pass'];
+    this.emailAC = this.formgroup.controls['email'];
+    console.log(this.formgroup);
   }
 
 
   ionViewDidLoad() {
   }
   doRegister(){
-    this.data =  [{ nombre: this.name.value, contraseña: this.pass.value, correo: this.email.value }];
-    if(this.name.value !="" && this.pass.value != "" && this.email.value != ""){
+    this.data =  [{ nombre: this.emailAC.value, 
+                    contraseña: this.passAC.value, 
+                    correo: this.emailAC.value,
+                    idPerfil: 1,
+                    estatus: 1
+                    }];
+    if(this.formgroup.valid){
       this.regProvider.doRegister(this.data).subscribe(
-      (response)=> {console.log(response)},
-      (error)=> {console.log(error);}
-    )
-    }
+        (response)=> {console.log(response)},
+        (error)=> {this.utilsProvider.displayErrorConnectionToast()}
+    )}
     else{
       const alert = this.alertCtrl.create({
         title: "¡Error!",

@@ -14,33 +14,42 @@
 
 
 <ion-content padding>
+	<form novalidate [formGroup]="formgroup">
+		<ion-list>
+		  <ion-item>
+		    <ion-label floating>Correo</ion-label>
+		    <ion-input type="email" formControlName="email"></ion-input>
+		  </ion-item>
+		 <div class="validation-errors">
+		  	<ng-container *ngFor="let validation of validation_messages.email" >
+				<p class="error-message" *ngIf="emailAC.hasError(validation.type) && emailAC.touched">
+				{{ validation.message }}
+				</p>
+			</ng-container>
+		  </div>
+
+		  <ion-item>
+		    <ion-label floating>Contraseña</ion-label>
+		    <ion-input type="password" formControlName="pass"></ion-input>
+		  </ion-item>
+		  <div class="validation-errors">
+		  	<ng-container *ngFor="let validation of validation_messages.pass" >
+				<p class="error-message" *ngIf="passAC.hasError(validation.type) && passAC.touched">
+				{{ validation.message }}
+				</p>
+			</ng-container>
+		  </div>
+		 
+		</ion-list>
+	</form>
 	<ion-list>
-
-	  <ion-item>
-	    <ion-label floating>Nombre</ion-label>
-	    <ion-input type="text" #name></ion-input>
-	  </ion-item>
-
-	  <ion-item>
-	    <ion-label floating>Correo</ion-label>
-	    <ion-input type="text" #email></ion-input>
-	  </ion-item>
-
-	  <ion-item>
-	    <ion-label floating>Contraseña</ion-label>
-	    <ion-input type="password" #pass></ion-input>
-	  </ion-item>
-
-	</ion-list>
-
-	<ion-list>
-		<button ion-button class="register" outline block color="danger" (click) = "doRegister()">
+		<button ion-button class="register" outline block color="danger" (click) = "doRegister()"  [disabled]="!formgroup.valid">
 			Registrar
 		</button>
 	</ion-list>
 	
 	<ion-list>
-		<button ion-button icon-end class="register" outline block color="danger" >
+		<button ion-button icon-end class="register" outline block color="danger">
 			Cancelar
 		</button>
 	</ion-list>

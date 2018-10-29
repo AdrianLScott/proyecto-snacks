@@ -14,7 +14,7 @@ class AplicacionSnacks extends CI_Controller {
 	    parent::__construct();
 	}
 
-	public function index(){
+	public function getStores(){
 		$this->load->model('aplicacion_snacks_model');
 		$stores = $this->aplicacion_snacks_model->getStores();
 		echo json_encode($stores);
@@ -27,5 +27,13 @@ class AplicacionSnacks extends CI_Controller {
 		//echo $json_str;
 		$json_obj = json_decode($json_str);
 		echo $this->aplicacion_snacks_model->addUser($json_obj, true);
+	}
+
+	public function getProductos()
+	{
+		$this->load->model('productos_model');
+		$productos = $this->productos_model->getProductos();
+		echo json_encode($productos);
+		//$this->load->view('welcome_message');
 	}
 }

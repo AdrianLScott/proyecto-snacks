@@ -25,6 +25,7 @@ export class StoresPage {
   		(error)=> {console.log(error);}
   	)
   }
+  
   objetosTienda(tienda){
   	this.navCtrl.push(ProductsPage, {tienda: tienda});
   }

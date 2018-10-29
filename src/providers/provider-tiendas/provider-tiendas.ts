@@ -16,7 +16,7 @@ export class ProviderTiendasProvider {
   }
 
   obtenerTiendas(){
-  	return this.http.get(Constants.API_BASE_ROUTE+'tiendas');
+  	return this.http.get(Constants.API_BASE_ROUTE+'aplicacionSnacks/getStores');
   }
 
 }

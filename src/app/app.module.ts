@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginProvider } from '../providers/login/login';
 import { RegisterProvider } from '../providers/register/register';
 import { ProductsPage } from '../pages/products/products';
+import { ProviderProductosProvider } from '../providers/provider-productos/provider-productos';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { ProductsPage } from '../pages/products/products';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProviderTiendasProvider,
     LoginProvider,
-    RegisterProvider
+    RegisterProvider,
+    ProviderProductosProvider
   ]
 })
 export class AppModule {}

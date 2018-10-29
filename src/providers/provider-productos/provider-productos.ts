@@ -13,7 +13,10 @@ import * as Constants from '../../app/main';
 export class ProviderProductosProvider {
 
   constructor(public http: HttpClient) {
-    console.log('Hello ProviderProductosProvider Provider');
+  }
+
+  obtenerProductos(id: any){
+  	return this.http.get(Constants.API_BASE_ROUTE+'aplicacionSnacks/getProducts?id='+id);
   }
 
 }

@@ -1,0 +1,50 @@
+<!--
+  Generated template for tp ProductDetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="venados">
+    <ion-title>Producto</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+	
+	<div class="imgcontainer">
+		<img src="/assets/imgs/starbucks.png">
+	</div>
+		
+	<ion-card class="card">
+	  	<ion-card-header center text-center>
+	  		<p class="titulo">{{producto.nombre}}</p>
+			
+	  	</ion-card-header>
+	  	<ion-card-content>
+    		<p class="contenido">{{producto.descripcion}}</p>
+  		</ion-card-content>
+  		<p class="precio" item-end text-end>$ {{producto.precio}}</p>
+	</ion-card>
+
+	<ion-item>
+    	<ion-input type="number" placeholder="Cantidad"></ion-input>
+  	</ion-item>
+
+	<button ion-button class="botonC"  block>
+		<ion-icon name="basket">
+			Compar
+		</ion-icon>
+	</button>
+	<button ion-button class="botonA"  block>
+		<ion-icon name="cart">
+			Agregar al carrito
+		</ion-icon>
+	</button>
+
+	
+
+</ion-content>

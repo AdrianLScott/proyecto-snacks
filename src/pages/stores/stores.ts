@@ -22,7 +22,7 @@ export class StoresPage {
   	this.proveedor.obtenerTiendas()
   	.subscribe(
   		(data)=> {this.tiendas = data;},
-  		(error)=> {console.log(error);}
+  		(error)=> {console.log("error");}
   	)
   }
 

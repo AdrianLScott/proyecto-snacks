@@ -17,6 +17,8 @@ import { RegisterProvider } from '../providers/register/register';
 import { ProductsPage } from '../pages/products/products';
 import { UtilityProvider } from '../providers/utility/utility';
 import { ProviderProductosProvider } from '../providers/provider-productos/provider-productos';
+import { ProductDetailsPage } from '../pages/product-details/product-details';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { ProviderProductosProvider } from '../providers/provider-productos/provi
     CartPage,
     StoresPage,
     RegisterPage,
-    ProductsPage
+    ProductsPage,
+    ProductDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { ProviderProductosProvider } from '../providers/provider-productos/provi
     CartPage,
     StoresPage,
     RegisterPage,
-    ProductsPage
+    ProductsPage,
+    ProductDetailsPage
   ],
   providers: [
     StatusBar,

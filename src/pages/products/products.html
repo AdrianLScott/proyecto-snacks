@@ -14,9 +14,9 @@
 
 
 <ion-content >
-	<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+	<ion-searchbar ></ion-searchbar>
 	<ion-list>
-	  <button ion-item *ngFor="let producto of productos" (click)="viewProduct()">
+	  <button ion-item *ngFor="let producto of productos" (click)="viewProduct(producto)">
 	  	<ion-thumbnail item-start class="imageList">
 	  		<img  src="/assets/imgs/starbucks.png">
 	  	</ion-thumbnail>
@@ -25,9 +25,7 @@
 		    <p class="precio" item-end>$ {{producto.precio}}</p>
 		</button>
 	</ion-list>
-	<ion-list>
-		
-	</ion-list>
+
 		
 	    	 <!--
 
@@ -38,8 +36,8 @@
 			      	<ion-thumbnail item-start>
 					    <img src="/assets/imgs/starbucks.png">
 					</ion-thumbnail>
-					<h2>{{producto.descripcion}}</h2>
-			          <p>Sabroso café de su puta madre está bien bueno</p>
+					<h2>{{producto.nombre}}</h2>
+			          <p>{{producto.descripcion}}</p>
 			          <p class="precio" item-end>$ {{producto.precio}}</p>
 			    </button>
 			</ion-list>

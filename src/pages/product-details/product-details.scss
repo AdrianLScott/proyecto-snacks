@@ -1,0 +1,32 @@
+page-product-details {
+	.imgcontainer{
+		width: 100%;
+	}
+	.card{
+		background-color: #ff572214;
+	}
+	.imgcontainer img{
+	}
+	.titulo{
+		font-size: 20px;
+	}
+	.contenido{
+		font-size: 15px;
+	}
+	.precio{
+		color: #779F3E;
+		font-size: 20px;
+	}
+	.botonC{
+		background-color: #a9963edb;
+		margin-bottom: 10px;
+		font-family: helvetica;
+		font-weight: bold;
+	}
+	.botonA{
+		background-color: #605547e8;
+		margin-bottom: 10px;
+		font-family: helvetica;
+		font-weight: bold;
+	}
+}

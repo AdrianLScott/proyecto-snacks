@@ -1,24 +1,35 @@
 page-login {
+
+		video {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -100;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
 		.login{
 			height: 50px;
 		}
 
 		.inputs-div{
-			margin-top: 10%;
-			margin-bottom: 10%;
-			background-color: #F6F6F6;
+			margin-top: 5%;
 			padding: 15px;
 			border-radius: 20px;
-
 		}
 
 		.input{
-			margin-bottom: 5px;
-			background-color: #F6F6F6;
+			background-color: #ece7e7;
+			margin-bottom: 10px;
 		}
 
 		.content{
-			background-color: white;
+			background-image: url("../assets/imgs/estadio.jpg");
+			background-size: 100% 50%;
 		}
 
 		.login{
@@ -26,5 +37,11 @@ page-login {
 			font-family: helvetica;
 			font-weight: bold;
 			font-size: 14px;
+		}
+		.carta{
+			margin-top: 10%;
+			border-radius: 4px;
+			opacity: 0.9;
+    		/*filter: alpha(opacity=50); */
 		}
 }

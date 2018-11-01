@@ -1,4 +1,12 @@
 page-product-details {
+	hr {
+		height: 0.55px !important;
+ 		background: rgba(0, 0, 0, 0.12)!important;
+	  	display: block !important;
+	  	font-size: 2em !important;
+	  	opacity: 1 !important;
+	  	visibility: visible !important;
+	}
 	.imgcontainer{
 		width: 100%;
 	}
@@ -8,25 +16,65 @@ page-product-details {
 	.imgcontainer img{
 	}
 	.titulo{
-		font-size: 20px;
+		font-size: 25px;
+		margin: 5px;
+		margin-left: 10px;
+		color: #4f4751;
 	}
 	.contenido{
-		font-size: 15px;
+		padding-left: 10px;
+		font-size: 20px;
+		color: #4f4751;
+
 	}
 	.precio{
 		color: #779F3E;
-		font-size: 20px;
+		font-size: 25px;
+		margin: 5px;
+		margin-left: 10px;
 	}
 	.botonC{
-		background-color: #a9963edb;
 		margin-bottom: 10px;
 		font-family: helvetica;
-		font-weight: bold;
 	}
 	.botonA{
-		background-color: #605547e8;
 		margin-bottom: 10px;
 		font-family: helvetica;
-		font-weight: bold;
+	}
+	.cant{
+		display: inline-block;
+		font-size: 25px;
+	}
+	.divButtons{
+		margin-top: -15px;
+    	margin-right: 10px;
+    	margin-bottom: -20px;
+	}
+	.divcant{
+    	margin-right: 10px;
+    	color: #4f4751;
+    	font-size: 20px;
+	}
+	.divPrecio{
+		display: inline-block;
+	}
+	.divtot{
+    	color: #4f4751;
+    	font-size: 20px;
+    	margin-left: 15px;
+
+	}
+	.iconoMenos{
+		font-size: 30px;
+		color: #C14A4A;
+	}
+	.iconoMas{
+		font-size: 30px;
+		color: #779F3E;
+	}
+	.current{
+		display: inline-block;
+		width: 20%;
+		text-align: center;
 	}
 }

@@ -32,7 +32,9 @@ export class ProductsPage {
   }
 
   viewProduct(producto){
-  	this.navCtrl.push(ProductDetailsPage,{producto: producto});
+  	this.navCtrl.push(ProductDetailsPage,{
+      producto: producto,
+      tienda: this.tienda});
   }
 
 }

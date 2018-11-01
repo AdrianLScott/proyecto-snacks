@@ -13,36 +13,57 @@
 </ion-header>
 
 
-<ion-content >
+<ion-content>
 	
 	<div class="imgcontainer">
 		<img src="/assets/imgs/starbucks.png">
 	</div>
-		
-	<ion-card class="card">
-	  	<ion-card-header center text-center>
-	  		<p class="titulo">{{producto.nombre}}</p>
+	<div class="cont">
+		<ion-row>
+			<ion-col>
+				<p class="titulo">{{producto.nombre}}</p>
+			</ion-col>
+			<ion-col>
+				<p class="precio" item-end text-end> $ {{producto.precio}}</p>
+			</ion-col>
+		</ion-row>
+		<hr>
+		<p class="contenido">{{producto.descripcion}}</p>
+	</div>
+	
+	<hr>
+	<div>
+		<ion-row>
+			<ion-col>
+				<div class="divtot" item-start text-start>
+					Total:
+				</div>
+				<div>
+					<p class="precio" item-start text-start> $ {{total}}</p>
+				</div>
+			</ion-col>
+			<ion-col item-end text-end>
+				<div class="divcant">Cantidad:</div>
+
+				<div class="divButtons">
+					<ion-icon ios="ios-remove-circle" md="md-remove-circle" (click)="decrement()" class="iconoMenos" ></ion-icon>
+				    <div class="current">
+				    	<p class="cant">{{currentNumber}}</p>
+				    </div>
+					<ion-icon ios="ios-add-circle" md="md-add-circle" (click)="increment()" class="iconoMas" ></ion-icon>
+				</div>
+			</ion-col>
 			
-	  	</ion-card-header>
-	  	<ion-card-content>
-    		<p class="contenido">{{producto.descripcion}}</p>
-  		</ion-card-content>
-  		<p class="precio" item-end text-end>$ {{producto.precio}}</p>
-	</ion-card>
+		</ion-row>
+	</div>
 
-	<ion-item>
-    	<ion-input type="number" placeholder="Cantidad"></ion-input>
-  	</ion-item>
+	<hr>
 
-	<button ion-button class="botonC"  block>
-		<ion-icon name="basket">
-			Compar
-		</ion-icon>
+	<button ion-button class="botonC" block color="botonPedir"  (click)="confirmarPedido()">
+			Pedir
 	</button>
-	<button ion-button class="botonA"  block>
-		<ion-icon name="cart">
-			Agregar al carrito
-		</ion-icon>
+	<button ion-button navPop class="botonA" outline text-center block color="botonPedir"  >
+			Regresar
 	</button>
 
 	

@@ -18,6 +18,7 @@ import { ProductsPage } from '../pages/products/products';
 import { UtilityProvider } from '../providers/utility/utility';
 import { ProviderProductosProvider } from '../providers/provider-productos/provider-productos';
 import { ProductDetailsPage } from '../pages/product-details/product-details';
+import { ProductDetailProvider } from '../providers/product-detail/product-detail';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ProductDetailsPage } from '../pages/product-details/product-details';
     LoginProvider,
     RegisterProvider,
     UtilityProvider,
-    ProviderProductosProvider
+    ProviderProductosProvider,
+    ProductDetailProvider
   ]
 })
 export class AppModule {}

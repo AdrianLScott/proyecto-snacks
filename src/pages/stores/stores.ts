@@ -1,3 +1,4 @@
+import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav } from 'ionic-angular';
 import { ProviderTiendasProvider } from '../../providers/provider-tiendas/provider-tiendas';
@@ -7,7 +8,7 @@ import { NotificationsPage } from './../notifications/notifications';
 import { CartPage } from './../cart/cart';
 
 
-@IonicPage()
+//@IonicPage()
 @Component({
   selector: 'page-stores',
   templateUrl: 'stores.html',
@@ -16,14 +17,20 @@ export class StoresPage {
 
 	tiendas;
 
-  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider) {}
+  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider) {}
 
   ionViewDidLoad(){
-  	this.proveedor.obtenerTiendas()
-  	.subscribe(
-  		(data)=> {this.tiendas = data;},
-  		(error)=> {console.log(error);}
-  	)
+    this.auth.hasTokenAndIsValid().then(
+      (data)=>{
+        if(data){
+          this.proveedor.obtenerTiendas()
+          .subscribe(
+            (data)=> {this.tiendas = data;},
+            (error)=> {console.log(error);}
+          )
+        }
+      }
+    );
   }
 
   objetosTienda(tienda){

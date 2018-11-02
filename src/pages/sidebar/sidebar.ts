@@ -1,9 +1,6 @@
+import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav, AlertController, App, Platform } from 'ionic-angular';
-
-import { StoresPage } from './../stores/stores';
-import { NotificationsPage } from './../notifications/notifications';
-import { CartPage } from './../cart/cart';
 import { LoginPage } from './../login/login';
 
 export interface PageInterface {
@@ -34,12 +31,16 @@ export class SidebarPage {
     { title: 'Salir', pageName: 'LogoutPage', icon: 'log-out' },
   ];
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public app: App, public platform: Platform) {
+  constructor(public navCtrl: NavController, 
+              public alertCtrl: AlertController, 
+              public app: App, 
+              public platform: Platform,
+              public auth: AuthProvider) {
   }
 
   openPage(page: PageInterface) {
+    
     let params = {};
- 
     // The index is equal to the order of our tabs inside tabs.ts
     if (page.index) {
       params = { tabIndex: page.index };
@@ -89,6 +90,7 @@ export class SidebarPage {
       {
         text: 'Cerrar sesión',
         handler: () => {
+          this.auth.logout();
           this.app.getRootNav().setRoot(LoginPage);
         }
       },{

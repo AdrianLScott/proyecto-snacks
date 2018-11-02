@@ -12,11 +12,24 @@ import { StoresPage } from '../pages/stores/stores';
 import { RegisterPage} from '../pages/register/register'
 import { ProviderTiendasProvider } from '../providers/provider-tiendas/provider-tiendas';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginProvider } from '../providers/login/login';
-import { RegisterProvider } from '../providers/register/register';
 import { ProductsPage } from '../pages/products/products';
 import { UtilityProvider } from '../providers/utility/utility';
 import { ProviderProductosProvider } from '../providers/provider-productos/provider-productos';
+import { AuthProvider } from '../providers/auth/auth';
+import { IonicStorageModule } from '@ionic/storage';
+import { Storage } from '@ionic/storage';
+import {HttpModule, Http} from '@angular/http';
+import {AuthHttp, AuthConfig,JwtHelper} from 'angular2-jwt';
+
+let storage = new Storage({});
+
+export function getAuthHttp(http) {
+  return new AuthHttp(new AuthConfig({
+    noJwtError: true,
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('id_token')),
+  }), http);
+}
 
 @NgModule({
   declarations: [
@@ -31,7 +44,9 @@ import { ProviderProductosProvider } from '../providers/provider-productos/provi
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    IonicStorageModule.forRoot(),
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,11 +62,16 @@ import { ProviderProductosProvider } from '../providers/provider-productos/provi
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {
+      provide: AuthHttp,
+      useFactory: getAuthHttp,
+      deps: [Http]
+    },
     ProviderTiendasProvider,
-    LoginProvider,
-    RegisterProvider,
     UtilityProvider,
-    ProviderProductosProvider
+    ProviderProductosProvider,
+    AuthProvider,
+    JwtHelper
   ]
 })
 export class AppModule {}

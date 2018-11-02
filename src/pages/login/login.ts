@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the LoginPage page.
@@ -17,26 +18,27 @@ export class LoginPage {
 
   @ViewChild('user') user;
   @ViewChild('pass') pass;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private authService: AuthProvider) {
   }
 
   doLogin() {
-  	if(this.user.value == "scott" && this.pass.value == "1234" || this.user.value == "cedi" && this.pass.value == "1234"){
-  		this.navCtrl.setRoot('SidebarPage');
-  	} 
-  	else{
-  		const alert = this.alertCtrl.create({
-  	    title: "¡Error!",
-  	    subTitle: "Usuario o contraseña incorrecto.",
-  	    buttons: ['OK']
-  	  });
-  	  alert.present();
-  	}
-  }
+    this.authService.login(this.user.value,this.pass.value).then(   
+      (data)=>{
+        if(data == 1){
+          this.navCtrl.setRoot('SidebarPage');
+        }
+        else if(data !== undefined){
+          const alert = this.alertCtrl.create({
+            title: "¡Error!",
+            subTitle: data,
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      })
+    .catch(e => {console.log(e)});
+  };
+
   registrar(){
     this.navCtrl.push(RegisterPage);
   }

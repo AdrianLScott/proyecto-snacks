@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
-import { RegisterProvider } from '../../providers/register/register';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { UtilityProvider } from '../../providers/utility/utility';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the RegisterPage page.
@@ -10,7 +10,7 @@ import { UtilityProvider } from '../../providers/utility/utility';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-interface dataInterface {
+export interface dataInterface {
    nombre: string;
    contraseña: string;
    correo: string;
@@ -31,7 +31,7 @@ export class RegisterPage {
   nameAC: AbstractControl;
   emailAC: AbstractControl;
   passAC: AbstractControl;
-  data: dataInterface[]= [];
+  data: dataInterface[] = [];
 
   validation_messages = {
     'email': [
@@ -44,8 +44,9 @@ export class RegisterPage {
     ],
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public regProvider: RegisterProvider, 
-              public alertCtrl: AlertController, public formbuilder: FormBuilder, public utilsProvider: UtilityProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,/* public regProvider: RegisterProvider,*/ 
+              public alertCtrl: AlertController, public formbuilder: FormBuilder, public utilsProvider: UtilityProvider,
+              public authService: AuthProvider) {
 
     this.formgroup = formbuilder.group({
       pass:['',[Validators.required,Validators.minLength(6)]],
@@ -54,7 +55,6 @@ export class RegisterPage {
 
     this.passAC = this.formgroup.controls['pass'];
     this.emailAC = this.formgroup.controls['email'];
-    console.log(this.formgroup);
   }
 
 
@@ -64,14 +64,27 @@ export class RegisterPage {
     this.data =  [{ nombre: this.emailAC.value, 
                     contraseña: this.passAC.value, 
                     correo: this.emailAC.value,
-                    idPerfil: 1,
+                    idPerfil: 4,
                     estatus: 1
                     }];
     if(this.formgroup.valid){
-      this.regProvider.doRegister(this.data).subscribe(
-        (response)=> {this.navCtrl.setRoot('SidebarPage')},
-        (error)=> {this.utilsProvider.displayErrorConnectionToast()}
-    )}
+      this.authService.register(this.data).then(
+        
+        (data)=>{
+          if(data == 1){
+            this.navCtrl.setRoot('SidebarPage');
+          }
+          else if(data!==undefined){
+            const alert = this.alertCtrl.create({
+              title: "¡Error!",
+              subTitle: data,
+              buttons: ['OK']
+            });
+            alert.present();
+          }
+        })
+      .catch(e => {console.log(e)});
+    }
     else{
       const alert = this.alertCtrl.create({
         title: "¡Error!",
@@ -80,12 +93,6 @@ export class RegisterPage {
       });
       alert.present();
     }
-  }
-
-  notEmpty
-
-  regresar(){
-  	//code..
   }
 
 }

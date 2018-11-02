@@ -1,16 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . '/libraries/implementJwt.php';
+
 class AplicacionSnacks extends CI_Controller {
 	function __construct() {
+
 	    header('Access-Control-Allow-Origin: *');
 	    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 	    header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 	    $method = $_SERVER['REQUEST_METHOD'];
 	    if($method == "OPTIONS") {
 	        die();
-	    }
-	    $this->objOfJwt = new implementJwt();
+		}
+		$this->objOfJwt = new implementJwt();
 	    parent::__construct();
 	}
 
@@ -18,21 +20,28 @@ class AplicacionSnacks extends CI_Controller {
 		$this->load->model('aplicacion_snacks_model');
 		$stores = $this->aplicacion_snacks_model->getStores();
 		echo json_encode($stores);
+		//$json= json_encode($stores);
+		//$key = 'SuperSecretKeyss';
+		 //To Encrypt: 
+		 //echo $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $json , MCRYPT_MODE_ECB); 
+		 //To Decrypt: 
+		  //echo $decrypted = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $encrypted, MCRYPT_MODE_ECB); 
+
 	}
 
-    
+
 	public function addUser(){
 		$this->load->model('aplicacion_snacks_model');
 		$json_str = file_get_contents('php://input');
 		$json_obj = json_decode($json_str);
 		if($json_obj != ''){
 			if(($msg = $this->aplicacion_snacks_model->addUser($json_obj, true)) == 1){
-				$id = $this->getIdByUser($json_obj[0]['nombre']);
+				$id = $this->getIdByUser($json_obj[0]->nombre);
 				$dataToken = array('id' => $id, 
-								   'nombre' => $json_obj[0]['nombre']);
+								   'nombre' => $json_obj[0]->nombre);
 				$token = $this->objOfJwt->GenerateToken($dataToken);
 				$response = array('id' => $id,
-							      'nombre' => $json_obj[0]['nombre'],
+							      'nombre' => $json_obj[0]->nombre,
 								  'token' => $token);
 				echo json_encode($response);
 			}else{
@@ -54,15 +63,6 @@ class AplicacionSnacks extends CI_Controller {
 		$this->load->model('aplicacion_snacks_model');
 		$id = $this->aplicacion_snacks_model->getIdByUser($user)->id;
 		return $id;
-	}
-
-	public function getProducts()
-	{
-		$id = $this->input->get('id');
-		$this->load->model('aplicacion_snacks_model');
-		$productos = $this->aplicacion_snacks_model->getProductos($id);
-		echo json_encode($productos);
-		//$this->load->view('welcome_message');
 	}
 
 	public function decodeToken(){
@@ -100,4 +100,20 @@ class AplicacionSnacks extends CI_Controller {
 		}
 	}
 
+
+	public function getProducts()
+	{
+		$id = $this->input->get('id');
+		$this->load->model('aplicacion_snacks_model');
+		$productos = $this->aplicacion_snacks_model->getProductos($id);
+		echo json_encode($productos);
+		//$this->load->view('welcome_message');
+	}
+
+	public function addPedido(){
+		$this->load->model('aplicacion_snacks_model');
+		$json_str = file_get_contents('php://input');
+		$json_obj = json_decode($json_str);
+		echo $this->aplicacion_snacks_model->addPedido($json_obj, true);
+	}
 }

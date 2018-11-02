@@ -3,7 +3,7 @@
  * 
  */
 class Aplicacion_snacks_model extends CI_Model {
-	protected $_levels  = array('DEBUG' => '0');
+	
 	function __construct() {
 
 	    header('Access-Control-Allow-Origin: *');
@@ -17,34 +17,10 @@ class Aplicacion_snacks_model extends CI_Model {
 	}
 
 	public function getStores(){
-		$query = $this->db->select('*')->from('empresas')->where('estatus',1)->get();
+		$query = $this->db->select('empresas.id, empresas.nombre, empresas.descripcion, empresas.logotipo, empresas.estatus')->from('empresas, detallesevento')->where('empresas.estatus',1)->where('detallesevento.id_empresa=empresas.id')->where('detallesevento.id_evento',1)->get();
+//		SELECT * FROM empresas, detallesevento WHERE empresas.id = detallesevento.id_empresa AND detallesevento.id_evento = 1
+
 		return $query->result();
-	}
-
-	public function addUser($data){
-		$data[0]->contraseña = password_hash($data[0]->contraseña, PASSWORD_DEFAULT);
-		try{
-		    if($this->db->insert('usuarios', $data[0])){
-		    	return 1;
-		    }
-		    else{
-		    	return $this->db->error();
-		    }
-		}
-		catch(Exception $e){
-		    return $this->db->error();
-		}
-
-	}
-
-	public function getIdByUser($user){
-		return $this->db->select('id')->where('nombre',$user)->get('usuarios')->row();
-	}
-
-	public function getProductos($id)
-	{
-		$q = $this->db->select('*')->from('productos')->where('idempresa',$id)->get();
-		return $q->result();
 	}
 
 	public function getUser($data){
@@ -70,6 +46,36 @@ class Aplicacion_snacks_model extends CI_Model {
 		    return $this->db->error();
 		}
 	}
+
+	public function addUser($data){
+		$data[0]->contraseña = password_hash($data[0]->contraseña, PASSWORD_DEFAULT);
+		try{
+		    if($this->db->insert('usuarios', $data[0])){
+		    	return 1;
+		    }
+		    else{
+		    	return $this->db->error();
+		    }
+		}
+		catch(Exception $e){
+		    return $this->db->error();
+		}
+
+	}
+
+	public function getIdByUser($user){
+		return $this->db->select('id')->where('nombre',$user)->get('usuarios')->row();
+	}
+
+	public function addPedido($data){
+		return $this->db->insert('pedidos', $data[0]);
+	}
+
+	public function getProductos($id)
+		{
+			$q = $this->db->select('*')->from('productos')->where('idempresa',$id)->get();
+			return $q->result();
+		}
 	
 	//ACABA VAN LAS FUNCIONES
 	

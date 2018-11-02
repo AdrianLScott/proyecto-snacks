@@ -20,7 +20,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Storage } from '@ionic/storage';
 import {HttpModule, Http} from '@angular/http';
 import {AuthHttp, AuthConfig,JwtHelper} from 'angular2-jwt';
-
+import { ProductDetailsPage } from '../pages/product-details/product-details';
+import { ProductDetailProvider } from '../providers/product-detail/product-detail';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -39,7 +40,8 @@ export function getAuthHttp(http) {
     CartPage,
     StoresPage,
     RegisterPage,
-    ProductsPage
+    ProductsPage,
+    ProductDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,8 @@ export function getAuthHttp(http) {
     CartPage,
     StoresPage,
     RegisterPage,
-    ProductsPage
+    ProductsPage,
+    ProductDetailsPage
   ],
   providers: [
     StatusBar,
@@ -71,7 +74,8 @@ export function getAuthHttp(http) {
     UtilityProvider,
     ProviderProductosProvider,
     AuthProvider,
-    JwtHelper
+    JwtHelper,
+    ProductDetailProvider
   ]
 })
 export class AppModule {}

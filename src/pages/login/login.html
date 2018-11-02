@@ -17,30 +17,37 @@
 
 
 <ion-content padding class="content">
-<br><br><br>
-	<img src="/assets/imgs/logo.svg">
-	<ion-list>
-		<div class="inputs-div">
-		  <ion-item class="input">
-		    <ion-label floating>Usuario</ion-label>
-		    <ion-input type="text" #user name="username"></ion-input>
-		  </ion-item>
+	<!--<video autoplay loop src="../assets/videos/sample.mp4"></video>-->
 
-		  <ion-item class="input">
-		    <ion-label floating>Contraseña</ion-label>
-		    <ion-input type="password" #pass name="password"></ion-input>
-		  </ion-item>
-	  	</div>
-	</ion-list>
+	<img src="/assets/imgs/logo.svg">
+	<ion-card class="carta">
+
+		<div class="inputs-div">
+			<ion-item class="input">
+			    <ion-input placeholder="Usuario" block #user></ion-input>
+			</ion-item>
+			 
+		  	<ion-item class="input">
+			    <ion-input type="password" block placeholder="Contraseña" #pass ></ion-input>
+			</ion-item>
+		 </div>
+
+		<ion-card-content>
+			<ion-list>
+				
+				<button ion-button class="login" block color="danger" (click)="doLogin()">
+					Iniciar Sesión
+				</button>
+				<p center text-center><b>Ó</b> </p>
+				<button ion-button icon-end class="login" block color="danger" (click)="registrar()">
+					Regístrate
+				</button>
+			</ion-list>
+		</ion-card-content>
 	
-	<ion-list>
-		<button ion-button class="login" block color="danger" (click)="doLogin()">
-			Iniciar Sesion
-		</button>
+	</ion-card>
 	
-		<button ion-button icon-end class="login" block color="danger" (click)="registrar()">
-			Registrar
-		</button>
-	</ion-list>
+	
+	
 
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProviderProductosProvider } from '../../providers/provider-productos/provider-productos';
+import { ProductDetailsPage } from '../product-details/product-details';
 
 /**
  * Generated class for the ProductsPage page.
@@ -30,8 +31,10 @@ export class ProductsPage {
   	)
   }
 
-  viewProduct(){
-  	console.log("Ahorita lo hago");
+  viewProduct(producto){
+  	this.navCtrl.push(ProductDetailsPage,{
+      producto: producto,
+      tienda: this.tienda});
   }
 
 }

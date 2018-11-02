@@ -20,58 +20,49 @@
 
 
 <ion-content padding>
-    <ion-card>
+ 
+  <ion-list>
+    <ion-item-sliding>
+      <ion-item class="item-remove-animate">
+          <h1>Starbucks</h1>
+
+          <ion-row>
+              <ion-col>
+                <p class="status-listo"> Tu pedido de "pedido", está listo.</p>
+              </ion-col>
+             <!-- 
+            <ion-col color="secondary" right text-right>
+              <p class="status-listo">Listo</p>
+            </ion-col>
+          -->
+          </ion-row>
+            
+          <ion-row>
+            <ion-col right text-right>
+              <ion-note>
+                25/10/2018, 10:40 PM
+              </ion-note>
+            </ion-col>
+          </ion-row>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="logSwap()">
+          <ion-icon name="trash"></ion-icon>
+          Borrar
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
     
-    <ion-item>
-      <h1>Starbucks</h1>
-    </ion-item>
 
-    <ion-row>
-        <ion-col>
-          &nbsp;2x Cafes grandes
-        </ion-col>
-        
-      <ion-col color="secondary" right text-right>
-        <p class="status-espera">En espera</p>
-      </ion-col>
-    </ion-row>
-
-
-    <ion-row>
-      <ion-col right text-right>
-        <ion-note>
-          25/10/2018, 10:40 PM
-        </ion-note>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
-
-  <ion-card>
-    
-    <ion-item>
-      <h1>Starbucks</h1>
-    </ion-item>
-
-    <ion-row>
-        <ion-col>
-          &nbsp;3x Cappuccinos
-        </ion-col>
-        
-      <ion-col color="secondary" right text-right>
-       <p class="status-listo">Listo</p>
-      </ion-col>
-    </ion-row>
-
-
-    <ion-row>
-      <ion-col right text-right>
-        <ion-note>
-          25/10/2018, 10:40 PM
-        </ion-note>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
-
+  </ion-list>
+  <ion-row text-center>
+    <ion-col>
+       <ion-note>
+        Delice para eliminar
+      </ion-note>
+    </ion-col>
+  </ion-row>
 </ion-content>

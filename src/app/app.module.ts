@@ -1,3 +1,4 @@
+import { ForgotPasswordPage } from './../pages/forgot-password/forgot-password';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -22,6 +23,7 @@ import {HttpModule, Http} from '@angular/http';
 import {AuthHttp, AuthConfig,JwtHelper} from 'angular2-jwt';
 import { ProductDetailsPage } from '../pages/product-details/product-details';
 import { ProductDetailProvider } from '../providers/product-detail/product-detail';
+import { ForgotPasswordProvider } from '../providers/forgot-password/forgot-password';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -41,7 +43,8 @@ export function getAuthHttp(http) {
     StoresPage,
     RegisterPage,
     ProductsPage,
-    ProductDetailsPage
+    ProductDetailsPage,
+    ForgotPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ export function getAuthHttp(http) {
     StoresPage,
     RegisterPage,
     ProductsPage,
-    ProductDetailsPage
+    ProductDetailsPage,
+    ForgotPasswordPage
   ],
   providers: [
     StatusBar,
@@ -75,7 +79,8 @@ export function getAuthHttp(http) {
     ProviderProductosProvider,
     AuthProvider,
     JwtHelper,
-    ProductDetailProvider
+    ProductDetailProvider,
+    ForgotPasswordProvider
   ]
 })
 export class AppModule {}

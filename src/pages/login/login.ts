@@ -1,3 +1,4 @@
+import { ForgotPasswordPage } from './../forgot-password/forgot-password';
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
@@ -41,6 +42,10 @@ export class LoginPage {
 
   registrar(){
     this.navCtrl.push(RegisterPage);
+  }
+
+  forgot_password(){
+    this.navCtrl.push(ForgotPasswordPage);
   }
 
 }

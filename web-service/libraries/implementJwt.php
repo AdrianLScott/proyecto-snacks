@@ -5,7 +5,7 @@
 	 */
 	class implementJwt
 	{
-		private $key = "KEY_TO_DECODE";
+		private $key = "";
 		public function GenerateToken($data){
 			return JWT::encode($data, $this->key);
 		}

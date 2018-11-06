@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import * as Constants from '../../app/main';
-
+import *  as AppConfig from '../../app/main';
 /*
   Generated class for the ProviderProductosProvider provider.
 
@@ -16,7 +14,8 @@ export class ProviderProductosProvider {
   }
 
   obtenerProductos(id: any){
-  	return this.http.get(Constants.API_BASE_ROUTE+'aplicacionSnacks/getProducts?id='+id);
+    AppConfig.cfg.apiUrl+AppConfig.cfg.user
+  	return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getProducts+'?id='+id);
   }
 
 }

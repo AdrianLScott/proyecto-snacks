@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as Constants from '../../app/main';
 import { Observable } from 'rxjs/Observable';
-
+import *  as AppConfig from '../../app/main';
 /*
   Generated class for the ProductDetailProvider provider.
 
@@ -18,7 +17,7 @@ export class ProductDetailProvider {
   doPedido(data: any) : Observable<Object> {
   	//console.log(data);
   	//var jsonData = JSON.stringify(data);
-  	return this.http.post(Constants.API_BASE_ROUTE+'aplicacionSnacks/addPedido',data);
+  	return this.http.post(AppConfig.cfg.apiUrl+AppConfig.cfg.user.product_details,data);
   }
 
 }

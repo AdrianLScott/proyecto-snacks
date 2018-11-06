@@ -2,7 +2,7 @@
 /**
  * 
  */
-class Aplicacion_snacks_model extends CI_Model {
+class Api_model extends CI_Model {
 	
 	function __construct() {
 

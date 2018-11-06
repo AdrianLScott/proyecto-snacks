@@ -1,5 +1,4 @@
 import { AuthProvider } from './../providers/auth/auth';
-import { SidebarPage } from './../pages/sidebar/sidebar';
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';

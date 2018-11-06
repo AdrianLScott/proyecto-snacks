@@ -24,6 +24,7 @@ import {AuthHttp, AuthConfig,JwtHelper} from 'angular2-jwt';
 import { ProductDetailsPage } from '../pages/product-details/product-details';
 import { ProductDetailProvider } from '../providers/product-detail/product-detail';
 import { ForgotPasswordProvider } from '../providers/forgot-password/forgot-password';
+import { CartModalPage } from '../pages/cart-modal/cart-modal';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -44,7 +45,8 @@ export function getAuthHttp(http) {
     RegisterPage,
     ProductsPage,
     ProductDetailsPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    CartModalPage
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,7 @@ export function getAuthHttp(http) {
     HttpClientModule,
     IonicStorageModule.forRoot(),
     HttpModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -63,7 +66,8 @@ export function getAuthHttp(http) {
     RegisterPage,
     ProductsPage,
     ProductDetailsPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    CartModalPage
   ],
   providers: [
     StatusBar,

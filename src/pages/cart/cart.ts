@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Storage} from '@ionic/storage';
-
+import { ModalController } from 'ionic-angular';
+import { CartModalPage } from '../cart-modal/cart-modal';
 
 /**
  * Generated class for the CartPage page.
@@ -20,7 +21,7 @@ export class CartPage {
   cardItems: any[]=[];
   total: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public modalCtrl: ModalController) {
 
     this.storage.ready().then(()=>{
 
@@ -36,6 +37,11 @@ export class CartPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CartPage');
+  }
+
+  irCarrito() {
+    const modal = this.modalCtrl.create(CartModalPage);
+    modal.present();
   }
 
 }

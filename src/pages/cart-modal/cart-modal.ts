@@ -18,9 +18,36 @@ import {Storage} from '@ionic/storage';
 export class CartModalPage {
   cardItems: any[] =[];
   tienda: any;
+  total: any;
+  showEmptiCartMessage: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+    
+    this.total = 0.0;
+    //PRepara lo que tiene el carrito en la caché
+    this.storage.ready().then( ()=>{
+      //obtiene los datos de la caché
+      this.storage.get("cart").then( (data)=>{
+        //asigna lo que tiene
+        this.cardItems = data; 
+        console.log(this.cardItems);
+        if (this.cardItems.length > 0) {
 
+          this.cardItems.forEach( (item, index) => {
+
+            this.total = this.total + (item.producto.precio * item.cantidad)
+
+          });
+
+        }else{
+
+          this.showEmptiCartMessage = true;
+
+        }
+
+      });
+
+    });
   }
 
   ionViewDidLoad() {

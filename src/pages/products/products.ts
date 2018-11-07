@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ProviderProductosProvider } from '../../providers/provider-productos/provider-productos';
 import { ProductDetailsPage } from '../product-details/product-details';
 
@@ -19,14 +19,16 @@ export class ProductsPage {
 	tienda;
 	productos;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController) {
   	this.tienda = navParams.data.tienda;
   }
 
   ionViewDidLoad() {
+    let loading = this.loadingCtrl.create();
+    loading.present();
     this.proveedor.obtenerProductos(this.tienda.id)
   	.subscribe(
-  		(data)=> {this.productos = data;},
+  		(data)=> {this.productos = data;loading.dismiss();},
   		(error)=> {console.log(error);}
   	)
   }

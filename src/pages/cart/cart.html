@@ -10,7 +10,7 @@
   	<ion-buttons start class="ham-menu">
       <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
+      </button>
     </ion-buttons>
     <ion-title>Pedidos</ion-title>
   </ion-navbar>
@@ -19,90 +19,54 @@
 
 
 <ion-content >
-  <ion-item-divider color="light">Por pedir</ion-item-divider>
+      <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content >
+            
+        </ion-refresher-content>
+      </ion-refresher>
 
-    <ion-card (click)="irCarrito()">
+      <ion-item-divider color="light">Por pedir</ion-item-divider>
+
+        <ion-card *ngIf="!showEmptiCartMessage; else lista" (click)="irCarrito()">
     
-    <ion-item>
-      <h1>Starbucks</h1>
-    </ion-item>
-
-    <ion-row>
-        <ion-col>
-          &nbsp;2x Cafes grandes
-        </ion-col>
+            <ion-item>
+              <h1>Starbucks</h1>
+            </ion-item>
         
-      <ion-col color="secondary" right text-right>
-        <p class="status-espera">En espera</p>
-      </ion-col>
-    </ion-row>
-
-
-    <ion-row>
-      <ion-col right text-right>
-        <ion-note>
-          25/10/2018, 10:40 PM
-        </ion-note>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
-  <ion-item-divider color="light">Pedidos</ion-item-divider>
-
-  <ion-card>
-    
-    <ion-item>
-      <h1>Starbucks</h1>
-    </ion-item>
-
-    <ion-row>
-        <ion-col>
-          &nbsp;3x Cappuccinos
-        </ion-col>
+            <ion-row>
+                <ion-col>
+                  &nbsp;2x Cafes grandes
+                </ion-col>
+                
+              <ion-col color="secondary" right text-right>
+                <p class="status-espera">En espera</p>
+              </ion-col>
+            </ion-row>
         
-      <ion-col color="secondary" right text-right>
-       <p class="status-listo">Listo</p>
-      </ion-col>
-    </ion-row>
-
-
-    <ion-row>
-      <ion-col right text-right>
-        <ion-note>
-          25/10/2018, 10:40 PM
-        </ion-note>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
-
-  <ion-item-divider color="light">Entregados</ion-item-divider>
-
-  <ion-card>
-    
-    <ion-item>
-      <h1>Starbucks</h1>
-    </ion-item>
-
-    <ion-row>
-        <ion-col>
-          &nbsp;3x Cappuccinos
-        </ion-col>
         
-      <ion-col color="secondary" right text-right>
-       <p class="status-listo">Listo</p>
-      </ion-col>
-    </ion-row>
+            <ion-row>
+              <ion-col right text-right>
+                <ion-note>
+                  25/10/2018, 10:40 PM
+                </ion-note>
+              </ion-col>
+            </ion-row>
+        
+          </ion-card>
+      
+        
+      
+        <ng-template #lista>
+          <ion-card >
+            <ion-grid>
+              <ion-row >
+                <ion-col>
+                  No haz agregado nada a tu carrito
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </ng-template>
 
-
-    <ion-row>
-      <ion-col right text-right>
-        <ion-note>
-          25/10/2018, 10:40 PM
-        </ion-note>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
 
 </ion-content>

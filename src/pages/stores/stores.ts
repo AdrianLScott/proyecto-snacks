@@ -1,11 +1,9 @@
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav } from 'ionic-angular';
+import { IonicPage, NavController, Nav, LoadingController } from 'ionic-angular';
 import { ProviderTiendasProvider } from '../../providers/provider-tiendas/provider-tiendas';
 import { ProductsPage } from '../products/products';
 
-import { NotificationsPage } from './../notifications/notifications';
-import { CartPage } from './../cart/cart';
 
 
 //@IonicPage()
@@ -17,15 +15,18 @@ export class StoresPage {
 
 	tiendas;
 
-  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider) {}
+  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider,public loadingCtrl: LoadingController) {}
 
   ionViewDidLoad(){
+    let loading = this.loadingCtrl.create();
+    loading.present();
+
     this.auth.hasTokenAndIsValid().then(
       (data)=>{
         if(data){
           this.proveedor.obtenerTiendas()
           .subscribe(
-            (data)=> {this.tiendas = data;},
+            (data)=> {this.tiendas = data; loading.dismiss();},
             (error)=> {console.log(error);}
           )
         }

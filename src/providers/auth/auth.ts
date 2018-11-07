@@ -46,6 +46,7 @@ export class AuthProvider {
     this.storage.remove('id');
     this.storage.remove('user');
     this.storage.remove('id_token');
+    this.storage.remove('cart');
   }
   /**
    * Recibe el token y retorna la información del usuario.

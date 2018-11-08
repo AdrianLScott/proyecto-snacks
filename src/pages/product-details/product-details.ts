@@ -65,6 +65,7 @@ export class ProductDetailsPage {
 
   ionViewDidLoad() {
 	}
+
 	doPedido(){
 		this.data = [{
 				idempresa: this.tienda.id,
@@ -118,53 +119,144 @@ export class ProductDetailsPage {
 	}
 
 	AddToPedidos(product){
-
+		//obtiene los datos del storage carrito
 		this.storage.get("cart").then((data)=> {
-			console.log(product);
-			if (data == null || data.lenght == 0) {
-				
-				data = [];
-				data.push({
-					"producto": product,
-					"tienda": this.tienda,
-					"cantidad": this.currentNumber,
-					"total": this.total
+			//compara si el carrito está vacio, para agregarlo
+			if (data == null || data.length <= 0) {
+				console.log(this.tienda.id);
+				data=[];
+				data.push({[this.tienda.id]:[{
+					"nombreTienda": this.tienda.nombre
+						},
+						{[product.id]: {
+							"producto": product,
+							"cantidad": this.currentNumber,
+							"total": this.total
+						}
+					}]
 				});
-				
+
+			//En caso de que si tenga, compara si el producto que acaba de pedir ya estaba en el carrito
 			}else {
-
-				let added = 0;
+				let productAdded = 0;
+				let storeAdded = 0;
+				//recorre el arreglo para ver si la tienda esta en esa pocision
 				for (let i = 0; i < data.length; i++) {
-					this.storage.remove('data[i]');
-					if (product.id == data[i].producto.id) {
 
-						console.log("Produc is already in the cart");
+					//Obtiene los indexes de las tiendas
+					let indexTienda = Object.keys(data[i]);
+					//convierte el index de la tienda en numero
+					let tienda = Number(indexTienda[0]);
 
-						let qty = data[i].cantidad;
+					//compara si está la tienda actual en el carrito
+					if (this.tienda.id == tienda) {
 
-						data[i].cantidad = qty + this.currentNumber;
-						data[i].total = parseFloat(data[i].total) + parseFloat(this.total)
-						added = 1;
+						//quiere decir que sí está en el carrito
+						console.log("La tienda está agregada al carrito");
+						
+						//checa los indexes de los objetos dentro de la tienda
+						let insideIndex = Object.keys(data[i][tienda]);
+						
+						//Recorre los indexes anteriores para buscar productos
+						for (let x = 0; x < insideIndex.length; x++) {
+							//convierte los indices de objetos en numero
+							let inside = Number(insideIndex[x]);
+							//obtiene los indexes de los productos
+							let productoIndex = Object.keys(data[i][tienda][inside]);
+							for (let y = 0; y < productoIndex.length; y++) {
+								let producto = Number(productoIndex[y]);
+								//compara si el producto que pide ya está en el carrito para modificar los datos del producto que ya estaba
+								if (product.id == producto) {
+									console.log("Ya está el producto en el carrito y en la tienda");
+									
+									let qty = data[i][tienda][inside][producto].cantidad;
+			
+									data[i][tienda][inside][producto].cantidad = qty + this.currentNumber;
+									data[i][tienda][inside][producto].total = parseFloat(data[i][tienda][inside][producto].total) + parseFloat(this.total);
+									//esta variable hace sabir si está o no está el producto ya pedido 1:ya está, 0: no está
+									productAdded = 1;
+								}
+							}
+							
+						}
+						if (productAdded == 0) {
+							console.log("Se agregó un producto nuevo");
+							data[i][tienda].push({
+								[product.id]: {
+									"producto": product,
+									"cantidad": this.currentNumber,
+									"total": this.total
+								}
+							});
+						}
+						
+						storeAdded=1;
+
 					}
+					/*
+					for (let x = 0; x < data[i].length; x++) {
+						console.log("TIENDA # = "+data[i][x]);
+						if (this.tienda.id == data[i][x]) {
+							storeAdded=1;
+							console.log("Ya está esa tienda en el carrito");
+							//recorre los productos que hay en la tienda para ver si ya hay uno
+							for (let p = 0; p < data[i][x].length; p++) {
+								console.log("DATA[I][X][P] = "+data[i][x][p]);
+								//si hay un producto en la tineda, lo modifica
+								if (product.id == data[i][x][p]) {
+									
+			
+									console.log("Ya etsá el producto en el carriot y en la tienda");
+			
+									let qty = data[i][x][p].cantidad;
+			
+									data[i][x][p].cantidad = qty + this.currentNumber;
+									data[i][x][p].total = parseFloat(data[i][x][p].total) + parseFloat(this.total);
+									//esta variable hace sabir si está o no está el producto ya pedido 1:ya está, 0: no está
+									productAdded = 1;
+								}
+								
+							}//si el producto no está agregado, lo agrega a la tienda
+							if (productAdded == 0) {
+								console.log("Se agregó un producto nuevo");
+								data[i][x].push({[product.id]: {
+									"producto": product,
+									"cantidad": this.currentNumber,
+									"total": this.total
+									}
+								});
+							}
+							
+							
+						}						
+					}*/
+
 					
 				}
-				if (added == 0) {
-					data.push({
-						"producto": product,
-						"tienda": this.tienda,
-						"cantidad": this.currentNumber,
-						"total": this.total
+				if (storeAdded == 0) {
+					console.log("Aqui se agrega la tienda nueva");
+					data.push({[this.tienda.id]:[{
+						"nombreTienda": this.tienda.nombre
+							},
+							{[product.id]: {
+								"producto": product,
+								"cantidad": this.currentNumber,
+								"total": this.total
+							}
+						}]
 					});
 				}
-
+				
 			}
+			
+			
 
 			this.storage.set("cart", data).then( ()=>{
 				console.log("Carrito modificado");
 				console.log(data);
 
 				const toast = this.toast.create({
-					message: "cart Updated",
+					message: "Pedido modificado",
 					duration: 3000
 				});
 				toast.present();

@@ -1,6 +1,6 @@
 import { ForgotPasswordPage } from './../forgot-password/forgot-password';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { AuthProvider } from '../../providers/auth/auth';
 
@@ -19,10 +19,12 @@ export class LoginPage {
 
   @ViewChild('user') user;
   @ViewChild('pass') pass;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private authService: AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private authService: AuthProvider,  public loadingCtrl: LoadingController) {
   }
 
   doLogin() {
+    let loading = this.loadingCtrl.create();
+    loading.present();
     this.authService.login(this.user.value,this.pass.value).then(   
       (data)=>{
         if(data == 1){
@@ -36,8 +38,9 @@ export class LoginPage {
           });
           alert.present();
         }
+        loading.dismiss();
       })
-    .catch(e => {console.log(e)});
+    .catch(e => {console.log(e);loading.dismiss();});
   };
 
   registrar(){

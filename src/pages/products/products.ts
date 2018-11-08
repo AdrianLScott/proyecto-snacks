@@ -1,5 +1,6 @@
+import { ProductDetailProvider } from './../../providers/product-detail/product-detail';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, App } from 'ionic-angular';
 import { ProviderProductosProvider } from '../../providers/provider-productos/provider-productos';
 import { ProductDetailsPage } from '../product-details/product-details';
 
@@ -19,7 +20,7 @@ export class ProductsPage {
 	tienda;
 	productos;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController, public app:App) {
   	this.tienda = navParams.data.tienda;
   }
 
@@ -34,9 +35,10 @@ export class ProductsPage {
   }
 
   viewProduct(producto){
-  	this.navCtrl.push(ProductDetailsPage,{
+    this.app.getRootNav().push(ProductDetailsPage,{
       producto: producto,
       tienda: this.tienda});
+  	//this.navCtrl.push(ProductDetailsPage
   }
 
 }

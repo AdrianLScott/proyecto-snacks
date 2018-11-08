@@ -1,35 +1,41 @@
+import { LoginPage } from './../pages/login/login';
 import { AuthProvider } from './../providers/auth/auth';
 import { Component } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Platform, NavController, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
-import { LoginPage } from '../pages/login/login';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any;
   token: string;
-  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider) {
+  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, public loadingCtrl: LoadingController) {
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    this.hasToken().then(data=>{
+      if(this.isTokenValid()){
+        this.rootPage= 'SidebarPage';
+      }
+      else{
+        this.rootPage= LoginPage;
+      }
+      loading.dismiss();
+    },(error) => {
+      this.rootPage = LoginPage;
+      loading.dismiss();
+    })
+    .catch(e=>{
+      this.rootPage=LoginPage;
+      loading.dismiss();
+    });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      this.hasToken().then(data=>{
-        if(this.isTokenValid()){
-          this.rootPage= 'SidebarPage';
-        }
-        else{
-          this.rootPage= LoginPage;
-        }
-      },(error) => {
-        this.rootPage = LoginPage;
-      })
-      .catch(e=>{
-        this.rootPage=LoginPage
-      });
+
     });
   }
 

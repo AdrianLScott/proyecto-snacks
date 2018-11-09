@@ -18,9 +18,9 @@ import { CartModalPage } from '../cart-modal/cart-modal';
 })
 export class CartPage {
 
-  cardItems: any[]=[];
+  cartItems: any[]=[];
   total: any;
-  pedidosTiendas: any[]=[];
+  tiendas: any[]=[];
   showEmptiCartMessage: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public modalCtrl: ModalController) {
@@ -36,19 +36,17 @@ export class CartPage {
       this.total = 0.0;
       
       this.storage.get("cart").then((data)=>{
+        //checa si el carrito está vacio
+        console.log(data);
         
-        this.cardItems = data;
-        
-        if (this.cardItems != null || this.cardItems.length > 0  ) {
-
-          this.cardItems.forEach( (item, index) => {
-
-            this.total = this.total + (item.producto.precio * item.cantidad)
+        if (data != null ) {
+            this.cartItems = data;
             this.showEmptiCartMessage=false;
-          });
+
+          console.log(this.tiendas);
 
         }else{
-
+          console.log(" no hay carrito");
           this.showEmptiCartMessage = true;
 
         }
@@ -62,40 +60,19 @@ export class CartPage {
     console.log('ionViewDidLoad CartPage');
   }
 
-  irCarrito() {
-    const modal = this.modalCtrl.create(CartModalPage);
-    modal.present();
+  irCarrito(tienda) {
+    const modal = this.modalCtrl.create(CartModalPage, {tienda: tienda});
+    modal.present();  
   }
 
   doRefresh(refresher) {
 
     this.showEmptiCartMessage= false;
-
-    this.storage.ready().then(()=>{
-      this.total = 0.0;
-      
-      this.storage.get("cart").then((data)=>{
-        
-        this.cardItems = data;
-          refresher.complete();
-        if (this.cardItems != null || this.cardItems.length > 0  ) {
-          
-          this.cardItems.forEach( (item, index) => {
-
-            this.total = this.total + (item.producto.precio * item.cantidad)
-            this.showEmptiCartMessage=false;
-          });
-
-        }else{
-
-          this.showEmptiCartMessage = true;
-
-        }
-
-      })
-
-    });
-
+    
+    setTimeout(() => {
+      this.cargarDatos();
+      refresher.complete();
+    }, 2000);
   }
 
 }

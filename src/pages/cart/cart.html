@@ -19,54 +19,53 @@
 
 
 <ion-content >
-      <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content >
-            
-        </ion-refresher-content>
-      </ion-refresher>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown"
+    pullingText="Jala para refrescar"
+    refreshingText="Cargando..." >
+        
+    </ion-refresher-content>
+  </ion-refresher>
 
-      <ion-item-divider color="light">Por pedir</ion-item-divider>
-
-        <ion-card *ngIf="!showEmptiCartMessage; else lista" (click)="irCarrito()">
+  <ion-item-divider color="light" text-center>Por Pedir</ion-item-divider>
+  <ng-template #elseBlock>
+    <ion-card *ngFor="let tienda of cartItems" (click)="irCarrito(tienda)">
     
-            <ion-item>
-              <h1>Starbucks</h1>
-            </ion-item>
-        
-            <ion-row>
-                <ion-col>
-                  &nbsp;2x Cafes grandes
-                </ion-col>
-                
-              <ion-col color="secondary" right text-right>
-                <p class="status-espera">En espera</p>
-              </ion-col>
-            </ion-row>
-        
-        
-            <ion-row>
-              <ion-col right text-right>
-                <ion-note>
-                  25/10/2018, 10:40 PM
-                </ion-note>
-              </ion-col>
-            </ion-row>
-        
-          </ion-card>
-      
-        
-      
-        <ng-template #lista>
-          <ion-card >
-            <ion-grid>
-              <ion-row >
-                <ion-col>
-                  No haz agregado nada a tu carrito
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-card>
-        </ng-template>
-
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <h1>{{tienda[0].tienda.nombre}}</h1>
+          </ion-item>
+        </ion-col>
+        <ion-col color="secondary" center text-right>
+          <p class="status-espera" class="status">En espera</p>
+        </ion-col>
+      </ion-row>
+    
+    
+        <ion-row>
+          <ion-col right text-right>
+            <ion-note>
+              Tap para confirmar pedido
+            </ion-note>
+          </ion-col>
+        </ion-row>
+    
+    </ion-card>
+  </ng-template>
+    
+    <ion-list *ngIf="cartItems == null || cartItems.length == 0; else elseBlock">
+      <ion-card >
+        <ion-grid>
+          <ion-row >
+            <ion-col>
+              <p>No has pedido nada aún</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
+  <br>
+  <ion-item-divider color="light" text-center>Pedidos</ion-item-divider>
 
 </ion-content>

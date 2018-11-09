@@ -16,7 +16,7 @@ import {Storage} from '@ionic/storage';
   templateUrl: 'cart-modal.html',
 })
 export class CartModalPage {
-  cardItems: any[] =[];
+  cartItems: any[] =[];
   tienda: any;
   total: any;
   showEmptiCartMessage: boolean = false;
@@ -24,34 +24,25 @@ export class CartModalPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
     
     this.total = 0.0;
-    //PRepara lo que tiene el carrito en la caché
-    this.storage.ready().then( ()=>{
-      //obtiene los datos de la caché
-      this.storage.get("cart").then( (data)=>{
-        //asigna lo que tiene
-        this.cardItems = data; 
-        console.log(this.cardItems);
-        if (this.cardItems.length > 0) {
+    this.tienda = navParams.data.tienda;
 
-          this.cardItems.forEach( (item, index) => {
+    console.log("PARAMAETRO: "+this.tienda);
+    if (this.tienda.length > 0 || this.tienda != null) {
+      for (let i = 1; i < this.tienda.length; i++) {
 
-            this.total = this.total + (item.producto.precio * item.cantidad)
+        this.cartItems.push(this.tienda[i]);
+        this.total = this.total + (this.tienda[i].cantidad * this.tienda[i].producto.precio);
+      }
+      console.log(this.cartItems);
 
-          });
+    }else{
 
-        }else{
+      this.showEmptiCartMessage = true;
 
-          this.showEmptiCartMessage = true;
-
-        }
-
-      });
-
-    });
+    }
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CartModalPage');
   }
 
 }

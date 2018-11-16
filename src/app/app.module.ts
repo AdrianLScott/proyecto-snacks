@@ -25,6 +25,7 @@ import { ProductDetailsPage } from '../pages/product-details/product-details';
 import { ProductDetailProvider } from '../providers/product-detail/product-detail';
 import { ForgotPasswordProvider } from '../providers/forgot-password/forgot-password';
 import { CartModalPage } from '../pages/cart-modal/cart-modal';
+import { PedidosProvider } from '../providers/pedidos/pedidos';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -84,7 +85,8 @@ export function getAuthHttp(http) {
     AuthProvider,
     JwtHelper,
     ProductDetailProvider,
-    ForgotPasswordProvider
+    ForgotPasswordProvider,
+    PedidosProvider
   ]
 })
 export class AppModule {}

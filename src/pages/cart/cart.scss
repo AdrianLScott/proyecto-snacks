@@ -5,5 +5,31 @@ page-cart {
     .status{
         padding-top: 10%;
         padding-right: 10px;
+        color: #A4A0A0;
+    }
+    .statusPedidoSC{
+        padding-top: 10%;
+        padding-right: 10px;
+        color: rgb(190, 191, 228);
+    }
+    .statusPedidosEC{
+        padding-top: 10%;
+        padding-right: 10px;
+        color: rgb(41, 46, 66);
+    }
+    .statusListo{
+        padding-top: 10%;
+        padding-right: 10px;
+        color: #B9C55F;
+    }
+    .statusCancelado{
+        padding-top: 10%;
+        padding-right: 10px;
+        color: rgb(104, 10, 10);
+    }
+    .statusEntregado{
+        padding-top: 10%;
+        padding-right: 10px;
+        color: rgb(123, 98, 192);
     }
 }

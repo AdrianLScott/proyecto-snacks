@@ -200,7 +200,7 @@ export class ProductDetailsPage {
 
 				const toast = this.toast.create({
 					message: "Pedido modificado",
-					duration: 2000
+					duration: 800
 				});
 				toast.present();
 			}).catch(e=>{console.log("falló: "+e)});

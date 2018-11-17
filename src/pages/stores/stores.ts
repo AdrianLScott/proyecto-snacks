@@ -6,7 +6,7 @@ import { ProductsPage } from '../products/products';
 
 
 
-//@IonicPage()
+@IonicPage()
 @Component({
   selector: 'page-stores',
   templateUrl: 'stores.html',
@@ -17,7 +17,7 @@ export class StoresPage {
 
   constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider,public loadingCtrl: LoadingController) {}
 
-  ionViewDidEnter(){
+  ionViewDidLoad(){
     this.auth.hasTokenAndIsValid().then(
       (data)=>{
         if(data){

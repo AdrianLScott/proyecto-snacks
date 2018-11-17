@@ -2,8 +2,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app.module';
 export let cfg = {
-  apiUrl: 'http://localhost/venados/index.php/Api',
-  nodeServer: 'http://localhost:3000',
+  apiUrl: 'http://192.168.0.4/venados/index.php/Api',
+  nodeServer: 'http://192.168.0.4:3000',
   tokenName: 'token',
   user: {
     register: '/addUser',

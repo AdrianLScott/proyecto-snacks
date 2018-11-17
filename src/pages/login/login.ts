@@ -1,3 +1,4 @@
+import { SidebarPage } from './../sidebar/sidebar';
 import { ForgotPasswordPage } from './../forgot-password/forgot-password';
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
@@ -20,14 +21,14 @@ export class LoginPage {
   @ViewChild('pass') pass;
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private authService: AuthProvider,  public loadingCtrl: LoadingController) {
   }
-
+  
   doLogin() {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.authService.login(this.user.value,this.pass.value).then(   
       (data)=>{
         if(data == 1){
-          this.navCtrl.setRoot('SidebarPage');
+          this.navCtrl.setRoot(SidebarPage);
         }
         else if(data !== undefined){
           const alert = this.alertCtrl.create({

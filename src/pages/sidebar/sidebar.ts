@@ -45,12 +45,6 @@ export class SidebarPage {
 
   openPage(page: PageInterface) {
     
-    let params = {};
-    // The index is equal to the order of our tabs inside tabs.ts
-    if (page.index) {
-      params = { tabIndex: page.index };
-    }
- 
    if (this.nav.getActiveChildNavs().length && page.index != undefined) {
       this.nav.getActiveChildNavs()[0].select(page.index);
     } else {

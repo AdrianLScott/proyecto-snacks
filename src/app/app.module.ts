@@ -1,3 +1,4 @@
+import { SidebarPageModule } from './../pages/sidebar/sidebar.module';
 import { ForgotPasswordPage } from './../pages/forgot-password/forgot-password';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -60,7 +61,7 @@ export function getAuthHttp(http) {
     HttpClientModule,
     IonicStorageModule.forRoot(),
     HttpModule,
-    
+    SidebarPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,7 +1,8 @@
+import { SidebarPage } from './../pages/sidebar/sidebar';
 import { LoginPage } from './../pages/login/login';
 import { AuthProvider } from './../providers/auth/auth';
 import { Component, OnInit } from '@angular/core';
-import { Platform, LoadingController } from 'ionic-angular';
+import { Platform, LoadingController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -11,21 +12,22 @@ import { Storage } from '@ionic/storage';
 })
 
 export class MyApp implements OnInit {
-  rootPage:any = LoginPage;
+  rootPage:any;
   token: any;
   constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, public loadingCtrl: LoadingController/*, DESCOMENTAR private onesignal: OneSignal*/) {
     let loading = this.loadingCtrl.create();
     loading.present();
     this.hasToken().then(data=>{
       if(this.isTokenValid()){
-        this.rootPage= 'SidebarPage';
+        this.rootPage= SidebarPage;
       }
       else{
-        this.rootPage= LoginPage;
+        this.rootPage = LoginPage;
       }
       loading.dismiss();
     },(error) => {
       this.rootPage = LoginPage;
+      
       loading.dismiss();
     })
     .catch(e=>{

@@ -3,7 +3,7 @@
     <name>proyecto-snacks</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://172.16.13.228:8100" />
+    <content original-src="index.html" src="http://192.168.0.4:8101" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -85,6 +85,7 @@
     <plugin name="onesignal-cordova-plugin" spec="2.4.5" />
     <allow-navigation href="http://192.168.0.4:8100" sessionid="cf571237" />
     <allow-navigation href="http://172.16.13.228:8100" sessionid="39af22c5" />
+    <allow-navigation href="http://192.168.0.4:8101" sessionid="e3857b91" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="6.3.0" />
 </widget>

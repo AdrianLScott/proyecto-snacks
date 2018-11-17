@@ -17,7 +17,7 @@ export class StoresPage {
 
   constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider,public loadingCtrl: LoadingController) {}
 
-  ionViewDidLoad(){
+  ionViewDidEnter(){
     this.auth.hasTokenAndIsValid().then(
       (data)=>{
         if(data){
@@ -35,6 +35,12 @@ export class StoresPage {
 
   objetosTienda(tienda){
   	this.navCtrl.push(ProductsPage, {tienda: tienda});
+  }
+  doRefresh(refresher) {
+    setTimeout(() => {
+      this.ionViewDidEnter();
+      refresher.complete();
+    }, 2000);
   }
 
 

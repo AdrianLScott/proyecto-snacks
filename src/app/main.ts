@@ -15,6 +15,8 @@ export let cfg = {
     getNotif: '/getNotifications',
     deleteNotif: '/deleteNotifications',
     forgotPassword: '/forgot_password',
+    getPedidos: '/getPedidos',
+    getDetallesPedidos: '/getDetallesPedidos',
   },
 };
 //export const API_BASE_ROUTE= 'http://pespeciales.upsin.edu.mx/venados/';

@@ -29,7 +29,7 @@ import { SocketProvider } from '../providers/socket/socket';
 import { NotificationsProvider } from '../providers/notifications/notifications';
 import { PopNotificationsComponent} from '../components/pop-notifications/pop-notifications';
 import { Toast } from '@ionic-native/toast';
-
+import { PedidosProvider } from '../providers/pedidos/pedidos';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -95,7 +95,8 @@ export function getAuthHttp(http) {
     SocketProvider,
     /*OneSignal DESCOMENTAAR*/,
     NotificationsProvider,
-    Toast
+    Toast,
+    PedidosProvider
   ]
 })
 export class AppModule {}

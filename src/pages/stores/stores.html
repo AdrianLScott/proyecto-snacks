@@ -20,6 +20,14 @@
 
 <ion-content class="card-background-page">
 
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown"
+        pullingText="Jala para refrescar"
+        refreshingText="Cargando..." >
+            
+        </ion-refresher-content>
+    </ion-refresher>
+
 		<ion-card ion-list *ngFor = "let tienda of tiendas" (click)="objetosTienda(tienda)">
 	    	<img src="{{tienda.logotipo}}"/>
 	    	<div class="card-title">{{tienda.nombre}}</div>

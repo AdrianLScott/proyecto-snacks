@@ -1,36 +1,125 @@
 
 <ion-header>
 
-  <ion-navbar >
+  <ion-navbar color="venados">
     <ion-title>Carrito</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content >
-  <ion-card [hidden]="!showEmptiCartMessage">
-    <ion-grid>
-      <ion-row >
-        <ion-col>
-          No hay productos en tu carrito
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+<ion-content>
 
-  <ion-list>
-    <ion-item *ngFor="let item of cardItems; let i = index">
+  <ion-list *ngIf="estatus == 'SinConfirmar'; else elsePedidos">
+      
+    <ion-item *ngFor="let item of cartItems; let i = index" #productos>
+
       <ion-thumbnail item-left>
         <img src="/assets/imgs/starbucks.png" style="width: 60px !important; height: 60px !important;">
       </ion-thumbnail>
       <h2>{{item.producto.nombre}}</h2>
       <p>Cantidad: {{item.cantidad}} Precio: {{item.producto.precio}}</p>
-      <button ion-button clear item-right color="danger" (click)="removeFromCart(item, i)">
+      <button ion-button clear item-right color="danger" (click)="removeFromCart(i)">
         <ion-icon name="close-circle"></ion-icon>
       </button>
     </ion-item>
   </ion-list> 
-  <p>total: {{total}}</p>
-    <button ion-button navPop>Cerrar</button>
+
+  <ng-template #elsePedidos>
+    <ion-list >
+      
+      <ion-item *ngFor="let item of cartItems; let i = index" #productos>
+  
+        <ion-thumbnail item-left>
+          <img src="/assets/imgs/starbucks.png" style="width: 60px !important; height: 60px !important;">
+        </ion-thumbnail>
+        <h2>{{item.nombre}}</h2>
+        <p>Cantidad: {{item.cantidad}} Precio: {{item.precio}}</p>
+        <!--<button ion-button clear item-right color="danger" (click)="removeFromCart(i)">
+          <ion-icon name="close-circle"></ion-icon>
+        </button>-->
+      </ion-item>
+    </ion-list> 
+
+  </ng-template>
+  
+  <ion-grid>
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-2>
+
+          </ion-col>
+          <ion-col col-4>
+            <b>TOTAL</b>
+            
+          </ion-col>
+          <ion-col col-3>
+
+          </ion-col>
+          <ion-col col-3 text-rigth>
+            $ <b>{{total}}</b>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-grid>
 </ion-content>
+
+<ion-footer>
+
+  <ion-toolbar *ngIf="estatus=='SinConfirmar'; else elseBtnSinConfirmar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+            <button ion-button color="danger" outline block (click)="close()">Cerrar</button>
+        </ion-col>
+        <ion-col>
+            <button ion-button color="danger"  block >Pedir</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+  <ng-template #elseBtnSinConfirmar>
+      <ion-toolbar *ngIf="estatus=='Solicitado'; else elseBtnRealizado" >
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                  <button ion-button color="danger" outline block (click)="close()">Cerrar</button>
+              </ion-col>
+              <ion-col>
+                  <button ion-button color="danger"  block (click)="cancelarPedido()" >Cancelar pedido</button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-toolbar>
+  </ng-template>
+
+  <ng-template #elseBtnRealizado>
+      <ion-toolbar *ngIf="estatus == 'Realizado'; else elseBtnPedidos">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                  <button ion-button color="danger" outline block (click)="close()">Cerrar</button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-toolbar>
+  </ng-template>
+
+  <ng-template #elseBtnPedidos>
+      <ion-toolbar >
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                  <button ion-button color="danger" outline block (click)="close()">Cerrar</button>
+              </ion-col>
+              <ion-col>
+                  <button ion-button color="danger"  block (click)="eliminarPedido()">Eliminar pedido</button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-toolbar>
+  </ng-template>
+</ion-footer>

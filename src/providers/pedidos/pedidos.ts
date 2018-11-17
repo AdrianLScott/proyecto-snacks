@@ -16,4 +16,7 @@ export class PedidosProvider {
    getPedidos(idUser: number){
   	return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getPedidos+'?idUser='+idUser);
   }
+  getDetallesPedidos(idPedido: number){
+    return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getDetallesPedidos+'?idPedido='+idPedido);
+  }
 }

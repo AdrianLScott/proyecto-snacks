@@ -93,12 +93,13 @@ export class CartPage {
       if (idUser != null) {
         //si encuentra id, jala los pedidos del usuario de la base de datos
         this.idUsuario = Number(idUser[0]);
+
         //abre el cargando mientras carga los datos
         let loading = this.loadingCtrl.create();
         loading.present();
         this.pedidosProv.getPedidos(this.idUsuario).subscribe(
           //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
-          (data)=> {this.pedidos = data;loading.dismiss(); console.log("Pedido: "+this.pedidos);this.organizarPedidos();},
+          (data)=> {this.pedidos = data;loading.dismiss(); this.organizarPedidos();},
           //Si no, muestra el error
           (error)=> {console.log(error);}
         ) 
@@ -111,15 +112,13 @@ export class CartPage {
   
   organizarPedidos(){
     this.limpiarVariables();
-    if (this.pedidos.length < 1 || this.pedidos != null) {
-      
+    
+    if (this.pedidos.length > 0 || this.pedidos != null) {
       for (let i = 0; i < this.pedidos.length; i++) {
         if (this.pedidos[i].estatus == "Solicitado") {//si hay pedidos solicitados
-          console.log(this.pedidos[i].nombre);
           this.solicitados.push(this.pedidos[i]);
-          console.log(this.solicitados);
 
-        }else if (this.pedidos[i].estatus == "Procesando") {// si hay pedidos que estan siendo proocesados
+        }else if (this.pedidos[i].estatus == "En proceso") {// si hay pedidos que estan siendo proocesados
           this.procesando.push(this.pedidos[i]);
 
         }else if (this.pedidos[i].estatus == "Realizado") {// si hay pedidos que estan listos pero no entregados
@@ -150,8 +149,8 @@ export class CartPage {
     this.validarDatos();
   }
 
-  irCarrito(tienda, i) {
-    const modal = this.modalCtrl.create(CartModalPage, {tienda: tienda, index: i, pag: this});
+  irCarrito(i, estatus) {
+    const modal = this.modalCtrl.create(CartModalPage, {index: i, pag: this, estatus :estatus});
     modal.present();  
   }
 

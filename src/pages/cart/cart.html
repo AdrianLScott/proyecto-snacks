@@ -25,7 +25,7 @@
   <!-- ******PARA LOS PEDIDOS QUE NO SE HA CONFIRMADO EL PAGO***********-->
   <ion-item-divider color="light" text-center>Por Pedir</ion-item-divider>
   <ng-template #elsePorPedir>
-    <ion-card *ngFor="let tienda of cartItems; let i = index" (click)="irCarrito(tienda, i)">
+    <ion-card *ngFor="let tienda of cartItems; let i = index" (click)="irCarrito(i, 'SinConfirmar')">
 
       <ion-row>
         <ion-col>
@@ -37,7 +37,6 @@
           <p class="status-espera" class="status">Sin Confirmar</p>
         </ion-col>
       </ion-row>
-    
     
         <ion-row>
           <ion-col right text-right>
@@ -65,7 +64,7 @@
   <!-- ******PARA LOS PEDIDOS QUE TODAVIA NO SON ATENDIDOS***********-->
   <ion-item-divider color="light" text-center>Pedidos</ion-item-divider>
   <ng-template #elsePedidos>
-    <ion-card *ngFor="let solicitado of solicitados; let i = index" (click)="irCarrito(solicitado, i)">
+    <ion-card *ngFor="let solicitado of solicitados; let i = index" (click)="irCarrito( solicitado.id, solicitado.estatus)">
 
       <ion-row>
         <ion-col>
@@ -90,7 +89,7 @@
     </ion-card>
 
     <!-- ******PARA LOS PEDIDOS QUE ESTÁN SIENDO ATENDIDOS (AQUI YA NO SE PUEDE ELIMINAR)***********-->
-    <ion-card *ngFor="let prosess of procesando; let i = index" (click)="irCarrito(prosess, i)">
+    <ion-card *ngFor="let prosess of procesando; let i = index" (click)="irCarrito( prosess.id, prosess.estatus)">
 
         <ion-row>
           <ion-col>
@@ -116,7 +115,7 @@
   </ng-template>
 
      
-     <ion-list *ngIf="solicitados == null || solicitados.length == 0 && procesando == null || procesando.length == 0; else elsePedidos">
+     <ion-list *ngIf="(solicitados == null || solicitados.length == 0) && (procesando == null || procesando.length == 0); else elsePedidos">
        <ion-card >
          <ion-grid>
            <ion-row >
@@ -131,12 +130,12 @@
   <!-- ******PARA LOS PEDIDOS Listos pero sin recoger***********-->
   <ion-item-divider color="light" text-center>Listos</ion-item-divider>
   <ng-template #elseListo>
-    <ion-card *ngFor="let realizado of realizados; let i = index" (click)="irCarrito(realizado, i)">
+    <ion-card *ngFor="let realizado of realizados; let i = index" (click)="irCarrito( realizado.id, realizado.estatus)">
 
       <ion-row>
         <ion-col>
           <ion-item>
-            <h1>{{realizadonombre}}</h1>
+            <h1>{{realizado.nombre}}</h1>
           </ion-item>
         </ion-col>
         <ion-col color="secondary" center text-right>
@@ -156,7 +155,7 @@
     </ion-card>
 
     <!-- ******PARA LOS PEDIDOS Listos RECOGIDOS***********-->
-    <ion-card *ngFor="let entregado of entregados; let i = index" (click)="irCarrito(entregado, i)">
+    <ion-card *ngFor="let entregado of entregados; let i = index" (click)="irCarrito( entregado.id, entregado.estatus)">
 
       <ion-row>
         <ion-col>
@@ -182,7 +181,7 @@
 
   </ng-template>
 
-  <ion-list *ngIf="realizados == null || realizados.length == 0 && entregados == null || entregados.length == 0; else elseListo">
+  <ion-list *ngIf="(realizados == null || realizados.length == 0) && (entregados == null || entregados.length == 0); else elseListo">
       <ion-card >
         <ion-grid>
           <ion-row >
@@ -198,7 +197,7 @@
  <!-- ******PARA LOS PEDIDOS CANCELADOS***********-->
  <ion-item-divider color="light" text-center>Cancelados</ion-item-divider>
  <ng-template #elseCancelado>
-   <ion-card *ngFor="let cancelado of cancelados; let i = index" (click)="irCarrito(cancelado, i)">
+   <ion-card *ngFor="let cancelado of cancelados; let i = index" (click)="irCarrito( cancelado.id, cancelado.estatus)">
 
      <ion-row>
        <ion-col>

@@ -4,7 +4,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { NotificationsPage } from '../pages/notifications/notifications';
@@ -19,12 +18,18 @@ import { ProviderProductosProvider } from '../providers/provider-productos/provi
 import { AuthProvider } from '../providers/auth/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { Storage } from '@ionic/storage';
-import {HttpModule, Http} from '@angular/http';
-import {AuthHttp, AuthConfig,JwtHelper} from 'angular2-jwt';
+import { HttpModule, Http } from '@angular/http';
+import { AuthHttp, AuthConfig,JwtHelper } from 'angular2-jwt';
 import { ProductDetailsPage } from '../pages/product-details/product-details';
 import { ProductDetailProvider } from '../providers/product-detail/product-detail';
 import { ForgotPasswordProvider } from '../providers/forgot-password/forgot-password';
 import { CartModalPage } from '../pages/cart-modal/cart-modal';
+import { SocketProvider } from '../providers/socket/socket';
+//import { OneSignal } from '@ionic-native/onesignal'; DESCOMENTAAR
+import { NotificationsProvider } from '../providers/notifications/notifications';
+import { PopNotificationsComponent} from '../components/pop-notifications/pop-notifications';
+import { Toast } from '@ionic-native/toast';
+
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -46,7 +51,8 @@ export function getAuthHttp(http) {
     ProductsPage,
     ProductDetailsPage,
     ForgotPasswordPage,
-    CartModalPage
+    CartModalPage,
+    PopNotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,8 @@ export function getAuthHttp(http) {
     ProductsPage,
     ProductDetailsPage,
     ForgotPasswordPage,
-    CartModalPage
+    CartModalPage,
+    PopNotificationsComponent
   ],
   providers: [
     StatusBar,
@@ -84,7 +91,11 @@ export function getAuthHttp(http) {
     AuthProvider,
     JwtHelper,
     ProductDetailProvider,
-    ForgotPasswordProvider
+    ForgotPasswordProvider,
+    SocketProvider,
+    /*OneSignal DESCOMENTAAR*/,
+    NotificationsProvider,
+    Toast
   ]
 })
 export class AppModule {}

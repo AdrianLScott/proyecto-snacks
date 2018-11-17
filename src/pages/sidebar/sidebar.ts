@@ -1,7 +1,9 @@
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, AlertController, App, Platform } from 'ionic-angular';
+import { IonicPage, NavController, Nav, AlertController, App, Platform, ViewController } from 'ionic-angular';
 import { LoginPage } from './../login/login';
+import { Storage } from '@ionic/storage';
+//import { OneSignal } from '@ionic-native/onesignal';
 
 export interface PageInterface {
   title: string;
@@ -19,7 +21,7 @@ export interface PageInterface {
 export class SidebarPage {
   // Basic root for our content view
   rootPage = 'TabsPage';
-
+  user: String = '';
   // Reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
    
@@ -35,7 +37,10 @@ export class SidebarPage {
               public alertCtrl: AlertController, 
               public app: App, 
               public platform: Platform,
-              public auth: AuthProvider) {
+              public auth: AuthProvider,
+              public storage: Storage,
+              public viewController: ViewController
+              /*private onesignal: OneSignal*/) {
   }
 
   openPage(page: PageInterface) {
@@ -59,7 +64,29 @@ export class SidebarPage {
       }
     }
   }
- 
+  ionViewDidLoad(){
+    this.storage.get('user').then(data=>{
+      if(data){
+        this.user = data;
+        /* ------------------DESCOMENTAR-------------------------------
+        window["plugins"].OneSignal.getPermissionSubscriptionState(function(status) {
+          status.permissionStatus.hasPrompted;
+          status.permissionStatus.status;
+  
+          status.subscriptionStatus.subscribed;
+          status.subscriptionStatus.userSubscriptionSetting;
+          status.subscriptionStatus.pushToken;
+  
+          //var playerID = status.subscriptionStatus.userId;
+          console.log(status.subscriptionStatus.userId);
+        this.onesignal.sendTag("email", data);
+        });---------------------------------------------------------------*/
+      }
+      else{
+        this.user = undefined;
+      }
+    });
+  }
   isActive(page: PageInterface) {
    // Again the Tabs Navigation	
     let childNav = this.nav.getActiveChildNavs()[0];
@@ -92,6 +119,7 @@ export class SidebarPage {
         handler: () => {
           this.auth.logout();
           this.app.getRootNav().setRoot(LoginPage);
+          //this.onesignal.deleteTag("email"); DESCOMENTAAAAAR
         }
       },{
         text: 'Salir',

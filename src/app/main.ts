@@ -2,7 +2,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app.module';
 export let cfg = {
-  apiUrl: 'http://pespeciales.upsin.edu.mx/venados/index.php/Api',
+  apiUrl: 'http://localhost/venados/index.php/Api',
+  nodeServer: 'http://localhost:3000',
   tokenName: 'token',
   user: {
     register: '/addUser',
@@ -11,6 +12,8 @@ export let cfg = {
     product_details: '/addPedido',
     getProducts: '/getProducts',
     getStores: '/getStores',
+    getNotif: '/getNotifications',
+    deleteNotif: '/deleteNotifications',
     forgotPassword: '/forgot_password',
   },
 };

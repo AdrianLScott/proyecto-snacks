@@ -38,7 +38,7 @@ export class StoresPage {
   }
   doRefresh(refresher) {
     setTimeout(() => {
-      this.ionViewDidEnter();
+      this.ionViewDidLoad();
       refresher.complete();
     }, 2000);
   }

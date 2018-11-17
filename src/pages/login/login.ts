@@ -1,3 +1,4 @@
+import { SellerPage } from './../seller/seller';
 import { SidebarPage } from './../sidebar/sidebar';
 import { ForgotPasswordPage } from './../forgot-password/forgot-password';
 import { Component, ViewChild } from '@angular/core';
@@ -27,8 +28,11 @@ export class LoginPage {
     loading.present();
     this.authService.login(this.user.value,this.pass.value).then(   
       (data)=>{
-        if(data == 1){
+        if(data == 'Cliente'){
           this.navCtrl.setRoot(SidebarPage);
+        }
+        else if(data == 'Vendedor'){
+          this.navCtrl.setRoot(SellerPage);
         }
         else if(data !== undefined){
           const alert = this.alertCtrl.create({

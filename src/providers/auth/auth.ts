@@ -12,14 +12,6 @@ import *  as AppConfig from '../../app/main';
   and Angular DI.
 */
 
-interface dataInterface {
-   nombre: string;
-   contraseña: string;
-   correo: string;
-   idPerfil: number;
-   estatus: number;
-}
-
 @Injectable()
 export class AuthProvider {
   
@@ -59,7 +51,7 @@ export class AuthProvider {
    * Storage.
    * @param userData Información a registrar delusuario
    */
-  register(userData: dataInterface[]) {
+  register(userData: any[]) {
     return this.http.post(this.cfg.apiUrl + this.cfg.user.register, userData)
       .toPromise()
       .then(data => {
@@ -84,10 +76,12 @@ export class AuthProvider {
       .then(data => {
         let json_obj = JSON.parse(data['_body']);
         if(json_obj['error'] === undefined){
-          this.saveData(data);
           let rs = data.json();
-          this.idToken = rs.token;
-          return 1;
+          if(rs.tipo_usuario == 'Cliente'){
+            this.saveData(data);
+            this.idToken = rs.token; 
+          }
+          return rs.tipo_usuario == 'Cliente'?'Cliente':'Vendedor';
         }
         else{
           return json_obj['error'];

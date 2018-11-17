@@ -1,3 +1,4 @@
+import { SellerPage } from './../pages/seller/seller';
 import { SidebarPageModule } from './../pages/sidebar/sidebar.module';
 import { ForgotPasswordPage } from './../pages/forgot-password/forgot-password';
 import { BrowserModule } from '@angular/platform-browser';
@@ -53,7 +54,8 @@ export function getAuthHttp(http) {
     ProductDetailsPage,
     ForgotPasswordPage,
     CartModalPage,
-    PopNotificationsComponent
+    SellerPage,
+    PopNotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +77,7 @@ export function getAuthHttp(http) {
     ProductDetailsPage,
     ForgotPasswordPage,
     CartModalPage,
+    SellerPage,
     PopNotificationsComponent
   ],
   providers: [

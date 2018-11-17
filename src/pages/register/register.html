@@ -16,17 +16,53 @@
 <ion-content padding>
 	<form novalidate [formGroup]="formgroup">
 		<ion-list>
+			<ion-item>
+				<ion-label floating>Nombres</ion-label>
+				<ion-input type="text" formControlName="nombre"></ion-input>
+			</ion-item>
+			<div class="validation-errors">
+				<ng-container *ngFor="let validation of validation_messages.nombre" >
+					<p class="error-message" *ngIf="nameAC.hasError(validation.type) && nameAC.touched">
+						{{ validation.message }}
+					</p>
+				</ng-container>
+			</div>
+
+			<ion-item>
+				<ion-label floating>Apellidos</ion-label>
+				<ion-input type="text" formControlName="apellidos"></ion-input>
+			</ion-item>
+			<div class="validation-errors">
+				<ng-container *ngFor="let validation of validation_messages.apellidos" >
+					<p class="error-message" *ngIf="apellsAC.hasError(validation.type) && apellsAC.touched">
+						{{ validation.message }}
+					</p>
+				</ng-container>
+			</div>
+					
 		  <ion-item>
-		    <ion-label floating>Correo</ion-label>
+		    <ion-label floating>Correo electrónico</ion-label>
 		    <ion-input type="email" formControlName="email"></ion-input>
 		  </ion-item>
-		 <div class="validation-errors">
+		 	<div class="validation-errors">
 		  	<ng-container *ngFor="let validation of validation_messages.email" >
-				<p class="error-message" *ngIf="emailAC.hasError(validation.type) && emailAC.touched">
-				{{ validation.message }}
-				</p>
-			</ng-container>
-		  </div>
+					<p class="error-message" *ngIf="emailAC.hasError(validation.type) && emailAC.touched">
+						{{ validation.message }}
+					</p>
+				</ng-container>
+			</div>
+			
+			<ion-item>
+				<ion-label floating>Teléfono</ion-label>
+				<ion-input type="number" formControlName="telefono"></ion-input>
+			</ion-item>
+			<div class="validation-errors">
+				<ng-container *ngFor="let validation of validation_messages.telefono" >
+					<p class="error-message" *ngIf="telAC.hasError(validation.type) && telAC.touched">
+						{{ validation.message }}
+					</p>
+				</ng-container>
+			</div>
 
 		  <ion-item>
 		    <ion-label floating>Contraseña</ion-label>
@@ -34,11 +70,26 @@
 		  </ion-item>
 		  <div class="validation-errors">
 		  	<ng-container *ngFor="let validation of validation_messages.pass" >
-				<p class="error-message" *ngIf="passAC.hasError(validation.type) && passAC.touched">
-				{{ validation.message }}
-				</p>
-			</ng-container>
-		  </div>
+					<p class="error-message" *ngIf="passAC.hasError(validation.type) && passAC.touched">
+						{{ validation.message }}
+					</p>
+				</ng-container>
+			</div>
+			
+			<ion-item>
+					<ion-label floating>Confirmar contraseña</ion-label>
+					<ion-input type="password" formControlName="confPass"></ion-input>
+				</ion-item>
+				<div class="validation-errors">
+					<ng-container *ngFor="let validation of validation_messages.confPass" >
+						<p class="error-message" *ngIf="confPassAC.hasError(validation.type) && confPassAC.touched">
+							{{ validation.message }}
+						</p>
+					</ng-container>
+					<p class="error-message" *ngIf="confPassAC.invalid && confPassAC.touched">
+						Las contraseñas no coinciden
+					</p>
+				</div>
 		 
 		</ion-list>
 	</form>

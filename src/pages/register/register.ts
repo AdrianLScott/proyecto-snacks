@@ -3,20 +3,13 @@ import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angul
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { UtilityProvider } from '../../providers/utility/utility';
 import { AuthProvider } from '../../providers/auth/auth';
-
+import { passValidator } from './validator';
 /**
  * Generated class for the RegisterPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-export interface dataInterface {
-   nombre: string;
-   contraseña: string;
-   correo: string;
-   idPerfil: number;
-   estatus: number;
-} 
 
 @IonicPage()
 @Component({
@@ -29,18 +22,35 @@ export class RegisterPage {
   //FC stand for FormControl
   formgroup: FormGroup;
   nameAC: AbstractControl;
+  apellsAC: AbstractControl;
   emailAC: AbstractControl;
+  telAC: AbstractControl;
   passAC: AbstractControl;
-  data: dataInterface[] = [];
+  confPassAC: AbstractControl;
+  data: any[];
 
   validation_messages = {
+    'nombre': [
+      { type: 'required', message: 'Campo requerido.' },
+    ],
+    'apellidos': [
+      { type: 'required', message: 'Campo requerido.' },
+    ],
     'email': [
-        { type: 'required', message: 'Correo requerido.' },
+        { type: 'required', message: 'Campo requerido.' },
         { type: 'email', message: 'Correo invalido.' }
       ],
+    'telefono': [
+      { type: 'required', message: 'Campo requerido.' },
+      { type: 'minlength', message: 'Debe contener 10 caracteres.' },
+      { type: 'maxlength', message: 'Debe contener 10 caracteres.' },
+    ],
     'pass': [
-      { type: 'required', message: 'Contraseña requerida.' },
+      { type: 'required', message: 'Campo requerida.' },
       { type: 'minlength', message: 'La contraseña debe contener al menos 6 caracteres.' },
+    ],
+    'confPass': [
+      { type: 'required', message: 'Campo requerida.' }
     ],
   }
 
@@ -49,29 +59,55 @@ export class RegisterPage {
               public authService: AuthProvider) {
 
     this.formgroup = formbuilder.group({
+      nombre:['',[Validators.required]],
+      apellidos:['',[Validators.required]],
+      email:['',[Validators.required,Validators.email]],
+      telefono:['',[Validators.required,Validators.minLength(10),Validators.maxLength(10)]],
       pass:['',[Validators.required,Validators.minLength(6)]],
-      email:['',[Validators.required,Validators.email]]
+      confPass:['',[Validators.required, passValidator]],
     });
 
-    this.passAC = this.formgroup.controls['pass'];
+    this.nameAC = this.formgroup.controls['nombre'];
+    this.apellsAC = this.formgroup.controls['apellidos'];
     this.emailAC = this.formgroup.controls['email'];
+    this.telAC = this.formgroup.controls['telefono'];
+    this.passAC = this.formgroup.controls['pass'];
+    this.confPassAC = this.formgroup.controls['confPass'];
   }
 
 
   ionViewDidLoad() {
   }
   doRegister(){
-    this.data =  [{ nombre: this.emailAC.value, 
-                    contraseña: this.passAC.value, 
-                    correo: this.emailAC.value,
-                    idPerfil: 4,
-                    estatus: 1
-                    }];
+    this.data = [
+      {nombre: this.emailAC.value, 
+        contraseña: this.passAC.value, 
+        correo: this.emailAC.value,
+        idPerfil: 4,
+        estatus: 1
+      },{
+        nombre: this.nameAC.value,
+        apellidos: this.apellsAC.value,
+        telefono: this.telAC.value
+      }];
+      
     if(this.formgroup.valid){
       this.authService.register(this.data).then(
         
         (data)=>{
           if(data == 1){
+              /*         this.toast.showWithOptions(
+            {
+              message: "Notificación eliminada",
+              duration: 2000,
+              position: 'bottom',
+              addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+            }
+          ).subscribe(
+            toast => {
+              console.log(toast);
+            }
+          ); */
             this.navCtrl.setRoot('SidebarPage');
           }
           else if(data!==undefined){

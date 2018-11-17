@@ -62,6 +62,9 @@
 						{{ validation.message }}
 					</p>
 				</ng-container>
+				<p class="error-message" *ngIf="telAC.invalid && telAC.touched">
+						Ingrese solo numeros
+				</p>
 			</div>
 
 		  <ion-item>

@@ -1,9 +1,11 @@
+import { SidebarPage } from './../sidebar/sidebar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { UtilityProvider } from '../../providers/utility/utility';
 import { AuthProvider } from '../../providers/auth/auth';
 import { passValidator } from './validator';
+import { validateNumber } from './validator';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -62,7 +64,7 @@ export class RegisterPage {
       nombre:['',[Validators.required]],
       apellidos:['',[Validators.required]],
       email:['',[Validators.required,Validators.email]],
-      telefono:['',[Validators.required,Validators.minLength(10),Validators.maxLength(10)]],
+      telefono:['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),validateNumber]],
       pass:['',[Validators.required,Validators.minLength(6)]],
       confPass:['',[Validators.required, passValidator]],
     });
@@ -108,7 +110,7 @@ export class RegisterPage {
               console.log(toast);
             }
           ); */
-            this.navCtrl.setRoot('SidebarPage');
+            this.navCtrl.setRoot(SidebarPage);
           }
           else if(data!==undefined){
             const alert = this.alertCtrl.create({

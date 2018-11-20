@@ -19,6 +19,9 @@ export let cfg = {
     getDetallesPedidos: '/getDetallesPedidos',
     getUserData: '/getUserData',
   },
+  vendedor:{
+    recargarSaldo: '/recargarSaldo'
+  }
 };
 //export const API_BASE_ROUTE= 'http://pespeciales.upsin.edu.mx/venados/';
 platformBrowserDynamic().bootstrapModule(AppModule);

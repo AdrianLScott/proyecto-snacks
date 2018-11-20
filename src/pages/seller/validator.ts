@@ -17,3 +17,14 @@ export function clientValidator(control: AbstractControl) {
 
     return null;
 }
+
+export function positiveNumberValidator(control: AbstractControl) {
+    if (control && (control.value !== null || control.value !== undefined)) {
+        if (control.value < 0) {
+            return {
+                isError: true
+            };
+        }
+    }
+    return null;
+}

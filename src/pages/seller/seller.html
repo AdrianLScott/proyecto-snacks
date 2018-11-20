@@ -52,6 +52,9 @@
           {{ validation.message }}
           </p>
         </ng-container>
+        <p class="error-message" *ngIf="saldoAC.invalid && saldoAC.touched">
+          El saldo debe ser mayor a 0.
+        </p>
       </div>
     </form>
   </div>
@@ -59,7 +62,7 @@
     
   </div>
   <ion-list>
-    <button ion-button id="send" class="enviar" block color="danger" [disabled]="!formgroup.valid">
+    <button ion-button id="send" class="enviar" block color="danger" (click)="hacerRecarga()" [disabled]="!formgroup.valid">
       Enviar
     </button>
   </ion-list>

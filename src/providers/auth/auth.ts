@@ -81,7 +81,7 @@ export class AuthProvider {
             this.saveData(data);
             this.idToken = rs.token; 
           }
-          return rs.tipo_usuario == 'Cliente'?'Cliente':'Vendedor';
+          return {id: rs.id, user_type: rs.tipo_usuario == 'Cliente'?'Cliente':'Vendedor'};
         }
         else{
           return json_obj['error'];

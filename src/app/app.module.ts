@@ -1,3 +1,5 @@
+import { HistoryRecargasPage } from './../pages/history-recargas/history-recargas';
+import { TabsSellerPage } from './../pages/tabs-seller/tabs-seller';
 import { SellerPage } from './../pages/seller/seller';
 import { SidebarPageModule } from './../pages/sidebar/sidebar.module';
 import { ForgotPasswordPage } from './../pages/forgot-password/forgot-password';
@@ -32,6 +34,7 @@ import { NotificationsProvider } from '../providers/notifications/notifications'
 import { PopNotificationsComponent} from '../components/pop-notifications/pop-notifications';
 import { Toast } from '@ionic-native/toast';
 import { PedidosProvider } from '../providers/pedidos/pedidos';
+import { SellerProvider } from '../providers/seller/seller';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -55,7 +58,9 @@ export function getAuthHttp(http) {
     ForgotPasswordPage,
     CartModalPage,
     SellerPage,
+    TabsSellerPage,
     PopNotificationsComponent,
+    HistoryRecargasPage
   ],
   imports: [
     BrowserModule,
@@ -78,7 +83,9 @@ export function getAuthHttp(http) {
     ForgotPasswordPage,
     CartModalPage,
     SellerPage,
-    PopNotificationsComponent
+    PopNotificationsComponent,
+    TabsSellerPage,
+    HistoryRecargasPage
   ],
   providers: [
     StatusBar,
@@ -100,7 +107,8 @@ export function getAuthHttp(http) {
     /*OneSignal DESCOMENTAAR*/,
     NotificationsProvider,
     Toast,
-    PedidosProvider
+    PedidosProvider,
+    SellerProvider
   ]
 })
 export class AppModule {}

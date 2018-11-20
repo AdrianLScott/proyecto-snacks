@@ -1,3 +1,4 @@
+import { TabsSellerPage } from './../tabs-seller/tabs-seller';
 import { SellerPage } from './../seller/seller';
 import { SidebarPage } from './../sidebar/sidebar';
 import { ForgotPasswordPage } from './../forgot-password/forgot-password';
@@ -28,11 +29,11 @@ export class LoginPage {
     loading.present();
     this.authService.login(this.user.value,this.pass.value).then(   
       (data)=>{
-        if(data == 'Cliente'){
+        if(data.user_type == 'Cliente'){
           this.navCtrl.setRoot(SidebarPage);
         }
-        else if(data == 'Vendedor'){
-          this.navCtrl.setRoot(SellerPage);
+        else if(data.user_type == 'Vendedor'){
+          this.navCtrl.setRoot(TabsSellerPage,{id_empleado: data.id});
         }
         else if(data !== undefined){
           const alert = this.alertCtrl.create({

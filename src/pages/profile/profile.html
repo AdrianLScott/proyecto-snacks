@@ -1,12 +1,7 @@
-<!--
-  Generated template for the ProfilePage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="venados">
     <ion-title>Perfil</ion-title>
   </ion-navbar>
 
@@ -14,5 +9,33 @@
 
 
 <ion-content padding>
+  <div>
+    <!--AQUI IMAGINO LA FOTO-->
+  </div>
+  
+<ion-card *ngIf="datosUsuario">
+  <ion-card-header text-center>
+    {{datosUsuario[0].nombre}} {{datosUsuario[0].apellidopaterno}}
+  </ion-card-header>
+
+  <ion-list>
+    <button ion-item>
+      <ion-icon name="at" item-start></ion-icon>
+      {{datosUsuario[0].correo}}
+    </button>
+
+    <button ion-item>
+      <ion-icon name="call" item-start></ion-icon>
+      {{datosUsuario[0].telefono}}
+    </button>
+
+    <button ion-item>
+      <ion-icon name="cash" item-start></ion-icon>
+      {{datosUsuario[0].saldo}}
+    </button>
+
+  </ion-list>
+</ion-card>
+
 
 </ion-content>

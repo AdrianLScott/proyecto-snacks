@@ -23,7 +23,6 @@ import { Storage } from '@ionic/storage';
 import { HttpModule, Http } from '@angular/http';
 import { AuthHttp, AuthConfig,JwtHelper } from 'angular2-jwt';
 import { ProductDetailsPage } from '../pages/product-details/product-details';
-import { ProductDetailProvider } from '../providers/product-detail/product-detail';
 import { ForgotPasswordProvider } from '../providers/forgot-password/forgot-password';
 import { CartModalPage } from '../pages/cart-modal/cart-modal';
 import { SocketProvider } from '../providers/socket/socket';
@@ -32,6 +31,8 @@ import { NotificationsProvider } from '../providers/notifications/notifications'
 import { PopNotificationsComponent} from '../components/pop-notifications/pop-notifications';
 import { Toast } from '@ionic-native/toast';
 import { PedidosProvider } from '../providers/pedidos/pedidos';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { UsuariosProvider } from '../providers/usuarios/usuarios';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -63,7 +64,8 @@ export function getAuthHttp(http) {
     HttpClientModule,
     IonicStorageModule.forRoot(),
     HttpModule,
-    SidebarPageModule
+    SidebarPageModule,
+    NgxQRCodeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -94,13 +96,13 @@ export function getAuthHttp(http) {
     ProviderProductosProvider,
     AuthProvider,
     JwtHelper,
-    ProductDetailProvider,
     ForgotPasswordProvider,
     SocketProvider,
     /*OneSignal DESCOMENTAAR*/,
     NotificationsProvider,
     Toast,
-    PedidosProvider
+    PedidosProvider,
+    UsuariosProvider
   ]
 })
 export class AppModule {}

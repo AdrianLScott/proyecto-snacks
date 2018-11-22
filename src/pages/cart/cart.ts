@@ -150,8 +150,9 @@ export class CartPage {
   }
 
   irCarrito(i, estatus) {
-    const modal = this.modalCtrl.create(CartModalPage, {index: i, pag: this, estatus :estatus});
+    const modal = this.modalCtrl.create(CartModalPage, {index: i, pag: this, estatus :estatus, idEmpresa: this.cartItems[0][0].tienda.id});
     modal.present();  
+
   }
 
   doRefresh(refresher) {

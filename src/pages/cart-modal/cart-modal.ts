@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ViewController, LoadingController, AlertController } from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import { PedidosProvider } from '../../providers/pedidos/pedidos';
-
+import { UsuariosProvider } from '../../providers/usuarios/usuarios';
+import * as AppConfig from './../../app/main';
+import * as socketIo from 'socket.io-client'; 
 
 @IonicPage()
 @Component({
@@ -18,8 +20,9 @@ export class CartModalPage {
   paginaAnterior: any;
   estatus: any;
   createdCode = null;
-  saldo: number;
+  saldo: any;
   idUsuario;
+  idTienda;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public storage: Storage, 
@@ -27,7 +30,8 @@ export class CartModalPage {
     public viewController: ViewController,
     public pedProv: PedidosProvider,
     public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public provUser: UsuariosProvider) {
 
     //obtenemos el valor del indice de la tienda que seleccionamos en la caché
     this.idPedido = this.navParams.data.index;
@@ -35,6 +39,8 @@ export class CartModalPage {
     this.paginaAnterior = this.navParams.data.pag;
     //obtenemos el estatus de el pedido que fue ingresado
     this.estatus = this.navParams.data.estatus;
+    //obtenemos el id de la tiienda
+    this.idTienda = this.navParams.data.idEmpresa;
    }
 
   //Esta funcion verifica los productos que tiene la tienda a la que se ingresó
@@ -43,7 +49,9 @@ export class CartModalPage {
     if (this.estatus == "SinConfirmar") { //para el estatus SinConfirmar (lo que está en el carrito (caché))(opciones:eliminar productos, aumentar la cantidad, y pedir).
       //limpia la variable total para que no se sobre escriba
       this.total = 0.0;
-      this.obtenersaldo();
+      this.obtenerUsuario().then(
+        (response)=>{this.obtenerSaldo();}
+      );
       //obtiene lo que tiene la caché de pedidos
       this.storage.get("cart").then((data)=>{
         if (data != null) {
@@ -100,9 +108,12 @@ export class CartModalPage {
   ionViewDidLoad(){
     this.refresh();
   }
-  obtenersaldo(){
-    this.obtenerUsuario();
-    this.saldo=100; //aqui se va a ocupar sacar de la base de datos
+  obtenerSaldo(){
+    this.provUser.getUserSaldo(this.idUsuario).subscribe(
+      (saldo)=>{this.saldo = saldo[0].saldo;},
+      (error)=>{this.showResposeMsg("No se pudo obtener el saldo");}
+      );
+      
   }
   generarCodigoQR(){
     this.createdCode = this.idPedido;
@@ -147,40 +158,81 @@ export class CartModalPage {
         this.cartItems.splice(0, this.cartItems.length);
         this.viewController._didLoad();
       }).catch(e=>{console.log("falló: "+e)});
-      
     });
   }
 
+  edicion(){
+    if(this.bandera){
+      this.bandera = false;
+    }else{
+      this.bandera= true;
+    }
+  }
+//esta funcion sirve para cancelar un pedido siempre y cuando no se esté preparando
   cancelarPedido(){
-    console.log("Se va a cancelar el pedido: "+this.idPedido);
+    console.log(this.idPedido);
+    const socket = socketIo(AppConfig.cfg.nodeServer);
+    let data = {
+      idEmpresa: this.idTienda,
+      idPedido: this.idPedido,
+      clase: this.close()
+    };
+    socket.emit('cancelar-pedido',data, 
+    function(confirmation){
+      if (confirmation) {
+        data.clase
+      } else {
+        console.log("no jalo");
+      }
+      
+    }
+    );
   }
 
   eliminarPedido(){
-    console.log("Se va a eliminar el pedido: "+this.idPedido);
+    this.pedProv.eliminarPedido(this.idPedido).subscribe(
+      (response)=>{
+        if (response) {
+          this.close()
+        }else{
+          this.showResposeMsg("No se pudo eliminar");
+        }
+      }
+    );
+    
+    //console.log("Se va a eliminar el pedido: "+this.idPedido);
   }
   obtenerUsuario(){
-    this.storage.get("id").then((idUser)=>{
+    return this.storage.get("id").then((idUser)=>{
       if (idUser != null) {
-        //si encuentra id, jala los pedidos del usuario de la base de datos
+        //si encuentra id
         this.idUsuario = Number(idUser[0]);
+        return this.idUsuario;
       }else{
         this.idUsuario = null;
+        return this.idUsuario;
       }
     });
   }
   doPedido(){
-    this.obtenersaldo();
-    let data = [{
-      idempresa: this.tienda[0].tienda.id,
-     // idusuario: this.idUser,
-      total: this.total,
-      estatus: 'Solicitado'
-    }];
+    //socket.close();
+    this.obtenerSaldo();
     if (this.saldo >= this.total && this.idUsuario != null) {
-      /*this.pedProv.doPedido(this.saldo).subscribe( //CAMBIAR PARAMETRO
-        (response)=> {this.showResposeMsg(1);},
-        (error)=> {this.showResposeMsg(2);}
-      );*/
+      let data={
+        idEmpresa: this.idTienda,
+        pedido: this.tienda,
+        idUsuario: this.idUsuario
+      };
+      /*
+      this.pedProv.addPedido(data).subscribe(
+        (response)=>{console.log("se agregó");},
+        (error)=>{this.showResposeMsg("El pedido no se pudo concretar, verifique su conexión a internet.");}
+        );
+        */
+      
+      const socket = socketIo(AppConfig.cfg.nodeServer);
+      socket.emit('add-pedido',{idEmpresa: this.idTienda, pedido: this.tienda, idUsuario:this.idUsuario, clase: this})
+      
     }else{
       const toast = this.toast.create({
         message: "Saldo insuficiente",
@@ -188,15 +240,18 @@ export class CartModalPage {
       });
       toast.present();
     }
+    
   }
 	
 	showResposeMsg(num: any){
 		let errorMsg ="";
 		if (num==1) {
 			errorMsg="Pedido Correctamente";
+		}else if(num==2){
+			errorMsg="Hubo un problema, intente más tarde";
 		}else{
-			errorMsg="Hubo un problema";
-		}
+      errorMsg=num;
+    }
 		const toast = this.toast.create({
 			message: errorMsg,
 			duration: 3000

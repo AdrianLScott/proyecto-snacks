@@ -34,7 +34,7 @@ idUsuario;
         loading.present();
         this.provUser.getUserData(this.idUsuario).subscribe(
           //al obtener los datos, se guardan en this.datosUsuario y el cargando se cierra
-          (data)=> {this.datosUsuario = data; loading.dismiss();console.log("gay");console.log(this.datosUsuario);},
+          (data)=> {this.datosUsuario = data[0]; loading.dismiss();console.log(this.datosUsuario);},
           //Si no, muestra el error
           (error)=> {console.log(error);}
         );

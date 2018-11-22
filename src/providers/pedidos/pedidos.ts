@@ -14,16 +14,21 @@ export class PedidosProvider {
 
   constructor(public http: HttpClient) {  }
 
-   getPedidos(idUser: number){
+  getPedidos(idUser: number){
   	return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getPedidos+'?idUser='+idUser);
   }
   getDetallesPedidos(idPedido: number){
     return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getDetallesPedidos+'?idPedido='+idPedido);
   }
-
-  doPedido(data: any) : Observable<Object> {
+  addPedido(data: any) : Observable<Object> {
   	//console.log(data);
   	//var jsonData = JSON.stringify(data);
-  	return this.http.post(AppConfig.cfg.apiUrl+AppConfig.cfg.user.product_details,data);
+  	return this.http.post(AppConfig.cfg.apiUrl+AppConfig.cfg.user.addPedido,data);
+  }
+  eliminarPedido(idPedido : number){
+    return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.eliminarPedido+'?idPedido='+idPedido);
+  }
+  cancelarPedido(idPedido : number){
+    return this.http.post(AppConfig.cfg.apiUrl+AppConfig.cfg.user.cancelarPedido,idPedido);
   }
 }

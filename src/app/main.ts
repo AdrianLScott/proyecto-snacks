@@ -2,14 +2,14 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app.module';
 export let cfg = {
-  apiUrl: 'http://localhost/venados-web/index.php/Api',
-  nodeServer: 'http://192.168.0.4:3000',
+  apiUrl: 'http://localhost/venados/index.php/Api',
+  nodeServer: 'http://localhost:3000',
   tokenName: 'token',
   user: {
     register: '/addUser',
     decodeToken: '/decodeToken',
     login: '/login',
-    product_details: '/addPedido',
+    addPedido: '/addPedido',
     getProducts: '/getProducts',
     getStores: '/getStores',
     getNotif: '/getNotifications',
@@ -18,6 +18,9 @@ export let cfg = {
     getPedidos: '/getPedidos',
     getDetallesPedidos: '/getDetallesPedidos',
     getUserData: '/getUserData',
+    getUserSaldo: '/getUserSaldo',
+    eliminarPedido: '/eliminarPedido',
+    cancelarPedido: '/cancelarPedido',
   },
   vendedor:{
     recargarSaldo: '/recargarSaldo'

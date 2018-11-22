@@ -2,6 +2,11 @@
 <ion-header>
 
   <ion-navbar color="venados">
+      <ion-buttons end *ngIf="estatus =='SinConfirmar'">
+        <button ion-button icon-only (click)="edicion()">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-buttons>
     <ion-title>Carrito</ion-title>
   </ion-navbar>
 
@@ -19,8 +24,8 @@
       </ion-thumbnail>
       <h2>{{item.producto.nombre}}</h2>
       <p>Cantidad: {{item.cantidad}} Precio: {{item.producto.precio}}</p>
-      <button ion-button clear item-right color="danger" (click)="removeFromCart(i)">
-        <ion-icon name="close-circle"></ion-icon>
+      <button ion-button clear item-right color="danger" *ngIf="bandera" (click)="removeFromCart(i)">
+        <ion-icon name="close"></ion-icon>
       </button>
     </ion-item>
     <ion-grid>
@@ -44,7 +49,7 @@
           </ion-grid>
         </ion-card>
       </ion-grid>
-      <ion-grid>
+      <ion-grid >
           <ion-card>
             <ion-grid>
               <ion-row>
@@ -59,7 +64,7 @@
       
                 </ion-col>
                 <ion-col col-3 text-rigth>
-                  <b style="color:green;">$ {{saldo}}</b>
+                  <b style="color:green;" *ngIf="saldo != null ">$ {{saldo}}</b>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -150,6 +155,11 @@
       </ion-grid>
   </ng-template>
   
+  <ion-card *ngIf="estatus == 'En proceso'">
+    <ion-card-content>
+        Este pedido está en proceso, lo que significa que ya está siendo atendido. Por favor espere.
+      </ion-card-content>
+  </ion-card>
   
 </ion-content>
 
@@ -184,17 +194,18 @@
   </ng-template>
 
   <ng-template #elseBtnRealizado>
-      <ion-toolbar *ngIf="estatus == 'Realizado'; else elseBtnPedidos">
+      <ion-toolbar *ngIf="estatus == 'Realizado'  || estatus == 'En proceso'; else elseBtnPedidos">
           <ion-grid>
             <ion-row>
               <ion-col>
-                  <button ion-button color="danger" block (click)="close()">Cerrar</button>
+                  <button ion-button color="danger" block (click)="close()">Regresar</button>
               </ion-col>
             </ion-row>
           </ion-grid>
       </ion-toolbar>
   </ng-template>
 
+  
   <ng-template #elseBtnPedidos>
       <ion-toolbar >
           <ion-grid>
@@ -202,11 +213,15 @@
               <ion-col>
                   <button ion-button color="danger" outline block (click)="close()">Cerrar</button>
               </ion-col>
+              
               <ion-col>
                   <button ion-button color="danger"  block (click)="eliminarPedido()">Eliminar pedido</button>
               </ion-col>
+              
             </ion-row>
           </ion-grid>
       </ion-toolbar>
   </ng-template>
+
+  
 </ion-footer>

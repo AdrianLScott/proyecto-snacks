@@ -15,23 +15,23 @@
   
 <ion-card *ngIf="datosUsuario">
   <ion-card-header text-center>
-    {{datosUsuario[0].nombre}} {{datosUsuario[0].apellidopaterno}}
+    {{datosUsuario.nombre}} {{datosUsuario.apellidopaterno}}
   </ion-card-header>
 
   <ion-list>
     <button ion-item>
       <ion-icon name="at" item-start></ion-icon>
-      {{datosUsuario[0].correo}}
+      {{datosUsuario.correo}}
     </button>
 
     <button ion-item>
       <ion-icon name="call" item-start></ion-icon>
-      {{datosUsuario[0].telefono}}
+      {{datosUsuario.telefono}}
     </button>
 
     <button ion-item>
       <ion-icon name="cash" item-start></ion-icon>
-      {{datosUsuario[0].saldo}}
+      {{datosUsuario.saldo}}
     </button>
 
   </ion-list>

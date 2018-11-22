@@ -18,5 +18,8 @@ export class UsuariosProvider {
   getUserData(idUser: number){
   	return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getUserData+'?idUser='+idUser);
   }
+  getUserSaldo(idUser: any){
+    return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getUserSaldo+'?idUser='+idUser);
+  }
 
 }

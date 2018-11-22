@@ -29,7 +29,7 @@
       <ion-item class="item-remove-animate" id="notif">
           <ion-row>
               <ion-col>
-                <h2 iontext>{{notif.nombre}}</h2>  
+                <h2 iontext>{{notif.titulo}}</h2>  
               </ion-col>
               <ion-col right text-right>
                 <ion-note>
@@ -37,16 +37,10 @@
                 </ion-note>
               </ion-col>
             </ion-row>
-          <ion-row [ngSwitch]="notif.estatus"> 
-              <ion-col *ngSwitchCase="'Realizado'">
-                <p class="status-listo"> {{notif.mensaje}}</p>
+          <ion-row> 
+              <ion-col>
+                <p> {{notif.mensaje}}</p>
               </ion-col>
-              <ion-col *ngSwitchCase="'Cancelado'">
-                  <p class="status-cancelado"> {{notif.mensaje}}</p>
-                </ion-col>
-                <ion-col *ngSwitchDefault>
-                    <p> {{notif.mensaje}}</p>
-                  </ion-col>
           </ion-row>
           
       </ion-item>
@@ -68,7 +62,7 @@
     </ion-col>
   </ion-row>
 
- <button (click)="sendPedido()">Realizar pedido</button>
+<!--  <button (click)="sendPedido()">Realizar pedido</button> -->
  <ion-refresher (ionRefresh)="doRefresh($event)">
   <ion-refresher-content pullingIcon="arrow-dropdown"
   pullingText="Desliza para actualizar"

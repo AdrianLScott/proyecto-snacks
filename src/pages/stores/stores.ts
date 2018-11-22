@@ -16,6 +16,7 @@ export class StoresPage {
 
 	tiendas;
   apiURL;
+  banderaBuscar: boolean = false;
   constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider,public loadingCtrl: LoadingController) {
     this.apiURL = AppConfig.cfg.api_baseURL;
   }
@@ -44,6 +45,14 @@ export class StoresPage {
       this.ionViewDidLoad();
       refresher.complete();
     }, 2000);
+  }
+
+  openBuscar(){
+    if (this.banderaBuscar) {
+      this.banderaBuscar = false;
+    } else {
+      this.banderaBuscar = true;
+    }
   }
 
 

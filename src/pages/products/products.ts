@@ -19,6 +19,7 @@ import { ProductDetailsPage } from '../product-details/product-details';
 export class ProductsPage {
 	tienda;
 	productos;
+  banderaBuscar: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController, public app:App) {
   	this.tienda = navParams.data.tienda;
@@ -39,6 +40,13 @@ export class ProductsPage {
       producto: producto,
       tienda: this.tienda});
   	//this.navCtrl.push(ProductDetailsPage
+  }
+  openBuscar(){
+    if (this.banderaBuscar) {
+      this.banderaBuscar = false;
+    } else {
+      this.banderaBuscar = true;
+    }
   }
 
 }

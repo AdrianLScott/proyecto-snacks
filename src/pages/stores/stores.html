@@ -9,7 +9,7 @@
  
     <ion-title>Tiendas</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="openBuscar()">
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
@@ -19,6 +19,7 @@
 
 
 <ion-content class="card-background-page">
+    <!--<ion-searchbar *ngIf="banderaBuscar"></ion-searchbar>-->
 
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="arrow-dropdown"
@@ -29,15 +30,15 @@
     </ion-refresher>
 
 		<ion-card ion-list *ngFor = "let tienda of tiendas" (click)="objetosTienda(tienda)">
-        <img src="{{apiURL}}{{tienda.img_fondo}}" *ngIf="tienda.logotipo != ''; else elseImg"/>
+        <img src="{{apiURL}}{{tienda.img_fondo}}" *ngIf="tienda.img_fondo != ''; else elseImg"/>
         <ng-template #elseImg>
           <img src="/assets/imgs/blank-img.png"/>
         </ng-template>
-	    	<div class="card-title">{{tienda.nombre}}</div>
-    		<div class="card-subtitle">{{tienda.descripcion}}</div>
+        <div class="franja" style="background-color:rgba(0,0,0,0.6);">
+          <p style="color: white; font-size: 28px">{{tienda.nombre}}</p>
+          <p style="color: white">{{tienda.descripcion}}</p>
+        </div>
   		</ion-card>
-		
 
-	
 </ion-content>
 

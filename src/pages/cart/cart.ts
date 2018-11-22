@@ -117,6 +117,7 @@ export class CartPage {
       for (let i = 0; i < this.pedidos.length; i++) {
         if (this.pedidos[i].estatus == "Solicitado") {//si hay pedidos solicitados
           this.solicitados.push(this.pedidos[i]);
+          console.log(this.pedidos[i]);
 
         }else if (this.pedidos[i].estatus == "En proceso") {// si hay pedidos que estan siendo proocesados
           this.procesando.push(this.pedidos[i]);
@@ -149,8 +150,8 @@ export class CartPage {
     this.validarDatos();
   }
 
-  irCarrito(i, estatus) {
-    const modal = this.modalCtrl.create(CartModalPage, {index: i, pag: this, estatus :estatus, idEmpresa: this.cartItems[0][0].tienda.id});
+  irCarrito(i, estatus, idEmpresa) {
+    const modal = this.modalCtrl.create(CartModalPage, {index: i, pag: this, estatus :estatus, idEmpresa: idEmpresa});
     modal.present();  
 
   }

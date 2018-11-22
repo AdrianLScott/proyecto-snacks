@@ -177,6 +177,7 @@ export class CartModalPage {
       idPedido: this.idPedido,
       clase: this.close()
     };
+    console.log("id Tienda: "+this.idTienda);
     socket.emit('cancelar-pedido',data, 
     function(confirmation){
       if (confirmation) {
@@ -184,9 +185,7 @@ export class CartModalPage {
       } else {
         console.log("no jalo");
       }
-      
-    }
-    );
+    });
   }
 
   eliminarPedido(){
@@ -220,18 +219,22 @@ export class CartModalPage {
     if (this.saldo >= this.total && this.idUsuario != null) {
       let data={
         idEmpresa: this.idTienda,
-        pedido: this.tienda,
-        idUsuario: this.idUsuario
+        pedido: this.cartItems,
+        idUsuario: this.idUsuario,
+        close: this.quitarTienda(),
+        total: this.total
       };
-      /*
-      this.pedProv.addPedido(data).subscribe(
-        (response)=>{console.log("se agregó");},
-        (error)=>{this.showResposeMsg("El pedido no se pudo concretar, verifique su conexión a internet.");}
-        );
-        */
-      
+      console.log(this.idTienda);
       const socket = socketIo(AppConfig.cfg.nodeServer);
-      socket.emit('add-pedido',{idEmpresa: this.idTienda, pedido: this.tienda, idUsuario:this.idUsuario, clase: this})
+      socket.emit('add-pedido',data,
+        function(confirmation){
+          if (confirmation) {
+            data.close;
+          } else {
+            console.log("no jalo");
+          }
+        }
+      )
       
     }else{
       const toast = this.toast.create({
@@ -240,7 +243,24 @@ export class CartModalPage {
       });
       toast.present();
     }
-    
+  }
+  quitarTienda(){
+    //carga el carrito de a cache para eliminar el producto
+    this.storage.get("cart").then((data)=>{
+      //Elimina el producto 
+      data.splice(this.idPedido, 1);
+      
+      this.storage.set("cart", data).then( ()=>{
+
+				const toast = this.toast.create({
+					message: "Pedido Correctamente",
+					duration: 1500
+				});
+        toast.present();
+        //this.cartItems.splice(0, this.cartItems.length);
+        this.close();
+      }).catch(e=>{console.log("falló: "+e)});
+    });
   }
 	
 	showResposeMsg(num: any){

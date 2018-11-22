@@ -25,7 +25,7 @@
   <!-- ******PARA LOS PEDIDOS QUE NO SE HA CONFIRMADO EL PAGO***********-->
   <ion-item-divider color="light" text-center>Por Pedir</ion-item-divider>
   <ng-template #elsePorPedir>
-    <ion-card *ngFor="let tienda of cartItems; let i = index" (click)="irCarrito(i, 'SinConfirmar')">
+    <ion-card *ngFor="let tienda of cartItems; let i = index" (click)="irCarrito(i, 'SinConfirmar', tienda[0].tienda.id)">
 
       <ion-row>
         <ion-col>
@@ -64,7 +64,7 @@
   <!-- ******PARA LOS PEDIDOS QUE TODAVIA NO SON ATENDIDOS***********-->
   <ion-item-divider color="light" text-center>Pedidos</ion-item-divider>
   <ng-template #elsePedidos>
-    <ion-card *ngFor="let solicitado of solicitados; let i = index" (click)="irCarrito( solicitado.id, solicitado.estatus)">
+    <ion-card *ngFor="let solicitado of solicitados; let i = index" (click)="irCarrito( solicitado.id, solicitado.estatus, solicitado.idempresa)">
 
       <ion-row>
         <ion-col>
@@ -130,7 +130,7 @@
   <!-- ******PARA LOS PEDIDOS Listos pero sin recoger***********-->
   <ion-item-divider color="light" text-center>Listos</ion-item-divider>
   <ng-template #elseListo>
-    <ion-card *ngFor="let realizado of realizados; let i = index" (click)="irCarrito( realizado.id, realizado.estatus)">
+    <ion-card *ngFor="let realizado of realizados; let i = index" (click)="irCarrito( realizado.id, realizado.estatus, realizado.idempresa)">
 
       <ion-row>
         <ion-col>
@@ -155,7 +155,7 @@
     </ion-card>
 
     <!-- ******PARA LOS PEDIDOS Listos RECOGIDOS***********-->
-    <ion-card *ngFor="let entregado of entregados; let i = index" (click)="irCarrito( entregado.id, entregado.estatus)">
+    <ion-card *ngFor="let entregado of entregados; let i = index" (click)="irCarrito( entregado.id, entregado.estatus, entregado.idempresa)">
 
       <ion-row>
         <ion-col>
@@ -197,7 +197,7 @@
  <!-- ******PARA LOS PEDIDOS CANCELADOS***********-->
  <ion-item-divider color="light" text-center>Cancelados</ion-item-divider>
  <ng-template #elseCancelado>
-   <ion-card *ngFor="let cancelado of cancelados; let i = index" (click)="irCarrito( cancelado.id, cancelado.estatus)">
+   <ion-card *ngFor="let cancelado of cancelados; let i = index" (click)="irCarrito( cancelado.id, cancelado.estatus, cancelado.idempresa)">
 
      <ion-row>
        <ion-col>

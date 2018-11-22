@@ -6,6 +6,7 @@ import { UtilityProvider } from '../../providers/utility/utility';
 import { AuthProvider } from '../../providers/auth/auth';
 import { passValidator } from './validator';
 import { validateNumber } from './validator';
+import { Toast } from '@ionic-native/toast';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -56,7 +57,7 @@ export class RegisterPage {
     ],
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,/* public regProvider: RegisterProvider,*/ 
+  constructor(public navCtrl: NavController, public navParams: NavParams,public toast: Toast,
               public alertCtrl: AlertController, public formbuilder: FormBuilder, public utilsProvider: UtilityProvider,
               public authService: AuthProvider) {
 
@@ -98,7 +99,7 @@ export class RegisterPage {
         
         (data)=>{
           if(data == 1){
-              /*         this.toast.showWithOptions(
+            this.toast.showWithOptions(
             {
               message: "Notificación eliminada",
               duration: 2000,
@@ -109,7 +110,7 @@ export class RegisterPage {
             toast => {
               console.log(toast);
             }
-          ); */
+          );
             this.navCtrl.setRoot(SidebarPage);
           }
           else if(data!==undefined){

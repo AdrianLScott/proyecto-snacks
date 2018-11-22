@@ -1,14 +1,8 @@
+import { Storage } from '@ionic/storage';
 import { HistoryRecargasPage } from './../history-recargas/history-recargas';
 import { SellerPage } from './../seller/seller';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the TabsSellerPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -20,12 +14,12 @@ export class TabsSellerPage {
   tab2Root: any = HistoryRecargasPage;
   myIndex: number;
   id_empleado: number;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.id_empleado = this.navParams.get('id_empleado');
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+    this.id_empleado = this.navParams.data;
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TabsSellerPage');
+  ionViewWillEnter() {
+
   }
 
 }

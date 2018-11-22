@@ -1,5 +1,3 @@
-import { TabsSellerPage } from './../tabs-seller/tabs-seller';
-import { SellerPage } from './../seller/seller';
 import { SidebarPage } from './../sidebar/sidebar';
 import { ForgotPasswordPage } from './../forgot-password/forgot-password';
 import { Component, ViewChild } from '@angular/core';
@@ -30,10 +28,10 @@ export class LoginPage {
     this.authService.login(this.user.value,this.pass.value).then(   
       (data)=>{
         if(data.user_type == 'Cliente'){
-          this.navCtrl.setRoot(SidebarPage);
+          this.navCtrl.setRoot(SidebarPage,{id_empleado: data.id,tipo_usuario: data.user_type});
         }
         else if(data.user_type == 'Vendedor'){
-          this.navCtrl.setRoot(TabsSellerPage,{id_empleado: data.id});
+          this.navCtrl.setRoot(SidebarPage,{id_empleado: data.id,tipo_usuario: data.user_type});
         }
         else if(data !== undefined){
           const alert = this.alertCtrl.create({

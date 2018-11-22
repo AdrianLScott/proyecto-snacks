@@ -1,8 +1,10 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app.module';
+//apiUrl: 'http://pespeciales.upsin.edu.mx/pt1Venados/index.php/Api',
 export let cfg = {
-  apiUrl: 'http://localhost/venados/index.php/Api',
+  apiUrl: 'http://172.16.13.228/venados/index.php/Api',
+  api_baseURL: 'http://pespeciales.upsin.edu.mx/pt1Venados/',
   nodeServer: 'http://localhost:3000',
   tokenName: 'token',
   user: {
@@ -23,7 +25,10 @@ export let cfg = {
     cancelarPedido: '/cancelarPedido',
   },
   vendedor:{
-    recargarSaldo: '/recargarSaldo'
+    recargarSaldo: '/recargarSaldo',
+    verificarPin: '/verificarPin',
+    getHistorial: '/getHistorialRecargas',
+    sendNotificacion: '/send_notif'
   }
 };
 //export const API_BASE_ROUTE= 'http://pespeciales.upsin.edu.mx/venados/';

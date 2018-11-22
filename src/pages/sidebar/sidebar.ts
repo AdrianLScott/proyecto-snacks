@@ -1,9 +1,10 @@
+import { TabsSellerPage } from './../tabs-seller/tabs-seller';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, AlertController, App, Platform, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, Nav, AlertController, App, Platform, ViewController, NavParams } from 'ionic-angular';
 import { LoginPage } from './../login/login';
 import { Storage } from '@ionic/storage';
-//import { OneSignal } from '@ionic-native/onesignal';
+import { OneSignal } from '@ionic-native/onesignal';
 
 export interface PageInterface {
   title: string;
@@ -20,18 +21,13 @@ export interface PageInterface {
 })
 export class SidebarPage {
   // Basic root for our content view
-  rootPage = 'TabsPage';
+  rootPage:any;
   user: String = '';
+  tipo_usuario: string;
   // Reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
    
-  pages: PageInterface[] = [
-    { title: 'Perfil', pageName: 'ProfilePage', icon: 'person' },
-    { title: 'Pedidos', pageName: 'CartPage', tabComponent: 'CartPage', index: 2, icon: 'cart' },
-    { title: 'Notificaciones', pageName: 'NotificationsPage', tabComponent: 'NotificacationsPage', index: 1, icon: 'notifications' },
-    { title: 'Tiendas', pageName: 'StoresPage', tabComponent: 'StoresPage', index: 0, icon: 'appstore' },
-    { title: 'Salir', pageName: 'LogoutPage', icon: 'log-out' },
-  ];
+  pages: PageInterface[];
 
   constructor(public navCtrl: NavController, 
               public alertCtrl: AlertController, 
@@ -39,10 +35,29 @@ export class SidebarPage {
               public platform: Platform,
               public auth: AuthProvider,
               public storage: Storage,
-              public viewController: ViewController
-              /*private onesignal: OneSignal*/) {
+              public viewController: ViewController,
+              public navParams:NavParams,
+              private onesignal: OneSignal) {
   }
-
+  ionViewWillEnter(){
+    this.tipo_usuario = this.navParams.get('tipo_usuario');    
+    if(this.tipo_usuario == 'Vendedor'){
+      this.pages = [
+        { title: 'Salir', pageName: 'LogoutPage', icon: 'log-out' },
+      ];
+      this.nav.setRoot(TabsSellerPage,this.navParams.get('id_empleado'))
+    }
+    else{
+      this.pages = [
+        { title: 'Perfil', pageName: 'ProfilePage', icon: 'person' },
+        { title: 'Pedidos', pageName: 'CartPage', tabComponent: 'CartPage', index: 2, icon: 'cart' },
+        { title: 'Notificaciones', pageName: 'NotificationsPage', tabComponent: 'NotificacationsPage', index: 1, icon: 'notifications' },
+        { title: 'Tiendas', pageName: 'StoresPage', tabComponent: 'StoresPage', index: 0, icon: 'appstore' },
+        { title: 'Salir', pageName: 'LogoutPage', icon: 'log-out' },
+      ];
+      this.rootPage = 'TabsPage';
+    }
+  }
   openPage(page: PageInterface) {
     
    if (this.nav.getActiveChildNavs().length && page.index != undefined) {
@@ -61,20 +76,21 @@ export class SidebarPage {
   ionViewDidLoad(){
     this.storage.get('user').then(data=>{
       if(data){
-        this.user = data;
-        /* ------------------DESCOMENTAR-------------------------------
-        window["plugins"].OneSignal.getPermissionSubscriptionState(function(status) {
-          status.permissionStatus.hasPrompted;
-          status.permissionStatus.status;
-  
-          status.subscriptionStatus.subscribed;
-          status.subscriptionStatus.userSubscriptionSetting;
-          status.subscriptionStatus.pushToken;
-  
-          //var playerID = status.subscriptionStatus.userId;
-          console.log(status.subscriptionStatus.userId);
-        this.onesignal.sendTag("email", data);
-        });---------------------------------------------------------------*/
+          if(this.navParams.get('tipo_usuario') !=='Vendedor'){
+            this.user = data;
+            window["plugins"].OneSignal.getPermissionSubscriptionState(function(status) {
+              status.permissionStatus.hasPrompted;
+              status.permissionStatus.status;
+      
+              status.subscriptionStatus.subscribed;
+              status.subscriptionStatus.userSubscriptionSetting;
+              status.subscriptionStatus.pushToken;
+      
+              //var playerID = status.subscriptionStatus.userId;
+              console.log(status.subscriptionStatus.userId);
+            });
+            this.onesignal.sendTag('email',data);
+        }
       }
       else{
         this.user = undefined;
@@ -113,7 +129,7 @@ export class SidebarPage {
         handler: () => {
           this.auth.logout();
           this.app.getRootNav().setRoot(LoginPage);
-          //this.onesignal.deleteTag("email"); DESCOMENTAAAAAR
+          this.onesignal.deleteTag("email");
         }
       },{
         text: 'Salir',

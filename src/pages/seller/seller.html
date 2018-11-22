@@ -1,15 +1,12 @@
-<!--
-  Generated template for the SellerPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar color="venados">
+    <ion-buttons start class="ham-menu">
+        <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Recarga Saldo</ion-title>
   </ion-navbar>
-
 </ion-header>
 <ion-content padding>
   <div>
@@ -17,7 +14,7 @@
       <ion-list>
         <ion-item>
           <ion-label floating>Num. Usuario:</ion-label>
-          <ion-input type="password" formControlName="cliente"></ion-input>
+          <ion-input type="number" formControlName="cliente"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.cliente" >
@@ -28,7 +25,7 @@
         </div>
         <ion-item>
           <ion-label floating>Confirmación de Num. Usuario</ion-label>
-          <ion-input type="password" EqualValidator="cliente" formControlName="confirm"></ion-input>
+          <ion-input type="number" EqualValidator="cliente" formControlName="confirm"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.confirm" >

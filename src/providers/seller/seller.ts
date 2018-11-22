@@ -16,4 +16,16 @@ export class SellerProvider {
   hacerRecarga(datos: any[]){
   	return this.http.post(AppConfig.cfg.apiUrl+AppConfig.cfg.vendedor.recargarSaldo, datos);
   }
+
+  verificarPin(datos: any){
+    return this.http.post(AppConfig.cfg.apiUrl+AppConfig.cfg.vendedor.verificarPin, datos);
+  }
+
+  getHistorialRecargas(datos: any){
+    return this.http.post(AppConfig.cfg.apiUrl+AppConfig.cfg.vendedor.getHistorial, datos);
+  }
+
+  sendNotificacion(datos: any){
+    return this.http.post(AppConfig.cfg.apiUrl+AppConfig.cfg.vendedor.sendNotificacion, datos);
+  }
 }

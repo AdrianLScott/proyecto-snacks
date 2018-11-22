@@ -1,3 +1,4 @@
+import { PinDialog } from '@ionic-native/pin-dialog';
 import { HistoryRecargasPage } from './../pages/history-recargas/history-recargas';
 import { TabsSellerPage } from './../pages/tabs-seller/tabs-seller';
 import { SellerPage } from './../pages/seller/seller';
@@ -29,7 +30,7 @@ import { ProductDetailProvider } from '../providers/product-detail/product-detai
 import { ForgotPasswordProvider } from '../providers/forgot-password/forgot-password';
 import { CartModalPage } from '../pages/cart-modal/cart-modal';
 import { SocketProvider } from '../providers/socket/socket';
-//import { OneSignal } from '@ionic-native/onesignal'; DESCOMENTAAR
+import { OneSignal } from '@ionic-native/onesignal';
 import { NotificationsProvider } from '../providers/notifications/notifications';
 import { PopNotificationsComponent} from '../components/pop-notifications/pop-notifications';
 import { Toast } from '@ionic-native/toast';
@@ -104,11 +105,12 @@ export function getAuthHttp(http) {
     ProductDetailProvider,
     ForgotPasswordProvider,
     SocketProvider,
-    /*OneSignal DESCOMENTAAR*/,
+    OneSignal,
     NotificationsProvider,
     Toast,
     PedidosProvider,
-    SellerProvider
+    SellerProvider,
+    PinDialog
   ]
 })
 export class AppModule {}

@@ -1,57 +1,60 @@
 import { SidebarPage } from './../pages/sidebar/sidebar';
 import { LoginPage } from './../pages/login/login';
 import { AuthProvider } from './../providers/auth/auth';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Platform, LoadingController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
-//import { OneSignal } from '@ionic-native/onesignal';
+import { OneSignal } from '@ionic-native/onesignal';
 @Component({
   templateUrl: 'app.html'
 })
 
-export class MyApp implements OnInit {
+export class MyApp {
   rootPage:any;
+  rootPageParams:any;
   token: any;
-  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, public loadingCtrl: LoadingController/*, DESCOMENTAR private onesignal: OneSignal*/) {
-    let loading = this.loadingCtrl.create();
-    loading.present();
+  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, public loadingCtrl: LoadingController, private onesignal: OneSignal) {
     this.hasToken().then(data=>{
       if(this.isTokenValid()){
         this.rootPage= SidebarPage;
+        this.rootPageParams = {tipo_usuario: "Cliente" }
       }
       else{
         this.rootPage = LoginPage;
       }
-      loading.dismiss();
+      statusBar.hide();
+      splashScreen.hide();
     },(error) => {
       this.rootPage = LoginPage;
-      
-      loading.dismiss();
+      statusBar.hide();
+      splashScreen.hide();
     })
     .catch(e=>{
       this.rootPage=LoginPage;
-      loading.dismiss();
+      statusBar.hide();
+      splashScreen.hide();
     });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
+
       // OneSignal Code start:
       // Enable to debug issues:
-      // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
 
-      //--------------------------DESCOMENTAR-------------------------
-      /* var notificationOpenedCallback = function(jsonData) {
-        console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-      }; */
-      /* this.onesignal
-      .startInit("9ba5748e-6561-4bdf-8c4c-77d4766fbde8", "108844902326")
-      .handleNotificationOpened(notificationOpenedCallback)
-      .endInit(); */
-      //--------------------------------------------------------------.
+      if(platform.is('core') || platform.is('mobileweb')) {
+        console.log("Platform is core or is mobile web");
+      } else {
+        var notificationOpenedCallback = function(jsonData) {
+          console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+        };
+
+        window["plugins"].OneSignal
+          .startInit("9ba5748e-6561-4bdf-8c4c-77d4766fbde8", "108844902326")
+          .handleNotificationOpened(notificationOpenedCallback)
+          .endInit(); 
+      }
     });
   }
 
@@ -78,8 +81,5 @@ export class MyApp implements OnInit {
     }
   }
 
-  ngOnInit(): void{
-    //socket.on('new-message', (data) => console.log(data));
-  }
 }
 

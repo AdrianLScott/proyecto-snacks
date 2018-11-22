@@ -21,6 +21,7 @@ import * as AppConfig from './../../app/main';
 export class NotificationsPage {
   notificaciones:any = [];
   messages = [];
+  value: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toast: Toast,
               public notifProvider: NotificationsProvider, public storage: Storage, public popoverCtrl: PopoverController) {
   }
@@ -31,7 +32,15 @@ export class NotificationsPage {
 
   sendPedido(){
     const socket = socketIo(AppConfig.cfg.nodeServer);
-    socket.emit('send-pedido',{idEmpresa: 1, pedido:"Yeees"})
+    var imprimir = this.testImprimir;
+    socket.emit('send-pedido',{idEmpresa: 1, pedido:"Yeees"}, function(response){
+      imprimir("khe");
+      console.log(response);
+    })
+  }
+
+  testImprimir(msg){
+    console.log('Si se imprime: ',msg);
   }
 
   getNotifications(){
@@ -62,18 +71,14 @@ export class NotificationsPage {
             this.notificaciones.splice(x,1);            
           }
         }
-/*         this.toast.showWithOptions(
+         this.toast.showWithOptions(
           {
             message: "Notificación eliminada",
             duration: 2000,
             position: 'bottom',
             addPixelsY: -80  // added a negative value to move it up a bit (default 0)
           }
-        ).subscribe(
-          toast => {
-            console.log(toast);
-          }
-        ); */
+        ).subscribe(); 
       })
   }
 
@@ -96,18 +101,14 @@ export class NotificationsPage {
     popover.present({
       ev: myEvent
     });
-/*     this.toast.showWithOptions(
+    this.toast.showWithOptions(
       {
         message: "Notificación eliminada",
         duration: 2000,
         position: 'bottom',
         addPixelsY: -80  // added a negative value to move it up a bit (default 0)
       }
-    ).subscribe(
-      toast => {
-        console.log(toast);
-      }
-    ); */
+    ).subscribe();
   }
   
 

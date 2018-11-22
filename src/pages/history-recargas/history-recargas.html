@@ -7,6 +7,11 @@
 <ion-header>
 
   <ion-navbar color="venados">
+      <ion-buttons start class="ham-menu">
+          <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
     <ion-title>Historial de recargas</ion-title>
   </ion-navbar>
 
@@ -14,5 +19,40 @@
 
 
 <ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let item of historial">
+      <ion-row>
+        <ion-col>
+          ID: {{item.id}}  
+        </ion-col>
+        <ion-col>
+          <h2 iontext>Recarga de ${{item.monto}}</h2>  
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-note>
+              Cliente: {{item.id_cliente}}
+          </ion-note>
+        </ion-col>
+        <ion-col right text-right>
+          <ion-note>
+           {{item.fecha}}
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+ 
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown"
+    pullingText="Desliza para actualizar"
+    refreshingText="Cargando..." >
+        
+    </ion-refresher-content>
+  </ion-refresher>
 </ion-content>

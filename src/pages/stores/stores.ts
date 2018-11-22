@@ -1,8 +1,9 @@
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, Nav, LoadingController, App } from 'ionic-angular';
 import { ProviderTiendasProvider } from '../../providers/provider-tiendas/provider-tiendas';
 import { ProductsPage } from '../products/products';
+import * as AppConfig from './../../app/main';
 
 
 
@@ -14,8 +15,10 @@ import { ProductsPage } from '../products/products';
 export class StoresPage {
 
 	tiendas;
-
-  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider,public loadingCtrl: LoadingController) {}
+  apiURL;
+  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider,public loadingCtrl: LoadingController) {
+    this.apiURL = AppConfig.cfg.api_baseURL;
+  }
 
   ionViewDidLoad(){
     this.auth.hasTokenAndIsValid().then(

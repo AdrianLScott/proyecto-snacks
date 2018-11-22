@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { UtilityProvider } from '../../providers/utility/utility';
 import { clientValidator, positiveNumberValidator } from './validator';
+import { PinDialog } from '@ionic-native/pin-dialog';
 
 /**
  * Generated class for the SellerPage page.
@@ -39,7 +40,7 @@ export class SellerPage {
       { type: 'required', message: 'Campo obligatorio.' }
     ]
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, public utilsProvider: UtilityProvider, public sellerProvider: SellerProvider, public loadingCtrl:LoadingController, public alert:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, public utilsProvider: UtilityProvider, public sellerProvider: SellerProvider, public loadingCtrl:LoadingController, public alert:AlertController, public pinDialog: PinDialog) {
     this.formgroup = formbuilder.group({
       cliente:['',[Validators.required]],
       confirm:['',[Validators.required,clientValidator]],
@@ -72,58 +73,66 @@ export class SellerPage {
       monto: this.saldoAC.value,
       id_empleado: this.id_empleado
     }];
-    const alert = this.presentConfirm();
-    alert.onDidDismiss((data)=>{
-        if(data){
-          let loading = this.loadingCtrl.create();
-          loading.present();
-          this.sellerProvider.hacerRecarga(datos).subscribe(
+    this.confirmRecarga().then((result: any) => {
+      if (result.buttonIndex == 1){
+        let loading = this.loadingCtrl.create();
+          const data = {'pin': result.input1, 'user_id': this.id_empleado}
+          this.sellerProvider.verificarPin(data).subscribe(
             data=>{
-              loading.dismiss()
-              let alertContent;
-              if(data == 1){
-                alertContent= {
-                  title: '¡Éxito!',
-                  subTitle: 'El usuario ha recibido su recarga correctamente.',
-                  buttons: ['Aceptar']
-                };
-                this.cleanInputs();
+              if(data=="1"){
+                this.sellerProvider.hacerRecarga(datos).subscribe(
+                  data=>{
+                    const notificacion = {monto: this.saldoAC.value, id_cliente: this.clienteAC.value};
+                    this.sellerProvider.sendNotificacion(notificacion).subscribe();
+                    loading.dismiss()
+                    let alertContent;
+                    if(data == 1){
+                      alertContent= {
+                        title: '¡Éxito!',
+                        subTitle: 'El usuario ha recibido su recarga correctamente.',
+                        buttons: ['Aceptar']
+                      };
+                      this.cleanInputs();
+                    }
+                    else{
+                      alertContent= {
+                        title: '¡Error!',
+                        subTitle: data,
+                        buttons: ['Aceptar']
+                      };
+                    }
+                    let alert = this.alert.create(alertContent);
+                    alert.present();
+                  }
+                );
+              }
+              else if(data=="-1"){
+                this.presentAlert("El pin introducido es incorrecto");
               }
               else{
-                alertContent= {
-                  title: '¡Error!',
-                  subTitle: data,
-                  buttons: ['Aceptar']
-                };
+                this.presentAlert("Algo ha sucedido, por favor intente de nuevo");
               }
-              let alert = this.alert.create(alertContent);
-              alert.present();
             }
-          ); 
+          )
         }
       })
-    alert.present();
+        //console.log('User clicked OK, value is: ', result.input1);
+    }
+          
+    //alert.present();
+
+  confirmRecarga(){
+    const msg = `Recarga por el monto de $${this.saldoAC.value} al cliente ${this.clienteAC.value}`;
+    return this.pinDialog.prompt('PIN de seguridad', msg, ['Confirmar', 'Cancelar']);
   }
 
-  presentConfirm() {
+  presentAlert(msg) {
     let alert = this.alert.create({
-      title: 'Confirmar recarga',
-      message: `Se hará una recargar por el monto de <b>$${this.saldoAC.value}</b> al usuario con el numero <b>${this.clienteAC.value}</b>`,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'Confirmar',
-          handler: () => {
-            alert.dismiss(true);
-            return false;
-          }
-        }
-      ]
+      title: 'Error',
+      subTitle: msg,
+      buttons: ['Aceptar']
     });
-    return alert;
+    alert.present();
   }
 
   cleanInputs(){
@@ -134,5 +143,6 @@ export class SellerPage {
     this.saldoAC.setValue('');
     this.saldoAC.markAsUntouched();
   }
+
 
 }

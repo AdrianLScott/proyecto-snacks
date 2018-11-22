@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ViewController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ViewController, LoadingController, AlertController } from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import { PedidosProvider } from '../../providers/pedidos/pedidos';
 
@@ -17,12 +17,16 @@ export class CartModalPage {
   bandera: boolean = false;
   paginaAnterior: any;
   estatus: any;
+  createdCode = null;
+  saldo: number;
+  idUsuario;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public storage: Storage, 
     public toast: ToastController, 
     public viewController: ViewController,
     public pedProv: PedidosProvider,
+    public alertCtrl: AlertController,
     public loadingCtrl: LoadingController) {
 
     //obtenemos el valor del indice de la tienda que seleccionamos en la caché
@@ -39,6 +43,7 @@ export class CartModalPage {
     if (this.estatus == "SinConfirmar") { //para el estatus SinConfirmar (lo que está en el carrito (caché))(opciones:eliminar productos, aumentar la cantidad, y pedir).
       //limpia la variable total para que no se sobre escriba
       this.total = 0.0;
+      this.obtenersaldo();
       //obtiene lo que tiene la caché de pedidos
       this.storage.get("cart").then((data)=>{
         if (data != null) {
@@ -68,6 +73,17 @@ export class CartModalPage {
           
         }
       });
+    }else if (this.estatus == "Realizado") {//para cargar los productos de los pedidos de la base de datos y el generador de código QR
+      //abre el cargando mientras carga los datos
+      let loading = this.loadingCtrl.create();
+      loading.present();
+      this.pedProv.getDetallesPedidos(this.idPedido).subscribe(
+        //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
+        (data)=> {this.tienda = data;loading.dismiss(); this.getProductos(); this.generarCodigoQR();},
+        //Si no, muestra el error
+        (error)=> {console.log(error);}
+      ) 
+      
     }else {//para cargar los productos de los pedidos de la base de datos
       //abre el cargando mientras carga los datos
       let loading = this.loadingCtrl.create();
@@ -81,8 +97,15 @@ export class CartModalPage {
     }
     
   }
-  ionViewDidEnter(){
+  ionViewDidLoad(){
     this.refresh();
+  }
+  obtenersaldo(){
+    this.obtenerUsuario();
+    this.saldo=100; //aqui se va a ocupar sacar de la base de datos
+  }
+  generarCodigoQR(){
+    this.createdCode = this.idPedido;
   }
   
   getProductos(){
@@ -122,7 +145,7 @@ export class CartModalPage {
 				});
         toast.present();
         this.cartItems.splice(0, this.cartItems.length);
-        this.viewController._didEnter();
+        this.viewController._didLoad();
       }).catch(e=>{console.log("falló: "+e)});
       
     });
@@ -135,5 +158,74 @@ export class CartModalPage {
   eliminarPedido(){
     console.log("Se va a eliminar el pedido: "+this.idPedido);
   }
+  obtenerUsuario(){
+    this.storage.get("id").then((idUser)=>{
+      if (idUser != null) {
+        //si encuentra id, jala los pedidos del usuario de la base de datos
+        this.idUsuario = Number(idUser[0]);
+      }else{
+        this.idUsuario = null;
+      }
+    });
+  }
+  doPedido(){
+    this.obtenersaldo();
+    let data = [{
+      idempresa: this.tienda[0].tienda.id,
+     // idusuario: this.idUser,
+      total: this.total,
+      estatus: 'Solicitado'
+    }];
+    if (this.saldo >= this.total && this.idUsuario != null) {
+      /*this.pedProv.doPedido(this.saldo).subscribe( //CAMBIAR PARAMETRO
+        (response)=> {this.showResposeMsg(1);},
+        (error)=> {this.showResposeMsg(2);}
+      );*/
+    }else{
+      const toast = this.toast.create({
+        message: "Saldo insuficiente",
+        duration: 1500
+      });
+      toast.present();
+    }
+  }
+	
+	showResposeMsg(num: any){
+		let errorMsg ="";
+		if (num==1) {
+			errorMsg="Pedido Correctamente";
+		}else{
+			errorMsg="Hubo un problema";
+		}
+		const toast = this.toast.create({
+			message: errorMsg,
+			duration: 3000
+    	});
+    	toast.present();
+	}
+	confirmarPedido(){
+
+		let confMSG="¿Está todo correcto?";
+		let alert = this.alertCtrl.create({
+			title: 'Confirmar pedido',
+			message: confMSG ,
+			buttons: [
+				{
+					text: 'Cancelar',
+					role: 'cancel',
+					handler: () => {
+						
+					}
+				},
+				{
+					text: 'Pedir',
+					handler: () => {
+						this.doPedido();
+					}
+				}
+			]
+		});
+		alert.present();
+	}
 
 }

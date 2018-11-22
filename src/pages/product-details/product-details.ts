@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
-import { ProductDetailProvider } from '../../providers/product-detail/product-detail';
 import {Storage} from '@ionic/storage';
 
 
@@ -36,7 +35,7 @@ export class ProductDetailsPage {
 	idUser;  
 
   constructor(
-	  public navCtrl: NavController, public prodProv: ProductDetailProvider, public navParams: NavParams, public alertCtrl: AlertController, public toast: ToastController, public storage: Storage) {
+	  public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public toast: ToastController, public storage: Storage) {
 		this.producto = navParams.data.producto;
 		this.tienda = navParams.data.tienda;
 		console.log(this.tienda);
@@ -67,57 +66,7 @@ export class ProductDetailsPage {
   ionViewDidLoad() {
 	}
 
-	doPedido(){
-		this.data = [{
-				idempresa: this.tienda.id,
-				idusuario: this.idUser,
-				total: this.total,
-				estatus: 'Soliciado'
-		}];
-		this.prodProv.doPedido(this.data).subscribe(
-			(response)=> {this.showResposeMsg(1);},
-			(error)=> {this.showResposeMsg(2);}
-		)
-		
-	}
 	
-	showResposeMsg(num: any){
-		
-		if (num==1) {
-			this.errorMsg="Pedido Correctamente";
-		}else{
-			this.errorMsg="Hubo un problema";
-		}
-		const toast = this.toast.create({
-			message: this.errorMsg,
-			duration: 3000
-    	});
-    	toast.present();
-	}
-	confirmarPedido(){
-
-		this.confMSG="Poducto: "+this.producto.nombre+"\n Cantidad: "+this.currentNumber+"\n ¿Todo correcto?";
-		let alert = this.alertCtrl.create({
-			title: 'Confirmar pedido',
-			message: this.confMSG ,
-			buttons: [
-				{
-					text: 'Cancelar',
-					role: 'cancel',
-					handler: () => {
-						
-					}
-				},
-				{
-					text: 'Comprar',
-					handler: () => {
-						this.doPedido();
-					}
-				}
-			]
-		});
-		alert.present();
-	}
 
 	AddToPedidos(product){
 		console.log(product);

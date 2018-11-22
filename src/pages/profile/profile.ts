@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { UsuariosProvider } from '../../providers/usuarios/usuarios';
+import {Storage} from '@ionic/storage';
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,12 +10,42 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+datosUsuario;
+idUsuario;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams, 
+    public provUser: UsuariosProvider,
+    public storage: Storage,
+    public loadingCtrl: LoadingController) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+  ionViewWillEnter() {
+    this.getUserData();
   }
+  getUserData(){
+    this.storage.get("id").then((idUser)=>{
+      if (idUser != null) {
+        //si encuentra id, jala los pedidos del usuario de la base de datos
+        this.idUsuario = Number(idUser[0]);
+        console.log("IDUSER: "+this.idUsuario);
+        //abre el cargando mientras carga los datos
+        let loading = this.loadingCtrl.create();
+        loading.present();
+        this.provUser.getUserData(this.idUsuario).subscribe(
+          //al obtener los datos, se guardan en this.datosUsuario y el cargando se cierra
+          (data)=> {this.datosUsuario = data; loading.dismiss();console.log("gay");console.log(this.datosUsuario);},
+          //Si no, muestra el error
+          (error)=> {console.log(error);}
+        );
+        
+ 
+
+      }else{
+        console.log("no se encontró el id del usuario");
+      }
+    });
+  }
+
 
 }

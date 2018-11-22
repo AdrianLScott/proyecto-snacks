@@ -29,7 +29,10 @@
     </ion-refresher>
 
 		<ion-card ion-list *ngFor = "let tienda of tiendas" (click)="objetosTienda(tienda)">
-	    	<img src="{{apiURL}}{{tienda.img_fondo}}"/>
+        <img src="{{apiURL}}{{tienda.img_fondo}}" *ngIf="tienda.logotipo != ''; else elseImg"/>
+        <ng-template #elseImg>
+          <img src="/assets/imgs/blank-img.png"/>
+        </ng-template>
 	    	<div class="card-title">{{tienda.nombre}}</div>
     		<div class="card-subtitle">{{tienda.descripcion}}</div>
   		</ion-card>

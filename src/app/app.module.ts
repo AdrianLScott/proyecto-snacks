@@ -86,7 +86,6 @@ export function getAuthHttp(http) {
     ForgotPasswordPage,
     CartModalPage,
     SellerPage,
-    PopNotificationsComponent,
     TabsSellerPage,
     HistoryRecargasPage
   ],

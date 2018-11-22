@@ -1,4 +1,4 @@
-import { ProductDetailProvider } from './../../providers/product-detail/product-detail';
+//import { ProductDetailProvider } from './../../providers/product-detail/product-detail';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, App } from 'ionic-angular';
 import { ProviderProductosProvider } from '../../providers/provider-productos/provider-productos';

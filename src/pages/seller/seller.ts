@@ -82,7 +82,10 @@ export class SellerPage {
               if(data=="1"){
                 this.sellerProvider.hacerRecarga(datos).subscribe(
                   data=>{
-                    const notificacion = {monto: this.saldoAC.value, id_cliente: this.clienteAC.value};
+                    const notificacion = {
+                      title: "Recarga exitosa",
+                      msg: "Has recibido una recarga de $"+this.saldoAC.value, 
+                      id_cliente: this.clienteAC.value};
                     this.sellerProvider.sendNotificacion(notificacion).subscribe();
                     loading.dismiss()
                     let alertContent;

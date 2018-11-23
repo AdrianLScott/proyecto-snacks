@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, App } from 'ionic-angular';
 import { ProviderProductosProvider } from '../../providers/provider-productos/provider-productos';
 import { ProductDetailsPage } from '../product-details/product-details';
+import * as AppConfig from './../../app/main';
 
 /**
  * Generated class for the ProductsPage page.
@@ -20,9 +21,11 @@ export class ProductsPage {
 	tienda;
 	productos;
   banderaBuscar: boolean = false;
+  apiURL;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController, public app:App) {
-  	this.tienda = navParams.data.tienda;
+    this.tienda = navParams.data.tienda;
+    this.apiURL = AppConfig.cfg.api_baseURL;
   }
 
   ionViewDidLoad() {

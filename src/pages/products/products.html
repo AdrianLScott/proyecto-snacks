@@ -27,7 +27,10 @@
 		  	<ion-row>
 		  		<ion-col col-3 >
 		  			<div>
-		  				<img  src="/assets/imgs/starbucks.png">
+							<img  src="{{apiURL}}{{producto.imagen}}"  *ngIf="producto.imagen != null; else elseImg">
+							<ng-template #elseImg>
+									<img src="/assets/imgs/blank-img.png"/>
+								</ng-template>
 		  			</div>
 		  			
 		  		</ion-col >

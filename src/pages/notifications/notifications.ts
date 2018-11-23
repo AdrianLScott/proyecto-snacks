@@ -4,8 +4,8 @@ import { NotificationsProvider } from './../../providers/notifications/notificat
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { Toast } from '@ionic-native/toast';
-import * as socketIo from 'socket.io-client'; 
-import * as AppConfig from './../../app/main';
+//import * as socketIo from 'socket.io-client'; 
+//import * as AppConfig from './../../app/main';
 /**
  * Generated class for the NotificationsPage page.
  *
@@ -30,14 +30,14 @@ export class NotificationsPage {
     this.getNotifications();
   }
 
-  sendPedido(){
+/*   sendPedido(){
     const socket = socketIo(AppConfig.cfg.nodeServer);
     var imprimir = this.testImprimir;
     socket.emit('send-pedido',{idEmpresa: 1, pedido:"Yeees"}, function(response){
       imprimir("khe");
       console.log(response);
     })
-  }
+  } */
 
   testImprimir(msg){
     console.log('Si se imprime: ',msg);
@@ -97,19 +97,19 @@ export class NotificationsPage {
       console.log(data);
       if(data){
         this.notificaciones = [];
+        this.toast.showWithOptions(
+          {
+            message: "Notificaciones eliminadas",
+            duration: 2000,
+            position: 'bottom',
+            addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+          }
+        ).subscribe();
       }
     });
     popover.present({
       ev: myEvent
     });
-    this.toast.showWithOptions(
-      {
-        message: "Notificación eliminada",
-        duration: 2000,
-        position: 'bottom',
-        addPixelsY: -80  // added a negative value to move it up a bit (default 0)
-      }
-    ).subscribe();
   }
   
 

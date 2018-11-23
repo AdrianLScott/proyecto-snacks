@@ -1,3 +1,4 @@
+import { PopNotificationsComponent } from './../components/pop-notifications/pop-notifications';
 import { NoEventPage } from './../pages/no-event/no-event';
 import { PinDialog } from '@ionic-native/pin-dialog';
 import { HistoryRecargasPage } from './../pages/history-recargas/history-recargas';
@@ -32,7 +33,6 @@ import { CartModalPage } from '../pages/cart-modal/cart-modal';
 import { SocketProvider } from '../providers/socket/socket';
 import { OneSignal } from '@ionic-native/onesignal';
 import { NotificationsProvider } from '../providers/notifications/notifications';
-import { PopNotificationsComponent} from '../components/pop-notifications/pop-notifications';
 import { Toast } from '@ionic-native/toast';
 import { PedidosProvider } from '../providers/pedidos/pedidos';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
@@ -62,9 +62,9 @@ export function getAuthHttp(http) {
     CartModalPage,
     SellerPage,
     TabsSellerPage,
-    PopNotificationsComponent,
     HistoryRecargasPage,
-    NoEventPage
+    NoEventPage,
+    PopNotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +90,8 @@ export function getAuthHttp(http) {
     SellerPage,
     TabsSellerPage,
     HistoryRecargasPage,
-    NoEventPage
+    NoEventPage,
+    PopNotificationsComponent,
   ],
   providers: [
     StatusBar,

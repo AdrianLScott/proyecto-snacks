@@ -8,12 +8,13 @@
 
   <ion-navbar color="venados">
 		<ion-title>{{tienda.nombre}}</ion-title>
-		
+		<!--
 		<ion-buttons end>
 				<button ion-button icon-only (click)="openBuscar()">
 					<ion-icon name="search"></ion-icon>
 				</button>
 			</ion-buttons>
+			-->
   </ion-navbar>
 
 </ion-header>
@@ -29,7 +30,7 @@
 		  			<div>
 							<img  src="{{apiURL}}{{producto.imagen}}"  *ngIf="producto.imagen != null; else elseImg">
 							<ng-template #elseImg>
-									<img src="/assets/imgs/blank-img.png"/>
+									<img src="" class="imgProducto"/>
 								</ng-template>
 		  			</div>
 		  			

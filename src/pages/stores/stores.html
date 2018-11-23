@@ -8,11 +8,13 @@
   </ion-buttons>
  
     <ion-title>Tiendas</ion-title>
+    <!--
     <ion-buttons end>
       <button ion-button icon-only (click)="openBuscar()">
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
+  -->
   </ion-navbar>
 
 </ion-header>
@@ -32,7 +34,7 @@
 		<ion-card ion-list *ngFor = "let tienda of tiendas" (click)="objetosTienda(tienda)">
         <img src="{{apiURL}}{{tienda.img_fondo}}" *ngIf="tienda.img_fondo != ''; else elseImg"/>
         <ng-template #elseImg>
-          <img src="/assets/imgs/blank-img.png"/>
+          <img src="" class="imgProducto"/>
         </ng-template>
         <div class="franja" style="background-color:rgba(0,0,0,0.6);">
           <p style="color: white; font-size: 28px">{{tienda.nombre}}</p>

@@ -17,9 +17,8 @@ export class MyApp {
   rootPage:any;
   rootPageParams:any;
   token: any;  
-  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, public loadingCtrl: LoadingController, private onesignal: OneSignal, private utility: UtilityProvider) {
-    const loading = this.loadingCtrl.create();
-    loading.present();
+  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private onesignal: OneSignal, private utility: UtilityProvider) {
+
     this.utility.isThereAnEvent().subscribe(data=>{
       if(data!=-1){
         this.hasToken().then(data=>{
@@ -32,23 +31,19 @@ export class MyApp {
           }
           statusBar.hide();
           splashScreen.hide();
-          loading.dismiss()
         },(error) => {
           this.rootPage = LoginPage;
           statusBar.hide();
           splashScreen.hide();
-          loading.dismiss()
         })
         .catch(e=>{
           this.rootPage=LoginPage;
           statusBar.hide();
           splashScreen.hide();
-          loading.dismiss()
         });
       }
       else{
         this.rootPage = NoEventPage;
-        loading.dismiss();
       }
     })
 

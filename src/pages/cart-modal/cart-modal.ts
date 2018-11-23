@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ViewController, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, AlertController } from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import { PedidosProvider } from '../../providers/pedidos/pedidos';
 import { UsuariosProvider } from '../../providers/usuarios/usuarios';
 import * as AppConfig from './../../app/main';
 import * as socketIo from 'socket.io-client'; 
+import { Toast } from '@ionic-native/toast';
+
 
 @IonicPage()
 @Component({
@@ -23,10 +25,12 @@ export class CartModalPage {
   saldo: any;
   idUsuario;
   idTienda;
+  apiURL;
+
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public storage: Storage, 
-    public toast: ToastController, 
+    public toast: Toast,
     public viewController: ViewController,
     public pedProv: PedidosProvider,
     public alertCtrl: AlertController,
@@ -41,6 +45,9 @@ export class CartModalPage {
     this.estatus = this.navParams.data.estatus;
     //obtenemos el id de la tiienda
     this.idTienda = this.navParams.data.idEmpresa;
+    //se obtiene la url para obtener las imagenes y poder mostrarlas
+    this.apiURL = AppConfig.cfg.api_baseURL;
+
    }
 
   //Esta funcion verifica los productos que tiene la tienda a la que se ingresó
@@ -150,11 +157,14 @@ export class CartModalPage {
       
       this.storage.set("cart", data).then( ()=>{
 
-				const toast = this.toast.create({
-					message: "Producto eliminado",
-					duration: 1500
-				});
-        toast.present();
+				this.toast.showWithOptions(
+          {
+            message: "Producto eliminado",
+            duration: 2000,
+            position: 'bottom',
+            addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+          }
+        ).subscribe();
         this.cartItems.splice(0, this.cartItems.length);
         this.viewController._didLoad();
       }).catch(e=>{console.log("falló: "+e)});
@@ -237,11 +247,14 @@ export class CartModalPage {
       )
       
     }else{
-      const toast = this.toast.create({
-        message: "Saldo insuficiente",
-        duration: 1500
-      });
-      toast.present();
+      this.toast.showWithOptions(
+        {
+          message: "Saldo insuficiente",
+          duration: 2000,
+          position: 'bottom',
+          addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+        }
+      ).subscribe();
     }
   }
   quitarTienda(){
@@ -252,11 +265,14 @@ export class CartModalPage {
       
       this.storage.set("cart", data).then( ()=>{
 
-				const toast = this.toast.create({
-					message: "Pedido Correctamente",
-					duration: 1500
-				});
-        toast.present();
+				this.toast.showWithOptions(
+          {
+            message: "Pedido correctamente",
+            duration: 2000,
+            position: 'bottom',
+            addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+          }
+        ).subscribe();
         //this.cartItems.splice(0, this.cartItems.length);
         this.close();
       }).catch(e=>{console.log("falló: "+e)});
@@ -272,11 +288,14 @@ export class CartModalPage {
 		}else{
       errorMsg=num;
     }
-		const toast = this.toast.create({
-			message: errorMsg,
-			duration: 3000
-    	});
-    	toast.present();
+		this.toast.showWithOptions(
+      {
+        message: errorMsg,
+        duration: 2000,
+        position: 'bottom',
+        addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+      }
+    ).subscribe();
 	}
 	confirmarPedido(){
 

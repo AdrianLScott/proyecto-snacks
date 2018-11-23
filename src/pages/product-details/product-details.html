@@ -16,7 +16,10 @@
 <ion-content>
 	
 	<div class="imgcontainer">
-		<img src="/assets/imgs/starbucks.png">
+		<img src="{{apiURL}}{{producto.imagen}}" *ngIf="producto.imagen != null ; else elseImg">
+		<ng-template #elseImg>
+			<img src="" class="imgProducto"/>
+		</ng-template>
 	</div>
 	<div class="cont">
 		<ion-row>

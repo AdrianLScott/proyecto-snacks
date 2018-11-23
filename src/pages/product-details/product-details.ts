@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+import { Toast } from '@ionic-native/toast';
 import {Storage} from '@ionic/storage';
+import * as AppConfig from './../../app/main';
 
 
 
@@ -33,15 +34,17 @@ export class ProductDetailsPage {
 	data: dataInterface[]= [];
 	errorMsg;
 	idUser;  
-
+	apiURL;
   constructor(
-	  public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public toast: ToastController, public storage: Storage) {
+	  public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public toast: Toast, public storage: Storage) {
 		this.producto = navParams.data.producto;
 		this.tienda = navParams.data.tienda;
 		console.log(this.tienda);
 		this.idUser = this.storage.get('id');
 		console.log(this.idUser);
-  	this.total = this.producto.precio;
+	  this.total = this.producto.precio;
+	  this.apiURL = AppConfig.cfg.api_baseURL;
+
 	}
 
 	increment() {
@@ -147,11 +150,14 @@ export class ProductDetailsPage {
 				console.log("Carrito modificado");
 				console.log(data);
 
-				const toast = this.toast.create({
-					message: "Pedido modificado",
-					duration: 800
-				});
-				toast.present();
+				this.toast.showWithOptions(
+					{
+					  message: "Pedido modificado",
+					  duration: 2000,
+					  position: 'bottom',
+					  addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+					}
+				  ).subscribe();
 			}).catch(e=>{console.log("falló: "+e)});
 
 		});

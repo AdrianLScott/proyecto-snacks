@@ -48,6 +48,7 @@ export class MyApp {
       }
       else{
         this.rootPage = NoEventPage;
+        loading.dismiss();
       }
     })
 

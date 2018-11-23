@@ -29,6 +29,9 @@ export let cfg = {
     verificarPin: '/verificarPin',
     getHistorial: '/getHistorialRecargas',
     sendNotificacion: '/send_notif'
+  },
+  general:{
+    isThereEvent: '/isThereAnEvent'
   }
 };
 //export const API_BASE_ROUTE= 'http://pespeciales.upsin.edu.mx/venados/';

@@ -1,3 +1,4 @@
+import { NoEventPage } from './../pages/no-event/no-event';
 import { PinDialog } from '@ionic-native/pin-dialog';
 import { HistoryRecargasPage } from './../pages/history-recargas/history-recargas';
 import { TabsSellerPage } from './../pages/tabs-seller/tabs-seller';
@@ -62,7 +63,8 @@ export function getAuthHttp(http) {
     SellerPage,
     TabsSellerPage,
     PopNotificationsComponent,
-    HistoryRecargasPage
+    HistoryRecargasPage,
+    NoEventPage
   ],
   imports: [
     BrowserModule,
@@ -87,7 +89,8 @@ export function getAuthHttp(http) {
     CartModalPage,
     SellerPage,
     TabsSellerPage,
-    HistoryRecargasPage
+    HistoryRecargasPage,
+    NoEventPage
   ],
   providers: [
     StatusBar,

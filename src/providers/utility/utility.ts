@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
+import *  as AppConfig from '../../app/main';
 /*
   Generated class for the UtilityProvider provider.
 
@@ -9,7 +11,7 @@ import { ToastController } from 'ionic-angular';
 @Injectable()
 export class UtilityProvider {
 
-  constructor(private toastCtrl: ToastController) {
+  constructor(private toastCtrl: ToastController, public http: HttpClient) {
   	// code
   }
 
@@ -27,6 +29,10 @@ export class UtilityProvider {
     });
 
     toast.present();
+  }
+
+  isThereAnEvent(){
+    return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.general.isThereEvent);
   }
 
 }

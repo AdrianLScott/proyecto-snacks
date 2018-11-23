@@ -9,33 +9,39 @@
 
 
 <ion-content padding>
-  <div>
-    <!--AQUI IMAGINO LA FOTO-->
-  </div>
   
-<ion-card *ngIf="datosUsuario">
-  <ion-card-header text-center>
-    {{datosUsuario.nombre}} {{datosUsuario.apellidopaterno}}
+<ion-card class="card" *ngIf="datosUsuario">
+  <ion-card-header class="card-header">
+    Datos de usuario
   </ion-card-header>
-
-  <ion-list>
-    <button ion-item>
-      <ion-icon name="at" item-start></ion-icon>
-      {{datosUsuario.correo}}
-    </button>
-
-    <button ion-item>
-      <ion-icon name="call" item-start></ion-icon>
-      {{datosUsuario.telefono}}
-    </button>
-
-    <button ion-item>
-      <ion-icon name="cash" item-start></ion-icon>
-      {{datosUsuario.saldo}}
-    </button>
-
-  </ion-list>
+  <ion-card-content class="card-content">
+    <ion-list>
+      <ion-item>
+        <ion-label>Nombre:</ion-label>
+        <ion-label>{{datosUsuario.nombre}} {{datosUsuario.apellidopaterno}} {{datosUsuario.apellidomaterno}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Correo:</ion-label>
+        <ion-label>{{datosUsuario.correo}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Teléfono:</ion-label>
+        <ion-label>{{datosUsuario.telefono}}</ion-label>
+      </ion-item>
+      <ion-item class="card-header">
+          <ion-label>Saldo:</ion-label>
+          <ion-label>${{datosUsuario.saldo}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
 </ion-card>
 
+<ion-card class="card" *ngIf="datosUsuario">
+    
+  </ion-card>
+  <ion-card *ngIf="datosUsuario" class="card-saldo">
+    <div class="card-title">{{datosUsuario.id}}</div>
+    <div class="card-subtitle">Numero para recargas</div>
+  </ion-card>
 
 </ion-content>

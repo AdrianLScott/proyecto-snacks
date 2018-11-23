@@ -27,7 +27,7 @@ idUsuario;
     this.storage.get("id").then((idUser)=>{
       if (idUser != null) {
         //si encuentra id, jala los pedidos del usuario de la base de datos
-        this.idUsuario = Number(idUser[0]);
+        this.idUsuario = Number(idUser);
         console.log("IDUSER: "+this.idUsuario);
         //abre el cargando mientras carga los datos
         let loading = this.loadingCtrl.create();

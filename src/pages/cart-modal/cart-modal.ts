@@ -205,7 +205,7 @@ export class CartModalPage {
     return this.storage.get("id").then((idUser)=>{
       if (idUser != null) {
         //si encuentra id
-        this.idUsuario = Number(idUser[0]);
+        this.idUsuario = Number(idUser);
         return this.idUsuario;
       }else{
         this.idUsuario = null;

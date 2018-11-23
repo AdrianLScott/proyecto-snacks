@@ -9,7 +9,10 @@
 
 
 <ion-content padding>
-  
+<ion-card *ngIf="datosUsuario" class="card-saldo">
+    <div class="card-title">{{datosUsuario.id}}</div>
+    <div class="card-subtitle">Numero para recargas</div>
+</ion-card>
 <ion-card class="card" *ngIf="datosUsuario">
   <ion-card-header class="card-header">
     Datos de usuario
@@ -17,8 +20,13 @@
   <ion-card-content class="card-content">
     <ion-list>
       <ion-item>
-        <ion-label>Nombre:</ion-label>
-        <ion-label>{{datosUsuario.nombre}} {{datosUsuario.apellidopaterno}} {{datosUsuario.apellidomaterno}}</ion-label>
+        <ion-label>Nombre(s):</ion-label>
+        <ion-label>{{datosUsuario.nombre}}</ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Apellidos:</ion-label>
+        <ion-label>{{datosUsuario.apellidopaterno}} {{datosUsuario.apellidomaterno}}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label>Correo:</ion-label>
@@ -35,13 +43,5 @@
     </ion-list>
   </ion-card-content>
 </ion-card>
-
-<ion-card class="card" *ngIf="datosUsuario">
-    
-  </ion-card>
-  <ion-card *ngIf="datosUsuario" class="card-saldo">
-    <div class="card-title">{{datosUsuario.id}}</div>
-    <div class="card-subtitle">Numero para recargas</div>
-  </ion-card>
 
 </ion-content>

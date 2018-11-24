@@ -72,17 +72,7 @@ export class CartModalPage {
               
               this.tienda = data[i];
               //verifia si la tienda no tiene nada
-              if (this.tienda != null && this.tienda.length != 1) {
-                //si tiene datos, hace un recorrido para meter los productos a una variable
-                for (let i = 1; i < this.tienda.length; i++) {
-          
-                  this.cartItems.push(this.tienda[i]);
-                  this.total = this.total + (this.tienda[i].cantidad * this.tienda[i].producto.precio);
-                }
-          
-              }else{
-                this.close();
-              }
+              this.getProductos();
             }
           }
           
@@ -132,9 +122,9 @@ export class CartModalPage {
     if (this.tienda != null && this.tienda.length > 0) {
       //si tiene datos, hace un recorrido para meter los productos a una variable
       for (let i = 0; i < this.tienda.length; i++) {
-        
+        console.log("hace el nuevo cart");
         this.cartItems.push(this.tienda[i]);
-        this.total = this.total + (this.tienda[i].cantidad * this.tienda[i].precio);
+        this.total = this.total + ((this.tienda[i].cantidad * this.tienda[i].precio)).toFixed(2);
       }
 
     }else{

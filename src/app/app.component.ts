@@ -1,3 +1,4 @@
+import { Toast } from '@ionic-native/toast';
 import { UtilityProvider } from './../providers/utility/utility';
 import { SidebarPage } from './../pages/sidebar/sidebar';
 import { LoginPage } from './../pages/login/login';
@@ -17,36 +18,10 @@ export class MyApp {
   rootPage:any;
   rootPageParams:any;
   token: any;  
-  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private onesignal: OneSignal, private utility: UtilityProvider) {
+  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private onesignal: OneSignal, private utility: UtilityProvider, public toast: Toast) {
 
-    this.utility.isThereAnEvent().subscribe(data=>{
-      if(data!=-1){
-        this.hasToken().then(data=>{
-          if(this.isTokenValid()){
-            this.rootPage= SidebarPage;
-            this.rootPageParams = {tipo_usuario: "Cliente" }
-          }
-          else{
-            this.rootPage = LoginPage;
-          }
-          statusBar.hide();
-          splashScreen.hide();
-        },(error) => {
-          this.rootPage = LoginPage;
-          statusBar.hide();
-          splashScreen.hide();
-        })
-        .catch(e=>{
-          this.rootPage=LoginPage;
-          statusBar.hide();
-          splashScreen.hide();
-        });
-      }
-      else{
-        this.rootPage = NoEventPage;
-      }
-    })
-
+    this.validateRootPage(statusBar, splashScreen, false);
+    
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -89,6 +64,48 @@ export class MyApp {
         (error)=>{return false;},
       );
     }
+  }
+
+  validateRootPage(statusbar, splashscreen, hasFailed:boolean){
+    const failed:boolean = hasFailed;
+    return this.utility.isThereAnEvent().subscribe(data=>{
+      if(data!=-1){
+        this.hasToken().then(data=>{
+          if(this.isTokenValid()){
+            this.rootPage= SidebarPage;
+            this.rootPageParams = {tipo_usuario: "Cliente" }
+          }
+          else{
+            this.rootPage = LoginPage;
+          }
+        },(error) => {
+          this.rootPage = LoginPage;
+        })
+        .catch(e=>{
+          this.rootPage=LoginPage;
+        });
+      }
+      else{
+        this.rootPage = NoEventPage;
+      }
+      if(failed){
+        this.toast.hide();
+      }
+      statusbar.hide();
+      splashscreen.hide();
+    },
+    error =>{
+      if(!failed){
+        this.toast.showWithOptions(
+          {
+            message: "Conexión fallida, reintentando conectar",
+            position: 'bottom',
+            duration: 5000,
+            addPixelsY: -80
+          }).subscribe();
+      }
+      this.validateRootPage(statusbar, splashscreen, true);
+    });
   }
 
 }

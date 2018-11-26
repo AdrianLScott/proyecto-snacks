@@ -57,23 +57,7 @@ export class SidebarPage {
       ];
       this.rootPage = 'TabsPage';
     }
-  }
-  openPage(page: PageInterface) {
-    
-   if (this.nav.getActiveChildNavs().length && page.index != undefined) {
-      this.nav.getActiveChildNavs()[0].select(page.index);
-    } else {
-      // Tabs are not active, so reset the root page 
-      // In this case: moving to or from SpecialPage
-      if(page.pageName != 'LogoutPage'){
-        this.nav.push(page.pageName);
-      }
-      else{
-        this.presentConfirm();
-      }
-    }
-  }
-  ionViewDidLoad(){
+
     this.storage.get('user').then(data=>{
       if(data){
           if(this.navParams.get('tipo_usuario') !=='Vendedor'){
@@ -96,6 +80,21 @@ export class SidebarPage {
         this.user = undefined;
       }
     });
+  }
+  openPage(page: PageInterface) {
+    
+   if (this.nav.getActiveChildNavs().length && page.index != undefined) {
+      this.nav.getActiveChildNavs()[0].select(page.index);
+    } else {
+      // Tabs are not active, so reset the root page 
+      // In this case: moving to or from SpecialPage
+      if(page.pageName != 'LogoutPage'){
+        this.nav.push(page.pageName);
+      }
+      else{
+        this.presentConfirm();
+      }
+    }
   }
   isActive(page: PageInterface) {
    // Again the Tabs Navigation	

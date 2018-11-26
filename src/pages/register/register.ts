@@ -2,7 +2,6 @@ import { SidebarPage } from './../sidebar/sidebar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { UtilityProvider } from '../../providers/utility/utility';
 import { AuthProvider } from '../../providers/auth/auth';
 import { passValidator } from './validator';
 import { validateNumber } from './validator';
@@ -58,7 +57,7 @@ export class RegisterPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public toast: Toast,
-              public alertCtrl: AlertController, public formbuilder: FormBuilder, public utilsProvider: UtilityProvider,
+              public alertCtrl: AlertController, public formbuilder: FormBuilder,
               public authService: AuthProvider) {
 
     this.formgroup = formbuilder.group({
@@ -101,16 +100,11 @@ export class RegisterPage {
           if(data == 1){
             this.toast.showWithOptions(
             {
-              message: "Notificación eliminada",
+              message: "Registro exitoso",
               duration: 2000,
               position: 'bottom',
-              addPixelsY: -80  // added a negative value to move it up a bit (default 0)
-            }
-          ).subscribe(
-            toast => {
-              console.log(toast);
-            }
-          );
+              addPixelsY: -80
+            }).subscribe();
             this.navCtrl.setRoot(SidebarPage);
           }
           else if(data!==undefined){

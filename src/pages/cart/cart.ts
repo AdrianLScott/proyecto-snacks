@@ -92,7 +92,7 @@ export class CartPage {
     this.storage.get("id").then((idUser)=>{
       if (idUser != null) {
         //si encuentra id, jala los pedidos del usuario de la base de datos
-        this.idUsuario = Number(idUser);
+        this.idUsuario = Number(idUser[0]);
 
         //abre el cargando mientras carga los datos
         let loading = this.loadingCtrl.create();

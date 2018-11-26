@@ -2,11 +2,13 @@
 <ion-header>
 
   <ion-navbar color="venados">
+    <!--
       <ion-buttons end *ngIf="estatus =='SinConfirmar'">
         <button ion-button icon-only (click)="edicion()">
           <ion-icon name="create"></ion-icon>
         </button>
       </ion-buttons>
+      -->
     <ion-title>Carrito</ion-title>
   </ion-navbar>
 
@@ -14,11 +16,9 @@
 
 
 <ion-content>
-
   <ion-list *ngIf="estatus == 'SinConfirmar'; else elseRealizado">
-      
-    <ion-item *ngFor="let item of cartItems; let i = index" #productos>
-
+    <ion-item-sliding *ngFor="let item of cartItems; let i = index" #productos>
+    <ion-item>
       <ion-thumbnail item-left>
         <img src="{{apiURL}}{{item.producto.imagen}}" style="width: 60px !important; height: 60px !important;" *ngIf="item.producto.imagen != null; else elseImg">
         <ng-template #elseImg>
@@ -27,10 +27,16 @@
       </ion-thumbnail>
       <h2>{{item.producto.nombre}}</h2>
       <p>Cantidad: {{item.cantidad}} Precio: {{item.producto.precio}}</p>
-      <button ion-button clear item-right color="danger" *ngIf="bandera" (click)="removeFromCart(i)">
-        <ion-icon name="close"></ion-icon>
-      </button>
+
     </ion-item>
+
+    <ion-item-options side="right">
+      <button ion-button color="danger" (click)="removeFromCart(i)">
+        <ion-icon name="trash"></ion-icon>
+        Eliminar
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
     <ion-grid>
         <ion-card>
           <ion-grid>

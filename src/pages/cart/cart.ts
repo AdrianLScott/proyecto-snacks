@@ -117,7 +117,6 @@ export class CartPage {
       for (let i = 0; i < this.pedidos.length; i++) {
         if (this.pedidos[i].estatus == "Solicitado") {//si hay pedidos solicitados
           this.solicitados.push(this.pedidos[i]);
-          console.log(this.pedidos[i]);
 
         }else if (this.pedidos[i].estatus == "En proceso") {// si hay pedidos que estan siendo proocesados
           this.procesando.push(this.pedidos[i]);

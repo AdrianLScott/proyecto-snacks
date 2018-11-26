@@ -147,8 +147,6 @@ export class ProductDetailsPage {
 			
 
 			this.storage.set("cart", data).then( ()=>{
-				console.log("Carrito modificado");
-				console.log(data);
 
 				this.toast.showWithOptions(
 					{

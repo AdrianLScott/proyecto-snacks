@@ -72,7 +72,7 @@ export class CartModalPage {
               
               this.tienda = data[i];
               //verifia si la tienda no tiene nada
-              this.getProductos();
+              this.getProductos(1);
             }
           }
           
@@ -84,7 +84,7 @@ export class CartModalPage {
       loading.present();
       this.pedProv.getDetallesPedidos(this.idPedido).subscribe(
         //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
-        (data)=> {this.tienda = data;loading.dismiss(); this.getProductos(); this.generarCodigoQR();},
+        (data)=> {this.tienda = data;loading.dismiss(); this.getProductos(0); this.generarCodigoQR();},
         //Si no, muestra el error
         (error)=> {console.log(error);}
       ) 
@@ -95,7 +95,7 @@ export class CartModalPage {
       loading.present();
       this.pedProv.getDetallesPedidos(this.idPedido).subscribe(
         //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
-        (data)=> {this.tienda = data;loading.dismiss(); this.getProductos(); },
+        (data)=> {this.tienda = data;loading.dismiss(); this.getProductos(0); },
         //Si no, muestra el error
         (error)=> {console.log(error);}
       ) 
@@ -116,16 +116,23 @@ export class CartModalPage {
     this.createdCode = this.idPedido;
   }
   
-  getProductos(){
+  getProductos(num){
     this.total = 0.0;
     //verifia si la tienda no tiene nada
+    console.log("Hla:");
+    console.log(this.tienda);
     if (this.tienda != null && this.tienda.length > 0) {
       //si tiene datos, hace un recorrido para meter los productos a una variable
-      for (let i = 0; i < this.tienda.length; i++) {
+      for (let i = num; i < this.tienda.length; i++) {
         console.log("hace el nuevo cart");
         this.cartItems.push(this.tienda[i]);
-        this.total = this.total + ((this.tienda[i].cantidad * this.tienda[i].precio)).toFixed(2);
+        if (num==1) {
+          this.total = (this.total + (this.tienda[i].cantidad * this.tienda[i].producto.precio)).toFixed(2);
+        }else{
+          this.total = (this.total + (this.tienda[i].cantidad * this.tienda[i].precio)).toFixed(2);
+        }
       }
+      console.log(this.cartItems);
 
     }else{
       this.close();
@@ -170,14 +177,12 @@ export class CartModalPage {
   }
 //esta funcion sirve para cancelar un pedido siempre y cuando no se esté preparando
   cancelarPedido(){
-    console.log(this.idPedido);
     const socket = socketIo(AppConfig.cfg.nodeServer);
     let data = {
       idEmpresa: this.idTienda,
       idPedido: this.idPedido,
       clase: this.close()
     };
-    console.log("id Tienda: "+this.idTienda);
     socket.emit('cancelar-pedido',data, 
     function(confirmation){
       if (confirmation) {
@@ -224,7 +229,6 @@ export class CartModalPage {
         close: this.quitarTienda(),
         total: this.total
       };
-      console.log(this.idTienda);
       const socket = socketIo(AppConfig.cfg.nodeServer);
       socket.emit('add-pedido',data,
         function(confirmation){

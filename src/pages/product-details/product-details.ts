@@ -49,19 +49,19 @@ export class ProductDetailsPage {
 
 	increment() {
 		if (this.currentNumber >= 20) {
-			this.total=this.currentNumber*this.producto.precio;
+			this.total=(this.currentNumber*this.producto.precio).toFixed(2);
 		}else{
   			this.currentNumber++;
-			this.total=this.currentNumber*this.producto.precio;
+			this.total=(this.currentNumber*this.producto.precio).toFixed(2);
 		}
 	}
 
 	decrement() {
 		if (this.currentNumber <= 1) {
-			this.total=this.currentNumber*this.producto.precio;
+			this.total=(this.currentNumber*this.producto.precio).toFixed(2);
 		}else{
 			this.currentNumber--;
-			 	this.total=this.currentNumber*this.producto.precio;
+			 	this.total=(this.currentNumber*this.producto.precio).toFixed(2);
 		}
 		
 	}
@@ -147,12 +147,10 @@ export class ProductDetailsPage {
 			
 
 			this.storage.set("cart", data).then( ()=>{
-				console.log("Carrito modificado");
-				console.log(data);
 
 				this.toast.showWithOptions(
 					{
-					  message: "Pedido modificado",
+					  message: "Agregado exitosamente al carrito",
 					  duration: 2000,
 					  position: 'bottom',
 					  addPixelsY: -80  // added a negative value to move it up a bit (default 0)

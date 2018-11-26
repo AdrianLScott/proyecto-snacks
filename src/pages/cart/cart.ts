@@ -92,7 +92,7 @@ export class CartPage {
     this.storage.get("id").then((idUser)=>{
       if (idUser != null) {
         //si encuentra id, jala los pedidos del usuario de la base de datos
-        this.idUsuario = Number(idUser[0]);
+        this.idUsuario = Number(idUser);
 
         //abre el cargando mientras carga los datos
         let loading = this.loadingCtrl.create();
@@ -117,7 +117,6 @@ export class CartPage {
       for (let i = 0; i < this.pedidos.length; i++) {
         if (this.pedidos[i].estatus == "Solicitado") {//si hay pedidos solicitados
           this.solicitados.push(this.pedidos[i]);
-          console.log(this.pedidos[i]);
 
         }else if (this.pedidos[i].estatus == "En proceso") {// si hay pedidos que estan siendo proocesados
           this.procesando.push(this.pedidos[i]);

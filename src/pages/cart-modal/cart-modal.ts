@@ -26,6 +26,7 @@ export class CartModalPage {
   idUsuario;
   idTienda;
   apiURL;
+  datosUsuario: any;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -95,7 +96,7 @@ export class CartModalPage {
       loading.present();
       this.pedProv.getDetallesPedidos(this.idPedido).subscribe(
         //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
-        (data)=> {this.tienda = data;loading.dismiss(); this.getProductos(0); },
+        (data)=> {this.tienda = data;this.getProductos(0);this.obtenerUsuario();loading.dismiss(); },
         //Si no, muestra el error
         (error)=> {console.log(error);}
       ) 
@@ -107,7 +108,7 @@ export class CartModalPage {
   }
   obtenerSaldo(){
     this.provUser.getUserSaldo(this.idUsuario).subscribe(
-      (saldo)=>{this.saldo = saldo[0].saldo;},
+      (saldo)=>{this.saldo = Number(saldo[0].saldo);},
       (error)=>{this.showResposeMsg("No se pudo obtener el saldo");}
       );
       
@@ -119,8 +120,6 @@ export class CartModalPage {
   getProductos(num){
     this.total = 0.0;
     //verifia si la tienda no tiene nada
-    console.log("Hla:");
-    console.log(this.tienda);
     if (this.tienda != null && this.tienda.length > 0) {
       //si tiene datos, hace un recorrido para meter los productos a una variable
       for (let i = num; i < this.tienda.length; i++) {
@@ -132,7 +131,7 @@ export class CartModalPage {
           this.total = (this.total + (this.tienda[i].cantidad * this.tienda[i].precio)).toFixed(2);
         }
       }
-      console.log(this.cartItems);
+      //console.log(this.cartItems);
 
     }else{
       this.close();
@@ -177,20 +176,34 @@ export class CartModalPage {
   }
 //esta funcion sirve para cancelar un pedido siempre y cuando no se esté preparando
   cancelarPedido(){
+    let dataP;
     const socket = socketIo(AppConfig.cfg.nodeServer);
-    let data = {
-      idEmpresa: this.idTienda,
-      idPedido: this.idPedido,
-      clase: this.close()
-    };
-    socket.emit('cancelar-pedido',data, 
-    function(confirmation){
-      if (confirmation) {
-        data.clase
-      } else {
-        console.log("no jalo");
-      }
+    this.obtenerUsuario().then((response)=>{
+      this.provUser.getUserData(this.idUsuario).subscribe(
+        //al obtener los datos, se guardan en this.datosUsuario y el cargando se cierra
+        (data)=> {
+          dataP = {
+          idEmpresa: this.idTienda,
+          idPedido: this.idPedido,
+          total: this.total,
+          usuario: data[0].id,
+          clase: this.close()
+        };
+        socket.emit('cancelar-pedido',dataP, 
+        function(confirmation){
+          if (confirmation == true) {
+            dataP.clase
+          } else {
+            console.log(confirmation);
+          }
+        });},
+        //Si no, muestra el error
+        (error)=> {console.log(error);}
+      );
     });
+
+
+    
   }
 
   eliminarPedido(){

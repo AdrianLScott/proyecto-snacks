@@ -32,4 +32,12 @@ page-cart {
         padding-right: 10px;
         color: rgb(123, 98, 192);
     }
+    hr {
+		height: 0.55px !important;
+ 		background: rgba(0, 0, 0, 0.12)!important;
+	  	display: block !important;
+	  	font-size: 2em !important;
+	  	opacity: 1 !important;
+	  	visibility: visible !important;
+	}
 }

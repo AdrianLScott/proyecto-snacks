@@ -119,10 +119,14 @@
             </ion-grid>
           </ion-card>
         </ion-grid>
+      <ion-card *ngIf="idPedido" class="card-saldo">
+          <div class="card-title">{{idPedido}}</div>
+          <div class="card-subtitle">Número de pedido</div>
+      </ion-card>
       <ion-card *ngIf="createdCode">
         <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
         <ion-card-content>
-            Deben de escanear este código para que el pedido pueda ser entregado.
+            Puedes escanera este código en la tienda si lo deseas.
           </ion-card-content>
       </ion-card>
     </ion-list> 

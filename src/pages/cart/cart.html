@@ -15,7 +15,7 @@
 <ion-content >
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown"
-    pullingText="Jala para refrescar"
+    pullingText="Jala para actualizar"
     refreshingText="Cargando..." >
         
     </ion-refresher-content>
@@ -23,7 +23,7 @@
 
 
   <!-- ******PARA LOS PEDIDOS QUE NO SE HA CONFIRMADO EL PAGO***********-->
-  <ion-item-divider color="light" text-center>Por Pedir</ion-item-divider>
+  <ion-item-divider color="light" text-center>Por pedir</ion-item-divider>
   <ng-template #elsePorPedir>
     <ion-card *ngFor="let tienda of cartItems; let i = index" (click)="irCarrito(i, 'SinConfirmar', tienda[0].tienda.id)">
 
@@ -54,7 +54,7 @@
         <ion-grid>
           <ion-row >
             <ion-col>
-              <p text-center>No has pedido nada aún</p>
+              <p text-center>No has agregado nada al carrito</p>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -62,7 +62,7 @@
     </ion-list>
 
   <!-- ******PARA LOS PEDIDOS QUE TODAVIA NO SON ATENDIDOS***********-->
-  <ion-item-divider color="light" text-center>Pedidos</ion-item-divider>
+  <ion-item-divider color="light" text-center>Solicitados</ion-item-divider>
   <ng-template #elsePedidos>
     <ion-card *ngFor="let solicitado of solicitados; let i = index" (click)="irCarrito( solicitado.id, solicitado.estatus, solicitado.idempresa)">
 
@@ -128,7 +128,7 @@
      </ion-list>
 
   <!-- ******PARA LOS PEDIDOS Listos pero sin recoger***********-->
-  <ion-item-divider color="light" text-center>Listos</ion-item-divider>
+  <ion-item-divider color="light" text-center>Por entregar</ion-item-divider>
   <ng-template #elseListo>
     <ion-card *ngFor="let realizado of realizados; let i = index" (click)="irCarrito( realizado.id, realizado.estatus, realizado.idempresa)">
 
@@ -153,8 +153,21 @@
         </ion-row>
     
     </ion-card>
-
+</ng-template>
+  <ion-list *ngIf="realizados == null || realizados.length == 0; else elseListo">
+      <ion-card >
+        <ion-grid>
+          <ion-row >
+            <ion-col>
+              <p text-center>No hay pedidos listos</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
     <!-- ******PARA LOS PEDIDOS Listos RECOGIDOS***********-->
+    <ion-item-divider color="light" text-center>Entregados</ion-item-divider>
+    <ng-template #elseEntregado>
     <ion-card *ngFor="let entregado of entregados; let i = index" (click)="irCarrito( entregado.id, entregado.estatus, entregado.idempresa)">
 
       <ion-row>
@@ -178,15 +191,15 @@
         </ion-row>
     
     </ion-card>
-
   </ng-template>
+  
 
-  <ion-list *ngIf="(realizados == null || realizados.length == 0) && (entregados == null || entregados.length == 0); else elseListo">
+  <ion-list *ngIf="entregados == null || entregados.length == 0; else elseEntregado">
       <ion-card >
         <ion-grid>
           <ion-row >
             <ion-col>
-              <p text-center>No hay pedidos listos ni entregados</p>
+              <p text-center>No hay pedidos entregados</p>
             </ion-col>
           </ion-row>
         </ion-grid>

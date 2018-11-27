@@ -5,12 +5,19 @@ page-products {
 	.imageList img{
 		border-radius: 4px;
 	}
-	.imgProducto{
-		content:url("../assets/imgs/blank-img.png");
+	.imgProducto{		
+		background-size: contain;
+		background-repeat: no-repeat;
 	}
 	img{
 		max-width: 100%;
 		border: 0;
 		height: 70px;
+	}
+
+	.img-col{
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
 	}
 }

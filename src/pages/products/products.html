@@ -26,15 +26,11 @@
 	  <button ion-item *ngFor="let producto of productos" (click)="viewProduct(producto)">
 		<ion-grid>		 	
 		  	<ion-row>
-		  		<ion-col col-3 >
-		  			<div>
-							<img  src="{{apiURL}}{{producto.imagen}}"  *ngIf="producto.imagen != null; else elseImg">
-							<ng-template #elseImg>
-									<img src="" class="imgProducto"/>
-								</ng-template>
-		  			</div>
-		  			
-		  		</ion-col >
+		  		<ion-col col-3 class="img-col" [style.background-image]="'url(' + apiURL + producto.imagen +')'" *ngIf="producto.imagen != null; else elseImg"></ion-col >
+					<ng-template #elseImg>
+						<ion-col col-3 class="imgProducto" [style.background-image]="'url(../assets/imgs/blank-img.png)'">
+						</ion-col>
+					</ng-template>
 		  		<ion-col col-6 >
 		  			<h2 >{{producto.nombre}}</h2>
 					<p>{{producto.descripcion}}</p>

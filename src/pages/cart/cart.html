@@ -15,7 +15,7 @@
 <ion-content >
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown"
-    pullingText="Jala para refrescar"
+    pullingText="Jala para actualizar"
     refreshingText="Cargando..." >
         
     </ion-refresher-content>
@@ -62,7 +62,7 @@
     </ion-list>
 
   <!-- ******PARA LOS PEDIDOS QUE TODAVIA NO SON ATENDIDOS***********-->
-  <ion-item-divider color="light" text-center>Pedidos</ion-item-divider>
+  <ion-item-divider color="light" text-center>Solicitados</ion-item-divider>
   <ng-template #elsePedidos>
     <ion-card *ngFor="let solicitado of solicitados; let i = index" (click)="irCarrito( solicitado.id, solicitado.estatus, solicitado.idempresa)">
 

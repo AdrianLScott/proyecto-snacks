@@ -8,4 +8,9 @@ page-products {
 	.imgProducto{
 		content:url("../assets/imgs/blank-img.png");
 	}
+	img{
+		max-width: 100%;
+		border: 0;
+		height: 70px;
+	}
 }

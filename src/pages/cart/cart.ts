@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import { ModalController } from 'ionic-angular';
 import { PedidosProvider } from '../../providers/pedidos/pedidos';
@@ -31,8 +31,7 @@ export class CartPage {
     public navParams: NavParams, 
     public storage: Storage, 
     public modalCtrl: ModalController,
-    public pedidosProv: PedidosProvider,
-    public loadingCtrl: LoadingController) {
+    public pedidosProv: PedidosProvider) {
 
       
     }
@@ -95,11 +94,10 @@ export class CartPage {
         this.idUsuario = Number(idUser);
 
         //abre el cargando mientras carga los datos
-        let loading = this.loadingCtrl.create();
-        loading.present();
+
         this.pedidosProv.getPedidos(this.idUsuario).subscribe(
           //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
-          (data)=> {this.pedidos = data;loading.dismiss(); this.organizarPedidos();},
+          (data)=> {this.pedidos = data; this.organizarPedidos();},
           //Si no, muestra el error
           (error)=> {console.log(error);}
         ) 

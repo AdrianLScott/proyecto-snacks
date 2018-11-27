@@ -20,11 +20,11 @@ export function clientValidator(control: AbstractControl) {
 
 export function positiveNumberValidator(control: AbstractControl) {
     if (control && (control.value !== null || control.value !== undefined)) {
-        if (control.value < 0) {
+        if (control.value <= 0) {
             return {
                 isError: true
             };
         }
     }
     return null;
-}
+} 

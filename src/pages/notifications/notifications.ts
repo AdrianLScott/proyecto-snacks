@@ -51,8 +51,8 @@ export class NotificationsPage {
             this.notificaciones = success
             for (var index in this.notificaciones) {
               var fecha = (this.notificaciones[index].fecha).split(" ");
-              this.notificaciones[index].fecha = fecha[0].replace(/-/g, "/");
-              //const arrayFecha = this.notificaciones[index].fecha.split("/");
+              const arrayFecha = fecha[0].split("-");
+              this.notificaciones[index].fecha = arrayFecha[2]+"/"+arrayFecha[1]+"/"+arrayFecha[0];
               this.notificaciones[index].hora = fecha[1].substr(0, 5);
             }
           }

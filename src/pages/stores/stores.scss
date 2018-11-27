@@ -3,9 +3,14 @@ page-stores {
 
 	  ion-card {
 	    position: relative;
-	    text-align: center;
-
-	  }
+			text-align: center;
+			height: 180px;
+			background-size: cover;
+			background-position: center;
+		}
+		.col{
+			padding: 0px !important;
+		}
 		.franja{
 			position: absolute;
 			top: 36%;
@@ -33,7 +38,13 @@ page-stores {
 	    width: 100%;
 	    color: #fff;
 	    margin-top: 5px;
-	  }
+		}
+		
+		.img{
+			object-fit: cover;
+			object-position: 50% 50%;
+			
+		}
 
 	}
 

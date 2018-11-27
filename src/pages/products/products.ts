@@ -39,7 +39,7 @@ export class ProductsPage {
   }
 
   viewProduct(producto){
-    this.app.getRootNav().push(ProductDetailsPage,{
+    this.navCtrl.push(ProductDetailsPage,{
       producto: producto,
       tienda: this.tienda});
   	//this.navCtrl.push(ProductDetailsPage

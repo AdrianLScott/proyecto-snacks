@@ -80,34 +80,41 @@ export class SellerPage {
           this.sellerProvider.verificarPin(data).subscribe(
             data=>{
               if(data=="1"){
+                loading.present();
                 this.sellerProvider.hacerRecarga(datos).subscribe(
-                  data=>{
-                    const notificacion = {
-                      title: "Recarga exitosa",
-                      msg: "Has recibido una recarga de $"+this.saldoAC.value, 
-                      id_cliente: this.clienteAC.value};
-                    this.sellerProvider.sendNotificacion(notificacion).subscribe();
-                    loading.dismiss()
+                  response=>{
                     let alertContent;
-                    if(data == 1){
-                      alertContent= {
-                        title: '¡Éxito!',
-                        subTitle: 'El usuario ha recibido su recarga correctamente.',
-                        buttons: ['Aceptar']
-                      };
-                      this.cleanInputs();
+                    if(response==1){
+                      var formatter = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                     });
+                      const notificacion = {
+                        title: "Recarga exitosa",
+                        msg: "Has recibido una recarga de "+formatter.format(this.saldoAC.value), 
+                        id_cliente: this.clienteAC.value};
+                        //No importa si falla lo de las notificaciones, con que se haya aplicado bien el saldo
+                        this.sellerProvider.sendNotificacion(notificacion).subscribe();
+                        alertContent= {
+                          title: '¡Éxito!',
+                          subTitle: 'El usuario ha recibido su recarga correctamente.',
+                          buttons: ['Aceptar']
+                        };
+                        let alert = this.alert.create(alertContent);
+                        alert.present();
+                        this.cleanInputs();
                     }
                     else{
                       alertContent= {
                         title: '¡Error!',
-                        subTitle: data,
+                        subTitle: response,
                         buttons: ['Aceptar']
                       };
+                      let alert = this.alert.create(alertContent);
+                      alert.present();
                     }
-                    let alert = this.alert.create(alertContent);
-                    alert.present();
-                  }
-                );
+                    loading.dismiss();
+                });
               }
               else if(data=="-1"){
                 this.presentAlert("El pin introducido es incorrecto");

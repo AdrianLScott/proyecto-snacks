@@ -7,7 +7,7 @@
     </button>
   </ion-buttons>
  
-    <ion-title>Tiendas</ion-title>
+    <ion-title>Empresas</ion-title>
     <!--
     <ion-buttons end>
       <button ion-button icon-only (click)="openBuscar()">
@@ -30,17 +30,21 @@
             
         </ion-refresher-content>
     </ion-refresher>
-
-		<ion-card ion-list *ngFor = "let tienda of tiendas" (click)="objetosTienda(tienda)">
-        <img src="{{apiURL}}{{tienda.img_fondo}}" *ngIf="tienda.img_fondo != ''; else elseImg"/>
-        <ng-template #elseImg>
-          <img src="" class="imgProducto"/>
-        </ng-template>
-        <div class="franja" style="background-color:rgba(0,0,0,0.6);">
-          <p style="color: white; font-size: 28px">{{tienda.nombre}}</p>
-          <p style="color: white">{{tienda.descripcion}}</p>
-        </div>
-  		</ion-card>
-
+    <ion-grid>
+        <ion-row wrap>
+          <ion-col col-12 col-sm-6 cold-md-4 *ngFor = "let tienda of tiendas" (click)="objetosTienda(tienda)">
+            <ion-card ion-list [style.background-image]="'url(' + apiURL + tienda.img_fondo +')'">
+              <!-- <img src="{{apiURL}}{{tienda.img_fondo}}" class="img" *ngIf="tienda.img_fondo != ''; else elseImg"/> -->
+              <ng-template #elseImg>
+                <img src="" class="imgProducto"/>
+              </ng-template>
+              <div class="franja" style="background-color:rgba(0,0,0,0.6);">
+                <p style="color: white; font-size: 28px">{{tienda.nombre}}</p>
+                <p style="color: white">{{tienda.descripcion}}</p>
+              </div>
+            </ion-card>
+          </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-content>
 

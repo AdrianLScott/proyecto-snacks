@@ -73,7 +73,21 @@ export class CartModalPage {
               
               this.tienda = data[i];
               //verifia si la tienda no tiene nada
-              this.getProductos(1);
+              this.total = 0.0;
+              //verifia si la tienda no tiene nada
+              if (this.tienda != null && this.tienda.length > 1) {
+                //si tiene datos, hace un recorrido para meter los productos a una variable
+                for (let i = 1; i < this.tienda.length; i++) {
+                  console.log("hace el nuevo cart");
+                  this.cartItems.push(this.tienda[i]);
+                  this.total = Number((this.total + (this.tienda[i].cantidad * this.tienda[i].producto.precio)).toFixed(2));
+
+                }
+                //console.log(this.cartItems);
+
+              }else{
+                this.close();
+              }
             }
           }
           
@@ -85,7 +99,7 @@ export class CartModalPage {
       loading.present();
       this.pedProv.getDetallesPedidos(this.idPedido).subscribe(
         //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
-        (data)=> {this.tienda = data;loading.dismiss(); this.getProductos(0); this.generarCodigoQR();},
+        (data)=> {this.tienda = data;loading.dismiss(); this.getProductos(); this.generarCodigoQR();},
         //Si no, muestra el error
         (error)=> {console.log(error);}
       ) 
@@ -96,7 +110,7 @@ export class CartModalPage {
       loading.present();
       this.pedProv.getDetallesPedidos(this.idPedido).subscribe(
         //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
-        (data)=> {this.tienda = data;this.getProductos(0);this.obtenerUsuario();loading.dismiss(); },
+        (data)=> {this.tienda = data;this.getProductos();this.obtenerUsuario();loading.dismiss(); },
         //Si no, muestra el error
         (error)=> {console.log(error);}
       ) 
@@ -117,19 +131,15 @@ export class CartModalPage {
     this.createdCode = this.idPedido;
   }
   
-  getProductos(num){
+  getProductos(){
     this.total = 0.0;
     //verifia si la tienda no tiene nada
     if (this.tienda != null && this.tienda.length > 0) {
       //si tiene datos, hace un recorrido para meter los productos a una variable
-      for (let i = num; i < this.tienda.length; i++) {
+      for (let i = 0; i < this.tienda.length; i++) {
         console.log("hace el nuevo cart");
         this.cartItems.push(this.tienda[i]);
-        if (num==1) {
-          this.total = (this.total + (this.tienda[i].cantidad * this.tienda[i].producto.precio)).toFixed(2);
-        }else{
-          this.total = (this.total + (this.tienda[i].cantidad * this.tienda[i].precio)).toFixed(2);
-        }
+        this.total = Number((this.total + (this.tienda[i].cantidad * this.tienda[i].precio)).toFixed(2));
       }
       //console.log(this.cartItems);
 
@@ -152,8 +162,7 @@ export class CartModalPage {
       data[Index].splice(i+1, 1);
       
       this.storage.set("cart", data).then( ()=>{
-
-				this.toast.showWithOptions(
+        this.toast.showWithOptions(
           {
             message: "Producto eliminado",
             duration: 2000,

@@ -25,11 +25,9 @@ export class StoresPage {
     this.auth.hasTokenAndIsValid().then(
       (data)=>{
         if(data){
-          let loading = this.loadingCtrl.create();
-          loading.present();
           this.proveedor.obtenerTiendas()
           .subscribe(
-            (data)=> {this.tiendas = data; loading.dismiss();},
+            (data)=> {this.tiendas = data;},
             (error)=> {console.log(error);}
           )
         }

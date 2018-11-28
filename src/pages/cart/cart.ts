@@ -147,6 +147,10 @@ export class CartPage {
     this.validarDatos();
   }
 
+  ionViewWillEnter(){
+    this.validarDatos();
+  }
+
   irCarrito(i, estatus, idEmpresa) {
     const modal = this.modalCtrl.create(CartModalPage, {index: i, pag: this, estatus :estatus, idEmpresa: idEmpresa});
     modal.present();  

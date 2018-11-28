@@ -336,6 +336,30 @@ export class CartModalPage {
 			]
 		});
 		alert.present();
+  }
+  confirmarCancel(){
+
+		let confMSG="¿Estas seguro que deseas cancelar el pedido?";
+		let alert = this.alertCtrl.create({
+			title: 'Confirmar pedido',
+			message: confMSG ,
+			buttons: [
+				{
+					text: 'No',
+					role: 'cancel',
+					handler: () => {
+						
+					}
+				},
+				{
+					text: 'Sí',
+					handler: () => {
+						this.cancelarPedido();
+					}
+				}
+			]
+		});
+		alert.present();
 	}
 
 }

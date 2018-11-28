@@ -28,7 +28,7 @@
 		  	<ion-row>
 		  		<ion-col col-3 class="img-col" [style.background-image]="'url(' + apiURL + producto.imagen +')'" *ngIf="producto.imagen != null; else elseImg"></ion-col >
 					<ng-template #elseImg>
-						<ion-col col-3 class="imgProducto" [style.background-image]="'url(../assets/imgs/blank-img.png)'">
+						<ion-col col-3 class="imgProducto">
 						</ion-col>
 					</ng-template>
 		  		<ion-col col-6 >

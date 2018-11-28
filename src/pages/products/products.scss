@@ -6,8 +6,10 @@ page-products {
 		border-radius: 4px;
 	}
 	.imgProducto{		
+		background-image: url(../assets/imgs/blank-img.png);
 		background-size: contain;
 		background-repeat: no-repeat;
+		background-position: center;
 	}
 	img{
 		max-width: 100%;

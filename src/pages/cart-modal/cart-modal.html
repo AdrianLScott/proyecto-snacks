@@ -21,7 +21,7 @@
     <ion-item>
       <ion-thumbnail item-left class="img" [style.background-image]="'url('+apiURL+item.producto.imagen+')'" *ngIf="item.producto.imagen != null; else elseImg"></ion-thumbnail>
         <ng-template #elseImg>
-          <ion-thumbnail item-left class="img" [style.background-image]="'url(../assets/imgs/blank-img.png)'"></ion-thumbnail>
+          <ion-thumbnail item-left class="img"></ion-thumbnail>
         </ng-template>
       <h2>{{item.producto.nombre}}</h2>
       <p>Cantidad: {{item.cantidad}} Precio: {{item.producto.precio}}</p>
@@ -86,7 +86,7 @@
   
           <ion-thumbnail item-left class="img" [style.background-image]="'url('+apiURL+item.imagen+')'" *ngIf="item.imagen != null; else elseImg"></ion-thumbnail>
           <ng-template #elseImg>
-              <ion-thumbnail item-left class="img" [style.background-image]="'url(../assets/imgs/blank-img.png)'"></ion-thumbnail>
+              <ion-thumbnail item-left class="img"></ion-thumbnail>
           </ng-template>
         <h2>{{item.nombre}}</h2>
         <p>Cantidad: {{item.cantidad}} Precio: {{item.precio}}</p>
@@ -136,7 +136,7 @@
         <ion-thumbnail item-left>
           <ion-thumbnail item-left class="img" [style.background-image]="'url('+apiURL+item.imagen+')'" *ngIf="item.imagen != null; else elseImg"></ion-thumbnail>
           <ng-template #elseImg>
-              <ion-thumbnail item-left class="img" [style.background-image]="'url(../assets/imgs/blank-img.png)'"></ion-thumbnail>
+              <ion-thumbnail item-left class="img"></ion-thumbnail>
           </ng-template>
         </ion-thumbnail>
         <h2>{{item.nombre}}</h2>
@@ -200,7 +200,7 @@
                   <button ion-button color="danger" outline block (click)="close()">Cerrar</button>
               </ion-col>
               <ion-col>
-                  <button ion-button color="danger"  block (click)="cancelarPedido()" >Cancelar pedido</button>
+                  <button ion-button color="danger"  block (click)="confirmarCancel()" >Cancelar pedido</button>
               </ion-col>
             </ion-row>
           </ion-grid>

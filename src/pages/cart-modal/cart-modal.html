@@ -115,9 +115,9 @@
             </ion-grid>
           </ion-card>
         </ion-grid>
-      <ion-card *ngIf="idPedido" class="card-saldo">
-          <div class="card-title">{{idPedido}}</div>
-          <div class="card-subtitle">Número de pedido</div>
+      <ion-card *ngIf="hexIdPedido" class="card-saldo">
+          <div class="card-title">{{hexIdPedido}}</div>
+          <div class="card-subtitle">Código de pedido</div>
       </ion-card>
       <ion-card *ngIf="createdCode">
         <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>

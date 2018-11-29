@@ -27,6 +27,7 @@ export class CartModalPage {
   idTienda;
   apiURL;
   datosUsuario: any;
+  hexIdPedido: any;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -40,6 +41,8 @@ export class CartModalPage {
 
     //obtenemos el valor del indice de la tienda que seleccionamos en la caché
     this.idPedido = this.navParams.data.index;
+    //el id del pedido se hace en hexadecimal
+    this.hexIdPedido = (Number(this.navParams.data.index)).toString(16);
     //obtenemos la pagina anterior
     this.paginaAnterior = this.navParams.data.pag;
     //obtenemos el estatus de el pedido que fue ingresado
@@ -128,7 +131,7 @@ export class CartModalPage {
       
   }
   generarCodigoQR(){
-    this.createdCode = this.idPedido;
+    this.createdCode = (Number(this.idPedido)).toString(16);
   }
   
   getProductos(){

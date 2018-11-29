@@ -9,6 +9,20 @@
     <ion-title>Pedidos</ion-title>
   </ion-navbar>
 
+  <ion-toolbar no-border-top color="venados">
+    <ion-segment [(ngModel)]="pedidos" color="light">
+      <ion-segment-button value="Carrito">
+        Carrito
+      </ion-segment-button>
+      <ion-segment-button value="En proceso">
+        En proceso
+      </ion-segment-button>
+      <ion-segment-button value="Historial">
+        Historial
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
 

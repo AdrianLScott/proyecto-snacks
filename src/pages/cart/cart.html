@@ -55,7 +55,7 @@
                     
               </ion-item>
                 <ion-item-options side="right">
-                  <button ion-button color="danger" >
+                  <button ion-button color="danger" (click)="eliminarCarrito(i)">
                     <ion-icon name="trash"></ion-icon>
                     Eliminar
                   </button>
@@ -207,7 +207,7 @@
           </ion-row>
         </ion-item>
         <ion-item-options side="right">
-            <button ion-button color="danger" >
+            <button ion-button color="danger" (click)="eliminarPedido(entregado.id, entregado.estatus, i)">
               <ion-icon name="trash"></ion-icon>
               Eliminar
             </button>
@@ -248,7 +248,7 @@
           </ion-row>
         </ion-item>
         <ion-item-options side="right">
-            <button ion-button color="danger" >
+            <button ion-button color="danger" (click)="eliminarPedido(cancelado.id, cancelado.estatus, i)">
               <ion-icon name="trash"></ion-icon>
               Eliminar
             </button>

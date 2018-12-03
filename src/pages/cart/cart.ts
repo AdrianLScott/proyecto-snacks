@@ -24,7 +24,8 @@ export class CartPage {
   pedidos;
   //el id del usuario
   idUsuario: number;
-
+  category: string = 'carrito';
+  categories: Array<string> = ['carrito', 'proceso', 'historial'];
 
   /* ****CONSTRUCTOR**** */
   constructor(public navCtrl: NavController, 

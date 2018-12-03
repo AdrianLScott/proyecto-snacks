@@ -1,173 +1,176 @@
+
 <ion-header>
+    <ion-navbar color="venados">
+        <ion-buttons start class="ham-menu">
+          <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>Pedidos</ion-title>
+    </ion-navbar>
+  
+    <ion-toolbar no-border-top color="venados">
+      <ion-segment [(ngModel)]="category" color="light">
+        <ion-segment-button value="carrito">
+          Carrito
+        </ion-segment-button>
+        <ion-segment-button value="proceso">
+          En proceso
+        </ion-segment-button>
+        <ion-segment-button value="historial">
+          Historial
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+      <ion-refresher (ionRefresh)="doRefresh($event)">
+          <ion-refresher-content pullingIcon="arrow-dropdown"
+          pullingText="Deliza hacia abajo para actualizar"
+          refreshingText="Cargando..." >
+          </ion-refresher-content>
+        </ion-refresher>
+    <!--*********************AQUI EMPIEZA EL PRIMER SEGMENTO QUE ES EL DE EL CARRITO-->
+    <div [ngSwitch]="category" (tabChanged)="onTabChanged($event)" class="swipe-area">
+      <div  *ngSwitchCase="'carrito'">
+      <ion-list>
+          <ion-item-sliding *ngFor="let tienda of cartItems; let i = index" (click)="irCarrito(i, 'SinConfirmar', tienda[0].tienda.id)">
+              <ion-item class="item-remove-animate" >
+                <ion-row>
+                  <ion-col>
+                    <h1 iontext>{{tienda[0].tienda.nombre}}</h1>  
+                  </ion-col>
+                  <ion-col right text-right>
+                    <ion-note>
+                      Sin Confirmar
+                    </ion-note>
+                  </ion-col>
+                </ion-row>
+                <ion-row> 
+                    <ion-col>
+                      <!--<p> {{notif.mensaje}}</p>-->
+                    </ion-col>
+                </ion-row>
+                    
+              </ion-item>
+                <ion-item-options side="right">
+                  <button ion-button color="danger" >
+                    <ion-icon name="trash"></ion-icon>
+                    Eliminar
+                  </button>
+                </ion-item-options>
+          
+              </ion-item-sliding>
+      </ion-list>
+      <ion-list *ngIf="cartItems == null || cartItems.length == 0;" >
+          <ion-card >
+            <ion-grid>
+              <ion-row >
+                <ion-col>
+                  <p text-center>No has agregado nada al carrito</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </ion-list>
+      </div>
+  <!--*********************AQUI EMPIEZA EL SEGUNDO SEGMENTO QUE ES EL DE EN PROCESO*****************-->
+  <!--*************************************PEDIDOS SOLICITADOS************************************-->
+  <div *ngSwitchCase="'proceso'">
+    <ion-item-divider color="light" text-center>Solicitados</ion-item-divider>
+    <ion-list>
+      <ion-item-sliding *ngFor="let solicitado of solicitados; let i = index" (click)="irCarrito( solicitado.id, solicitado.estatus, solicitado.idempresa)">
+        <ion-item class="item-remove-animate" >
+          <ion-row>
+            <ion-col>
+              <h1 iontext>{{solicitado.nombre}}</h1>  
+            </ion-col>
+            <ion-col right text-right>
+              <ion-note class="statusPedidoSC">
+                  {{solicitado.estatus}}
+              </ion-note>
+            </ion-col>
+          </ion-row>
+          <ion-row> 
+              <ion-col>
+                <!--<p> {{notif.mensaje}}</p>-->
+              </ion-col>
+          </ion-row>
+        </ion-item>
+    </ion-item-sliding>
+  </ion-list>
 
-  <ion-navbar color="venados">
-  	<ion-buttons start class="ham-menu">
-      <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>Pedidos</ion-title>
-  </ion-navbar>
-
-  <ion-toolbar no-border-top color="venados">
-    <ion-segment [(ngModel)]="pedidos" color="light">
-      <ion-segment-button value="Carrito">
-        Carrito
-      </ion-segment-button>
-      <ion-segment-button value="En proceso">
-        En proceso
-      </ion-segment-button>
-      <ion-segment-button value="Historial">
-        Historial
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
-
-</ion-header>
-
-
-<ion-content >
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown"
-    pullingText="Deliza hacia abajo para actualizar"
-    refreshingText="Cargando..." >
-        
-    </ion-refresher-content>
-  </ion-refresher>
-
-
-  <!-- ******PARA LOS PEDIDOS QUE NO SE HA CONFIRMADO EL PAGO***********-->
-  <ion-item-divider color="light" text-center>Por pedir</ion-item-divider>
-  <ng-template #elsePorPedir>
-    <ion-card *ngFor="let tienda of cartItems; let i = index" (click)="irCarrito(i, 'SinConfirmar', tienda[0].tienda.id)">
-
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <h1>{{tienda[0].tienda.nombre}}</h1>
-          </ion-item>
-        </ion-col>
-        <ion-col color="secondary" center text-right>
-          <p class="status-espera" class="status">Sin Confirmar</p>
-        </ion-col>
-      </ion-row>
-    
-        <ion-row>
-          <ion-col right text-right>
-            <ion-note>
-              Tap para detalles
-            </ion-note>
+  <ion-list *ngIf="solicitados == null || solicitados.length == 0">
+    <ion-card >
+      <ion-grid>
+        <ion-row >
+          <ion-col>
+            <p text-center>No hay pedidos solicitados</p>
           </ion-col>
         </ion-row>
-    
+      </ion-grid>
     </ion-card>
-  </ng-template>
-    
-    <ion-list *ngIf="cartItems == null || cartItems.length == 0; else elsePorPedir">
+  </ion-list>
+  <!--*************************************PEDIDOS EN PROCESO*************************************-->
+  <ion-item-divider color="light" text-center>En proceso</ion-item-divider>
+  <ion-list>
+      <ion-item-sliding *ngFor="let prosess of procesando; let i = index" (click)="irCarrito( prosess.id, prosess.estatus)">
+        <ion-item class="item-remove-animate" >
+          <ion-row>
+            <ion-col>
+              <h1 iontext>{{prosess.nombre}}</h1>  
+            </ion-col>
+            <ion-col right text-right>
+              <ion-note class="statusPedidosEC">
+                  {{prosess.estatus}}
+              </ion-note>
+            </ion-col>
+          </ion-row>
+          <ion-row> 
+              <ion-col>
+                <!--<p> {{notif.mensaje}}</p>-->
+              </ion-col>
+          </ion-row>
+        </ion-item>
+
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list *ngIf="procesando == null || procesando.length == 0">
       <ion-card >
         <ion-grid>
           <ion-row >
             <ion-col>
-              <p text-center>No has agregado nada al carrito</p>
+              <p text-center>No hay pedidos en proceso</p>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card>
     </ion-list>
 
-  <!-- ******PARA LOS PEDIDOS QUE TODAVIA NO SON ATENDIDOS***********-->
-  <ion-item-divider color="light" text-center>Solicitados</ion-item-divider>
-  <ng-template #elsePedidos>
-    <ion-card *ngFor="let solicitado of solicitados; let i = index" (click)="irCarrito( solicitado.id, solicitado.estatus, solicitado.idempresa)">
-
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <h1>{{solicitado.nombre}}</h1>
-          </ion-item>
-        </ion-col>
-        <ion-col color="secondary" center text-right>
-          <p class="status-espera" class="statusPedidoSC">{{solicitado.estatus}}</p>
-        </ion-col>
-      </ion-row>
-    
-    
-        <ion-row>
-          <ion-col right text-right>
-            <ion-note>
-              Tap para detalles
-            </ion-note>
-          </ion-col>
-        </ion-row>
-    
-    </ion-card>
-
-    <!-- ******PARA LOS PEDIDOS QUE ESTÁN SIENDO ATENDIDOS (AQUI YA NO SE PUEDE ELIMINAR)***********-->
-    <ion-card *ngFor="let prosess of procesando; let i = index" (click)="irCarrito( prosess.id, prosess.estatus)">
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <h1>{{prosess.nombre}}</h1>
-            </ion-item>
-          </ion-col>
-          <ion-col color="secondary" center text-right>
-            <p class="status-espera" class="statusPedidosEC">{{prosess.estatus}}</p>
-          </ion-col>
-        </ion-row>
-        
-        <ion-row>
-          <ion-col right text-right>
-            <ion-note>
-              Tap para detalles
-            </ion-note>
-          </ion-col>
-        </ion-row>
-       
-      </ion-card>
-    
-  </ng-template>
-
-     
-     <ion-list *ngIf="(solicitados == null || solicitados.length == 0) && (procesando == null || procesando.length == 0); else elsePedidos">
-       <ion-card >
-         <ion-grid>
-           <ion-row >
-             <ion-col>
-               <p text-center>No hay pedidos hechos</p>
-             </ion-col>
-           </ion-row>
-         </ion-grid>
-       </ion-card>
-     </ion-list>
-
-  <!-- ******PARA LOS PEDIDOS Listos pero sin recoger***********-->
-  <ion-item-divider color="light" text-center>Por entregar</ion-item-divider>
-  <ng-template #elseListo>
-    <ion-card *ngFor="let realizado of realizados; let i = index" (click)="irCarrito( realizado.id, realizado.estatus, realizado.idempresa)">
-
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <h1>{{realizado.nombre}}</h1>
-          </ion-item>
-        </ion-col>
-        <ion-col color="secondary" center text-right>
-          <p class="status-espera" class="statusListo">{{realizado.estatus}}</p>
-        </ion-col>
-      </ion-row>
-    
-    
-        <ion-row>
-          <ion-col right text-right>
-            <ion-note>
-              Tap para detalles
-            </ion-note>
-          </ion-col>
-        </ion-row>
-    
-    </ion-card>
-</ng-template>
+  <!--*************************************PEDIDOS LISTOS PERO SIN ENTREGAR*************************************-->
+  <ion-item-divider color="light" text-center>Listos</ion-item-divider>
+  <ion-list>
+      <ion-item-sliding *ngFor="let realizado of realizados; let i = index" (click)="irCarrito( realizado.id, realizado.estatus, realizado.idempresa)">
+        <ion-item class="item-remove-animate" >
+          <ion-row>
+            <ion-col>
+              <h1 iontext>{{realizado.nombre}}</h1>  
+            </ion-col>
+            <ion-col right text-right>
+              <ion-note class="statusListo">
+                  {{realizado.estatus}}
+              </ion-note>
+            </ion-col>
+          </ion-row>
+          <ion-row> 
+              <ion-col>
+                <!--<p> {{notif.mensaje}}</p>-->
+              </ion-col>
+          </ion-row>
+        </ion-item>
+    </ion-item-sliding>
+  </ion-list>
   <ion-list *ngIf="realizados == null || realizados.length == 0; else elseListo">
       <ion-card >
         <ion-grid>
@@ -179,35 +182,38 @@
         </ion-grid>
       </ion-card>
     </ion-list>
-    <!-- ******PARA LOS PEDIDOS Listos RECOGIDOS***********-->
+  </div>
+  <!--***************AQUI EMPIEZA EL HISTORIAL DE PEDIDOS***********************-->
+  <div *ngSwitchCase="'historial'">
+    <!--***************PEDIDOS ENTREGADOS***********************-->
     <ion-item-divider color="light" text-center>Entregados</ion-item-divider>
-    <ng-template #elseEntregado>
-    <ion-card *ngFor="let entregado of entregados; let i = index" (click)="irCarrito( entregado.id, entregado.estatus, entregado.idempresa)">
-
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <h1>{{entregado.nombre}}</h1>
-          </ion-item>
-        </ion-col>
-        <ion-col color="secondary" center text-right>
-          <p class="status-espera" class="statusEntregado">{{entregado.estatus}}</p>
-        </ion-col>
-      </ion-row>
-    
-    
-        <ion-row>
-          <ion-col right text-right>
-            <ion-note>
-              Tap para detalles
-            </ion-note>
-          </ion-col>
-        </ion-row>
-    
-    </ion-card>
-  </ng-template>
-  
-
+    <ion-list>
+      <ion-item-sliding *ngFor="let entregado of entregados; let i = index" (click)="irCarrito( entregado.id, entregado.estatus, entregado.idempresa)">
+        <ion-item class="item-remove-animate" >
+          <ion-row>
+            <ion-col>
+              <h1 iontext>{{entregado.nombre}}</h1>  
+            </ion-col>
+            <ion-col right text-right>
+              <ion-note class="statusEntregado">
+                  {{entregado.estatus}}
+              </ion-note>
+            </ion-col>
+          </ion-row>
+          <ion-row> 
+              <ion-col>
+                <!--<p> {{notif.mensaje}}</p>-->
+              </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item-options side="right">
+            <button ion-button color="danger" >
+              <ion-icon name="trash"></ion-icon>
+              Eliminar
+            </button>
+          </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
   <ion-list *ngIf="entregados == null || entregados.length == 0; else elseEntregado">
       <ion-card >
         <ion-grid>
@@ -220,44 +226,46 @@
       </ion-card>
     </ion-list>
 
-
- <!-- ******PARA LOS PEDIDOS CANCELADOS***********-->
- <ion-item-divider color="light" text-center>Cancelados</ion-item-divider>
- <ng-template #elseCancelado>
-   <ion-card *ngFor="let cancelado of cancelados; let i = index" (click)="irCarrito( cancelado.id, cancelado.estatus, cancelado.idempresa)">
-
-     <ion-row>
-       <ion-col>
-         <ion-item>
-           <h1>{{cancelado.nombre}}</h1>
-         </ion-item>
-       </ion-col>
-       <ion-col color="secondary" center text-right>
-         <p class="status-espera" class="statusCancelado">{{cancelado.estatus}}</p>
-       </ion-col>
-     </ion-row>
-   
-   
-       <ion-row>
-         <ion-col right text-right>
-           <ion-note>
-             Tap para detalles
-           </ion-note>
-         </ion-col>
-       </ion-row>
-   
-   </ion-card>
- </ng-template>
-
- <ion-list *ngIf="cancelados == null || cancelados.length == 0; else elseCancelado">
-     <ion-card >
-       <ion-grid>
-         <ion-row >
-           <ion-col>
-             <p text-center>No hay pedidos cancelados</p>
-           </ion-col>
-         </ion-row>
-       </ion-grid>
-     </ion-card>
-   </ion-list>
-</ion-content>
+    <!--***************PEDIDOS CANCELADOS***********************-->
+    <ion-item-divider color="light" text-center>Cancelados</ion-item-divider>
+    <ion-list>
+      <ion-item-sliding *ngFor="let cancelado of cancelados; let i = index" (click)="irCarrito( cancelado.id, cancelado.estatus, cancelado.idempresa)">
+        <ion-item class="item-remove-animate" >
+          <ion-row>
+            <ion-col>
+              <h1 iontext>{{cancelado.nombre}}</h1>  
+            </ion-col>
+            <ion-col right text-right>
+              <ion-note class="statusCancelado">
+                  {{cancelado.estatus}}
+              </ion-note>
+            </ion-col>
+          </ion-row>
+          <ion-row> 
+              <ion-col>
+                <!--<p> {{notif.mensaje}}</p>-->
+              </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item-options side="right">
+            <button ion-button color="danger" >
+              <ion-icon name="trash"></ion-icon>
+              Eliminar
+            </button>
+          </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list *ngIf="cancelados == null || cancelados.length == 0; else elseCancelado">
+      <ion-card >
+        <ion-grid>
+          <ion-row >
+            <ion-col>
+              <p text-center>No hay pedidos cancelados</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
+  </div>
+</div>
+  </ion-content>

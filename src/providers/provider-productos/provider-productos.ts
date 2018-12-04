@@ -10,12 +10,13 @@ import *  as AppConfig from '../../app/main';
 @Injectable()
 export class ProviderProductosProvider {
 
+  httpOptions;
   constructor(public http: HttpClient) {
+    
   }
 
   obtenerProductos(id: any){
-    AppConfig.cfg.apiUrl+AppConfig.cfg.user
-  	return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getProducts+'?id='+id);
+  	return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getProducts+'?id='+id, this.httpOptions);
   }
 
 }

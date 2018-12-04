@@ -18,7 +18,7 @@ import { CartPage } from '../pages/cart/cart';
 import { StoresPage } from '../pages/stores/stores';
 import { RegisterPage} from '../pages/register/register'
 import { ProviderTiendasProvider } from '../providers/provider-tiendas/provider-tiendas';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductsPage } from '../pages/products/products';
 import { UtilityProvider } from '../providers/utility/utility';
 import { ProviderProductosProvider } from '../providers/provider-productos/provider-productos';
@@ -38,6 +38,7 @@ import { PedidosProvider } from '../providers/pedidos/pedidos';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { UsuariosProvider } from '../providers/usuarios/usuarios';
 import { SellerProvider } from '../providers/seller/seller';
+import { InterceptorProvider } from '../providers/interceptor/interceptor';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -115,7 +116,8 @@ export function getAuthHttp(http) {
     PedidosProvider,
     SellerProvider,
     PinDialog,
-    UsuariosProvider
+    UsuariosProvider,
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorProvider, multi: true },
   ]
 })
 export class AppModule {}

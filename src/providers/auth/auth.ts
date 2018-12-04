@@ -25,10 +25,6 @@ export class AuthProvider {
     private http: Http,
     private utility: UtilityProvider) {
     this.cfg = AppConfig.cfg;
-    this.storage.get('id_token').then(token => {
-        this.idToken = token;
-    });
-
   }
 
   /**
@@ -77,10 +73,8 @@ export class AuthProvider {
         let json_obj = JSON.parse(data['_body']);
         if(json_obj['error'] === undefined){
           let rs = data.json();
-          if(rs.tipo_usuario == 'Cliente'){
-            this.saveData(data);
-            this.idToken = rs.token; 
-          }
+          this.saveData(data);
+          this.idToken = rs.token; 
           return {id: rs.id, user_type: rs.tipo_usuario == 'Cliente'?'Cliente':'Vendedor'};
         }
         else{
@@ -98,42 +92,5 @@ export class AuthProvider {
     this.storage.set("id", rs.id);
     this.storage.set("user", rs.nombre);
     this.storage.set("id_token", rs.token);
-  }
-
-  public hasTokenAndIsValid(){
-    return this.hasToken().then(data=>{
-      if(this.isTokenValid()){
-        return true;
-      }
-      else{
-        return false;
-      }
-    },(error) => {
-      return false;
-    })
-    .catch(e=>{
-      return false;
-    });
-  }
-  /**
-   * Checa si existe el token en el storage
-  **/
-  private hasToken(){
-    return this.storage.get('id_token').then(data=>{
-      if(data){
-        this.token = data;
-      }
-      else{
-        this.token = undefined;
-      }
-    });
-  }
-  /**
-   * Verifica que el token que se encuentra en storage es valido
-   */
-  private isTokenValid(){
-    if(this.token !== undefined){
-      return this.getUserDataByToken(this.token).subscribe();
-    }
   }
 }

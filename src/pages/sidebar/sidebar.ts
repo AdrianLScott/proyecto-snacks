@@ -52,7 +52,7 @@ export class SidebarPage {
         { title: 'Perfil', pageName: 'ProfilePage', icon: 'person' },
         { title: 'Pedidos', pageName: 'CartPage', tabComponent: 'CartPage', index: 2, icon: 'cart' },
         { title: 'Notificaciones', pageName: 'NotificationsPage', tabComponent: 'NotificacationsPage', index: 1, icon: 'notifications' },
-        { title: 'Empresas', pageName: 'StoresPage', tabComponent: 'StoresPage', index: 0, icon: 'appstore' },
+        { title: 'Tiendas', pageName: 'StoresPage', tabComponent: 'StoresPage', index: 0, icon: 'appstore' },
         { title: 'Salir', pageName: 'LogoutPage', icon: 'log-out' },
       ];
       this.rootPage = 'TabsPage';

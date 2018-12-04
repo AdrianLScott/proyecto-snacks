@@ -1,11 +1,10 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app.module';
-//apiUrl: 'http://pespeciales.upsin.edu.mx/pt1Venados/index.php/Api',
 export let cfg = {
-  apiUrl: 'http://pespeciales.upsin.edu.mx/pt1Venados/index.php/Api',
+  apiUrl: 'http://192.168.43.198/venados/index.php/Api',
   api_baseURL: 'http://pespeciales.upsin.edu.mx/pt1Venados/',
-  nodeServer: 'http://pespeciales.upsin.edu.mx',
+  nodeServer: 'http://192.168.43.198:3006', 
   tokenName: 'token',
   user: {
     register: '/addUser',
@@ -34,5 +33,4 @@ export let cfg = {
     isThereEvent: '/isThereAnEvent'
   }
 };
-//export const API_BASE_ROUTE= 'http://pespeciales.upsin.edu.mx/venados/';
 platformBrowserDynamic().bootstrapModule(AppModule);

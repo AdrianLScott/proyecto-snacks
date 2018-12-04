@@ -9,6 +9,25 @@ page-cart-modal {
 		width: calc(100% - 20px);
 		background-color: #f53d3d; 
 	}
+	.iconoMenos{
+		font-size: 25px;
+		color: #C14A4A;
+	}
+	.divButtons{
+		margin-top: -15px;
+    	margin-right: 10px;
+		margin-bottom: -20px;
+		display: inline-block;
+	}
+	.current{
+		display: inline-block;
+		width: 20%;
+		text-align: center;
+	}
+	.iconoMas{
+		font-size: 25px;
+		color: #779F3E;
+	}
 	.card-title {
 		position: absolute;
 		top: 45%;

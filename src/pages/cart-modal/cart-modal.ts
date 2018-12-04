@@ -86,7 +86,7 @@ export class CartModalPage {
                   this.total = Number((this.total + (this.tienda[i].cantidad * this.tienda[i].producto.precio)).toFixed(2));
 
                 }
-                //console.log(this.cartItems);
+                console.log(this.cartItems);
 
               }else{
                 this.close();
@@ -363,6 +363,36 @@ export class CartModalPage {
 			]
 		});
 		alert.present();
-	}
+  }
+  increment(index){
+    
+    let idPedido = Number(this.idPedido);
+    this.cartItems[index].cantidad = Number(this.cartItems[index].cantidad + 1);
+    this.cartItems[index].total = Number((this.cartItems[index].cantidad * Number(this.cartItems[index].producto.precio)).toFixed(2));
+    this.total = Number((this.total + Number(this.cartItems[index].producto.precio)).toFixed(2));
+    this.storage.get("cart").then(
+      (data)=>{
+        data[idPedido][index+1].cantidad = Number(data[idPedido][index+1].cantidad + 1);
+        data[idPedido][index+1].total = Number((data[idPedido][index+1].cantidad * Number(data[idPedido][index+1].producto.precio)).toFixed(2));
+        this.storage.set("cart", data).then(()=>{
+        });
+      });
+  }
+
+  decrement(index){
+    if (this.cartItems[index].cantidad != 1) {
+      this.cartItems[index].cantidad = Number(this.cartItems[index].cantidad - 1);
+      this.cartItems[index].total = Number((this.cartItems[index].cantidad * Number(this.cartItems[index].producto.precio)).toFixed(2));
+      this.total = Number((this.total - Number(this.cartItems[index].producto.precio)).toFixed(2));
+      let idPedido = Number(this.idPedido);
+      this.storage.get("cart").then(
+        (data)=>{
+            data[idPedido][index+1].cantidad = Number(data[idPedido][index+1].cantidad - 1);
+            data[idPedido][index+1].total = Number((data[idPedido][index+1].cantidad * Number(data[idPedido][index+1].producto.precio)).toFixed(2));
+            this.storage.set("cart", data).then(()=>{
+          });        
+        });
+    }
+  }
 
 }

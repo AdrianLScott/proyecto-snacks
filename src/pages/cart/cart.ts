@@ -4,6 +4,7 @@ import {Storage} from '@ionic/storage';
 import { ModalController } from 'ionic-angular';
 import { PedidosProvider } from '../../providers/pedidos/pedidos';
 import { CartModalPage } from '../cart-modal/cart-modal';
+import { Toast } from '@ionic-native/toast';
 
 
 @IonicPage()
@@ -24,14 +25,17 @@ export class CartPage {
   pedidos;
   //el id del usuario
   idUsuario: number;
-
+  category: string = 'carrito';
+  categories: Array<string> = ['carrito', 'proceso', 'historial'];
 
   /* ****CONSTRUCTOR**** */
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public storage: Storage, 
+    public toast: Toast,
     public modalCtrl: ModalController,
-    public pedidosProv: PedidosProvider) {
+    public pedidosProv: PedidosProvider,
+    ) {
 
       
     }
@@ -141,10 +145,53 @@ export class CartPage {
     this.procesando=[];
     this.cancelados=[];
   }
-
+  eliminarCarrito(indice){
+    this.cartItems.splice(indice, 1);
+    this.storage.set("cart", this.cartItems).then( ()=>{
+      this.cargarDatos();
+      this.toast.showWithOptions(
+        {
+          message: "Pedido eliminado",
+          duration: 2000,
+          position: 'bottom',
+          addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+        }
+      ).subscribe();
+    }).catch(e=>{console.log("falló: "+e)});
+    
+  }
+  eliminarPedido(idPedido, estatus, index){
+    if (estatus == "Cancelado") {
+      this.cancelados.splice(index, 1);
+    }else{
+      this.entregados.splice(index, 1);
+    }
+    this.pedidosProv.eliminarPedido(idPedido).subscribe(
+      (response)=>{
+        if (response) {
+          this.validarDatos();
+          this.toastMsg("Se eliminó el producto correcatmente");
+        }else{
+          this.toastMsg("No se puedo eliminar, verifique su conexión a internet");
+        }
+      }
+    );
+    
+    //console.log("Se va a eliminar el pedido: "+this.idPedido);
+  }
 
   ionViewWillLoad(){
     this.validarDatos();
+  }
+  toastMsg(msg){
+    this.toast.showWithOptions(
+      {
+        message: msg,
+        duration: 2000,
+        position: 'bottom',
+        addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+      }
+    ).subscribe();
   }
 
   ionViewWillEnter(){

@@ -1,6 +1,6 @@
-import { AuthProvider } from './../../providers/auth/auth';
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, LoadingController, App } from 'ionic-angular';
+
+import { Component } from '@angular/core';
+import { IonicPage, NavController, LoadingController } from 'ionic-angular';
 import { ProviderTiendasProvider } from '../../providers/provider-tiendas/provider-tiendas';
 import { ProductsPage } from '../products/products';
 import * as AppConfig from './../../app/main';
@@ -17,22 +17,15 @@ export class StoresPage {
 	tiendas;
   apiURL;
   banderaBuscar: boolean = false;
-  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider, private auth:AuthProvider,public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider,public loadingCtrl: LoadingController) {
     this.apiURL = AppConfig.cfg.api_baseURL;
   }
 
   ionViewDidLoad(){
-    this.auth.hasTokenAndIsValid().then(
-      (data)=>{
-        if(data){
-          this.proveedor.obtenerTiendas()
-          .subscribe(
-            (data)=> {this.tiendas = data;},
-            (error)=> {console.log(error);}
-          )
-        }
-      }
-    );
+    this.proveedor.obtenerTiendas()
+      .subscribe(
+        (data)=> {this.tiendas = data;},
+        (error)=> {console.log(error);})
   }
 
   objetosTienda(tienda){
@@ -52,6 +45,6 @@ export class StoresPage {
       this.banderaBuscar = true;
     }
   }
-
+  
 
 }

@@ -4,11 +4,10 @@ import { SidebarPage } from './../pages/sidebar/sidebar';
 import { LoginPage } from './../pages/login/login';
 import { AuthProvider } from './../providers/auth/auth';
 import { Component } from '@angular/core';
-import { Platform, LoadingController, Nav } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
-import { OneSignal } from '@ionic-native/onesignal';
 import { NoEventPage } from '../pages/no-event/no-event';
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +17,7 @@ export class MyApp {
   rootPage:any;
   rootPageParams:any;
   token: any;  
-  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private onesignal: OneSignal, private utility: UtilityProvider, public toast: Toast) {
+  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private utility: UtilityProvider, public toast: Toast) {
 
     this.validateRootPage(statusBar, splashScreen, false);
     
@@ -43,56 +42,41 @@ export class MyApp {
     });
   }
 
-  /**
-   * Checa si existe el token en el storage
-  **/
-  hasToken(){
-    return this.storage.get('id_token').then(data=>{
-      if(data){
-        this.token = data;
-      }
-      else{
-        this.token = undefined;
-      }
-    });
-  }
-
-  isTokenValid(){
-    if(this.token !== undefined){
-      return this.auth.getUserDataByToken(this.token).subscribe(
-        (success)=>{console.log(success.json());},
-        (error)=>{return false;},
-      );
-    }
-  }
 
   validateRootPage(statusbar, splashscreen, hasFailed:boolean){
     const failed:boolean = hasFailed;
     return this.utility.isThereAnEvent().subscribe(data=>{
       if(data!=-1){
-        this.hasToken().then(data=>{
-          if(this.isTokenValid()){
-            this.rootPage= SidebarPage;
-            this.rootPageParams = {tipo_usuario: "Cliente" }
+        this.storage.get('id_token').then(token => {
+          if(token){
+            this.auth.getUserDataByToken(token).subscribe(
+              (success)=>{
+                const tipo_usuario = success.json()["tipo_usuario"];
+                if(tipo_usuario == 4){
+                  this.rootPage= SidebarPage;
+                  this.rootPageParams = {tipo_usuario: "Cliente" }
+                }
+                else{
+                  this.rootPage = LoginPage;
+                }
+              },
+              (error)=>{
+                this.rootPage = LoginPage;
+              }
+            )
           }
           else{
             this.rootPage = LoginPage;
           }
-        },(error) => {
+        }).catch(e=>{
           this.rootPage = LoginPage;
         })
-        .catch(e=>{
-          this.rootPage=LoginPage;
-        });
+        statusbar.hide();
+        splashscreen.hide();
       }
       else{
         this.rootPage = NoEventPage;
       }
-      if(failed){
-        this.toast.hide();
-      }
-      statusbar.hide();
-      splashscreen.hide();
     },
     error =>{
       if(!failed){

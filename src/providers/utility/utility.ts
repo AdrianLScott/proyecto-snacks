@@ -31,6 +31,7 @@ export class UtilityProvider {
     toast.present();
   }
 
+
   isThereAnEvent(){
     return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.general.isThereEvent);
   }

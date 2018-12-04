@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
-import { passValidator } from './validator';
-import { validateNumber } from './validator';
+import { passValidator, validateNumber } from './validator';
 import { Toast } from '@ionic-native/toast';
 /**
  * Generated class for the RegisterPage page.

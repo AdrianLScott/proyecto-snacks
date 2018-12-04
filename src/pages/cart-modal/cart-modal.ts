@@ -189,28 +189,42 @@ export class CartModalPage {
 //esta funcion sirve para cancelar un pedido siempre y cuando no se esté preparando
   cancelarPedido(){
     let dataP;
-    const socket = socketIo(AppConfig.cfg.nodeServer);
+    const loading = this.loadingCtrl.create();
+    loading.present();
     this.obtenerUsuario().then((response)=>{
       this.provUser.getUserData(this.idUsuario).subscribe(
         //al obtener los datos, se guardan en this.datosUsuario y el cargando se cierra
         (data)=> {
+          const clase = this;
           dataP = {
-          idEmpresa: this.idTienda,
-          idPedido: this.idPedido,
-          total: this.total,
-          usuario: data[0].id,
-          clase: this.close()
-        };
-        socket.emit('cancelar-pedido',dataP, 
-        function(confirmation){
-          if (confirmation == true) {
-            dataP.clase
-          } else {
-            console.log(confirmation);
-          }
-        });},
+            idEmpresa: this.idTienda,
+            idPedido: this.idPedido,
+            total: this.total,
+            usuario: data[0].id
+          };
+          let socket = socketIo(AppConfig.cfg.nodeServer, {reconnection: false});
+          socket.on('connect',function(){
+            socket.emit('cancelar-pedido',dataP,
+              function(confirmation){
+                if (confirmation) {
+                  clase.close();
+                  clase.showToast("El pedido se ha cancelado correctamente");
+                  loading.dismiss();
+                } else {
+                  clase.showToast("Error. El pedido no se ha podido realizar");
+                  loading.dismiss();
+                }
+              }
+            );
+          })
+          socket.on('connect_error',function(){
+            clase.showToast("Ha ocurrido un error de conexión intentelo de nuevo");
+            loading.dismiss();
+          })
+
+        },
         //Si no, muestra el error
-        (error)=> {console.log(error);}
+        (error)=> {console.log(error);loading.dismiss();}
       );
     });
 
@@ -245,35 +259,41 @@ export class CartModalPage {
   }
   doPedido(){
     //socket.close();
+    const loading = this.loadingCtrl.create();
+    loading.present();
     this.obtenerSaldo();
     if (this.saldo >= this.total && this.idUsuario != null) {
+      const clase = this;
       let data={
         idEmpresa: this.idTienda,
         pedido: this.cartItems,
         idUsuario: this.idUsuario,
-        close: this.quitarTienda(),
         total: this.total
       };
-      const socket = socketIo(AppConfig.cfg.nodeServer);
-      socket.emit('add-pedido',data,
-        function(confirmation){
-          if (confirmation) {
-            data.close;
-          } else {
-            console.log("no jalo");
-          }
-        }
-      )
       
-    }else{
-      this.toast.showWithOptions(
-        {
-          message: "Saldo insuficiente",
-          duration: 2000,
-          position: 'bottom',
-          addPixelsY: -80  // added a negative value to move it up a bit (default 0)
-        }
-      ).subscribe();
+      let socket = socketIo(AppConfig.cfg.nodeServer, {reconnection: false});
+      socket.on('connect',function(){
+        socket.emit('add-pedido',data,
+          function(confirmation){
+            if (confirmation) {
+              clase.quitarTienda();
+              clase.showToast("El pedido se ha realizado correctamente");
+              loading.dismiss();
+            } else {
+              clase.showToast("Error. El pedido no se ha podido realizar");
+              loading.dismiss();
+            }
+          }
+        );
+      })
+      socket.on('connect_error',function(){
+        clase.showToast("Ha ocurrido un error de conexión intentelo de nuevo");
+        loading.dismiss();
+      })
+    }
+    else{
+      this.showToast("Saldo insuficiente");
+      loading.dismiss();
     }
   }
   quitarTienda(){
@@ -283,15 +303,6 @@ export class CartModalPage {
       data.splice(this.idPedido, 1);
       
       this.storage.set("cart", data).then( ()=>{
-
-				this.toast.showWithOptions(
-          {
-            message: "Pedido correctamente",
-            duration: 2000,
-            position: 'bottom',
-            addPixelsY: -80  // added a negative value to move it up a bit (default 0)
-          }
-        ).subscribe();
         //this.cartItems.splice(0, this.cartItems.length);
         this.close();
       }).catch(e=>{console.log("falló: "+e)});
@@ -393,6 +404,17 @@ export class CartModalPage {
           });        
         });
     }
+  }
+  
+  showToast(msg: string){
+    this.toast.showWithOptions(
+      {
+        message: msg,
+        duration: 2000,
+        position: 'bottom',
+        addPixelsY: -80  // added a negative value to move it up a bit (default 0)
+      }
+    ).subscribe();
   }
 
 }

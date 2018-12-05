@@ -7,7 +7,11 @@
 <ion-header>
 
   <ion-navbar color="venados">
-		<ion-title>{{tienda.nombre}}</ion-title>
+		<ion-title>
+			<div>{{tienda.nombre}}</div>
+			<ion-icon name="ios-cash-outline" style="font-size: 23px; margin-right: 5px; float: left;  align-self: center"></ion-icon>
+			<div style="font-size: 14px; padding-top: 3px; float: left">${{this.globals.saldo}}</div>
+		</ion-title>
 		<!--
 		<ion-buttons end>
 				<button ion-button icon-only (click)="openBuscar()">

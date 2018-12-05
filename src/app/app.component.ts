@@ -1,3 +1,5 @@
+import { UsuariosProvider } from './../providers/usuarios/usuarios';
+import { GlobalsProvider } from './../providers/globals/globals';
 import { Toast } from '@ionic-native/toast';
 import { UtilityProvider } from './../providers/utility/utility';
 import { SidebarPage } from './../pages/sidebar/sidebar';
@@ -17,7 +19,7 @@ export class MyApp {
   rootPage:any;
   rootPageParams:any;
   token: any;  
-  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private utility: UtilityProvider, public toast: Toast) {
+  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private utility: UtilityProvider, public toast: Toast, public globals: GlobalsProvider,public userProv: UsuariosProvider) {
 
     this.validateRootPage(statusBar, splashScreen, false);
     
@@ -30,13 +32,18 @@ export class MyApp {
       if(platform.is('core') || platform.is('mobileweb')) {
         console.log("Platform is core or is mobile web");
       } else {
+        const clase = this;
         var notificationOpenedCallback = function(jsonData) {
-          console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+          clase.setSaldo();
         };
+        var notificationReceivedHandler = function(jsonData) {
+          clase.setSaldo();
+        }
 
         window["plugins"].OneSignal
           .startInit("9ba5748e-6561-4bdf-8c4c-77d4766fbde8", "108844902326")
           .handleNotificationOpened(notificationOpenedCallback)
+          .handleNotificationReceived(notificationReceivedHandler)
           .endInit(); 
       }
     });
@@ -53,6 +60,7 @@ export class MyApp {
               (success)=>{
                 const tipo_usuario = success.json()["tipo_usuario"];
                 if(tipo_usuario == 4){
+                  this.setSaldo();
                   this.rootPage= SidebarPage;
                   this.rootPageParams = {tipo_usuario: "Cliente" }
                 }
@@ -90,6 +98,18 @@ export class MyApp {
       }
       this.validateRootPage(statusbar, splashscreen, true);
     });
+  }
+
+  setSaldo(){
+    this.storage.get('id').then(id => {
+      if(id){
+        this.userProv.getUserSaldo(id).subscribe(
+          res => {
+            this.globals.saldo = res[0].saldo;
+          }
+        );
+      }
+    })
   }
 
 }

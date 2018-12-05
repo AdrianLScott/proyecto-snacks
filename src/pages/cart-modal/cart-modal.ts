@@ -6,6 +6,7 @@ import { UsuariosProvider } from '../../providers/usuarios/usuarios';
 import * as AppConfig from './../../app/main';
 import * as socketIo from 'socket.io-client'; 
 import { Toast } from '@ionic-native/toast';
+import { GlobalsProvider } from '../../providers/globals/globals';
 
 
 @IonicPage()
@@ -37,7 +38,8 @@ export class CartModalPage {
     public pedProv: PedidosProvider,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    public provUser: UsuariosProvider) {
+    public provUser: UsuariosProvider,
+    public globals: GlobalsProvider) {
 
     //obtenemos el valor del indice de la tienda que seleccionamos en la caché
     this.idPedido = this.navParams.data.index;
@@ -125,7 +127,7 @@ export class CartModalPage {
   }
   obtenerSaldo(){
     this.provUser.getUserSaldo(this.idUsuario).subscribe(
-      (saldo)=>{this.saldo = Number(saldo[0].saldo);},
+      (saldo)=>{this.saldo = Number(saldo[0].saldo);this.globals.saldo= this.saldo},
       (error)=>{this.showResposeMsg("No se pudo obtener el saldo");}
       );
       
@@ -207,6 +209,7 @@ export class CartModalPage {
             socket.emit('cancelar-pedido',dataP,
               function(confirmation){
                 if (confirmation) {
+                  clase.refresh();
                   clase.close();
                   clase.showToast("El pedido se ha cancelado correctamente");
                   loading.dismiss();
@@ -355,7 +358,7 @@ export class CartModalPage {
 
 		let confMSG="¿Estas seguro que deseas cancelar el pedido?";
 		let alert = this.alertCtrl.create({
-			title: 'Confirmar pedido',
+			title: 'Confirmación',
 			message: confMSG ,
 			buttons: [
 				{

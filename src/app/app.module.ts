@@ -39,6 +39,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { UsuariosProvider } from '../providers/usuarios/usuarios';
 import { SellerProvider } from '../providers/seller/seller';
 import { InterceptorProvider } from '../providers/interceptor/interceptor';
+import { GlobalsProvider } from '../providers/globals/globals';
 let storage = new Storage({});
 
 export function getAuthHttp(http) {
@@ -118,6 +119,7 @@ export function getAuthHttp(http) {
     PinDialog,
     UsuariosProvider,
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorProvider, multi: true },
+    GlobalsProvider,
   ]
 })
 export class AppModule {}

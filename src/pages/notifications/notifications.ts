@@ -4,6 +4,7 @@ import { NotificationsProvider } from './../../providers/notifications/notificat
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { Toast } from '@ionic-native/toast';
+import { GlobalsProvider } from '../../providers/globals/globals';
 //import * as socketIo from 'socket.io-client'; 
 //import * as AppConfig from './../../app/main';
 /**
@@ -23,7 +24,8 @@ export class NotificationsPage {
   messages = [];
   value: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toast: Toast,
-              public notifProvider: NotificationsProvider, public storage: Storage, public popoverCtrl: PopoverController) {
+              public notifProvider: NotificationsProvider, public storage: Storage, public popoverCtrl: PopoverController,
+              public globals: GlobalsProvider) {
   }
 
   ionViewDidLoad() {

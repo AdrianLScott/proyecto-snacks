@@ -1,3 +1,4 @@
+import { GlobalsProvider } from './../../providers/globals/globals';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Storage} from '@ionic/storage';
@@ -35,6 +36,7 @@ export class CartPage {
     public toast: Toast,
     public modalCtrl: ModalController,
     public pedidosProv: PedidosProvider,
+    public globals: GlobalsProvider
     ) {
 
       

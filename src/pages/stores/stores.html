@@ -6,8 +6,11 @@
       <ion-icon name="menu"></ion-icon>
     </button>
   </ion-buttons>
- 
-    <ion-title>Tiendas</ion-title>
+  
+    <ion-title>Tiendas
+      <div style="float:right;font-size: 17px; padding-top: 3px;">${{this.globals.saldo}}</div>
+      <ion-icon name="ios-cash-outline" style="font-size:25px; margin-right: 5px;float:right; align-self: center"></ion-icon>
+    </ion-title>
     <!--
     <ion-buttons end>
       <button ion-button icon-only (click)="openBuscar()">
@@ -16,7 +19,6 @@
     </ion-buttons>
   -->
   </ion-navbar>
-
 </ion-header>
 
 
@@ -25,9 +27,8 @@
 
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="arrow-dropdown"
-        pullingText="Desliza hacia abajo para actualizar"
+        pullingText="Desliza hacia abajo para actualizar"        
         refreshingText="Cargando..." >
-            
         </ion-refresher-content>
     </ion-refresher>
     <ion-grid>

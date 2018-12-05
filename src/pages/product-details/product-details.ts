@@ -1,3 +1,4 @@
+import { GlobalsProvider } from './../../providers/globals/globals';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
@@ -36,7 +37,7 @@ export class ProductDetailsPage {
 	idUser;  
 	apiURL;
   constructor(
-	  public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public toast: Toast, public storage: Storage) {
+	  public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public toast: Toast, public storage: Storage, public globals: GlobalsProvider) {
 		this.producto = navParams.data.producto;
 		this.tienda = navParams.data.tienda;
 		console.log(this.tienda);

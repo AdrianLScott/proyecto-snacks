@@ -1,4 +1,4 @@
-
+import { GlobalsProvider } from './../../providers/globals/globals';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, LoadingController } from 'ionic-angular';
 import { ProviderTiendasProvider } from '../../providers/provider-tiendas/provider-tiendas';
@@ -17,7 +17,7 @@ export class StoresPage {
 	tiendas;
   apiURL;
   banderaBuscar: boolean = false;
-  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider,public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider,public loadingCtrl: LoadingController, public globals: GlobalsProvider) {
     this.apiURL = AppConfig.cfg.api_baseURL;
   }
 

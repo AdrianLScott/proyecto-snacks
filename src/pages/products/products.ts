@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, LoadingController, App } from 'ion
 import { ProviderProductosProvider } from '../../providers/provider-productos/provider-productos';
 import { ProductDetailsPage } from '../product-details/product-details';
 import * as AppConfig from './../../app/main';
+import { GlobalsProvider } from '../../providers/globals/globals';
 
 /**
  * Generated class for the ProductsPage page.
@@ -23,7 +24,7 @@ export class ProductsPage {
   banderaBuscar: boolean = false;
   apiURL;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController, public app:App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController, public app:App, public globals: GlobalsProvider) {
     this.tienda = navParams.data.tienda;
     this.apiURL = AppConfig.cfg.api_baseURL;
   }

@@ -1,9 +1,12 @@
+import { UsuariosProvider } from './../../providers/usuarios/usuarios';
+import { Storage } from '@ionic/storage';
 import { SidebarPage } from './../sidebar/sidebar';
 import { ForgotPasswordPage } from './../forgot-password/forgot-password';
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { AuthProvider } from '../../providers/auth/auth';
+import { GlobalsProvider } from '../../providers/globals/globals';
 
 /**
  * Generated class for the LoginPage page.
@@ -19,7 +22,14 @@ export class LoginPage {
 
   @ViewChild('user') user;
   @ViewChild('pass') pass;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private authService: AuthProvider,  public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public alertCtrl: AlertController, 
+    private authService: AuthProvider,  
+    public loadingCtrl: LoadingController,
+    public globals: GlobalsProvider,
+    public storage: Storage,
+    public userProv: UsuariosProvider) {
   }
   
   doLogin() {
@@ -28,6 +38,7 @@ export class LoginPage {
     this.authService.login(this.user.value,this.pass.value).then(   
       (data)=>{
         if(data.user_type == 'Cliente'){
+          this.setSaldo();
           this.navCtrl.setRoot(SidebarPage,{id_empleado: data.id,tipo_usuario: data.user_type});
         }
         else if(data.user_type == 'Vendedor'){
@@ -52,6 +63,18 @@ export class LoginPage {
 
   forgot_password(){
     this.navCtrl.push(ForgotPasswordPage);
+  }
+
+  setSaldo(){
+    this.storage.get('id').then(id => {
+      if(id){
+        this.userProv.getUserSaldo(id).subscribe(
+          res => {
+            this.globals.saldo = res[0].saldo;
+          }
+        );
+      }
+    })
   }
 
 }

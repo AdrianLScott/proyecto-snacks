@@ -45,7 +45,11 @@ export class SidebarPage {
       this.pages = [
         { title: 'Salir', pageName: 'LogoutPage', icon: 'log-out' },
       ];
-      this.nav.setRoot(TabsSellerPage,this.navParams.get('id_empleado'))
+      this.nav.setRoot(TabsSellerPage,this.navParams.get('id_empleado'));
+      let pageIndex;
+      if((pageIndex = this.navParams.get('pageIndex'))!==undefined){
+        this.nav.getActiveChildNavs()[0].select(this.navParams.get(pageIndex));
+      }
     }
     else{
       this.pages = [

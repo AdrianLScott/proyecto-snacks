@@ -214,7 +214,7 @@ export class CartModalPage {
                   clase.showToast("El pedido se ha cancelado correctamente");
                   loading.dismiss();
                 } else {
-                  clase.showToast("Error. El pedido no se ha podido realizar");
+                  clase.showToast("Error. El pedido no se ha podido cancelar");
                   loading.dismiss();
                 }
               }

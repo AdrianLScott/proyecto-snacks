@@ -14,7 +14,7 @@
       <ion-list>
         <ion-item>
           <ion-label floating>Num. Usuario:</ion-label>
-          <ion-input type="number" formControlName="cliente"></ion-input>
+          <ion-input type="text" formControlName="cliente"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.cliente" >
@@ -25,7 +25,7 @@
         </div>
         <ion-item>
           <ion-label floating>Confirmación de Num. Usuario</ion-label>
-          <ion-input type="number" EqualValidator="cliente" formControlName="confirm"></ion-input>
+          <ion-input type="text" EqualValidator="cliente" formControlName="confirm"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.confirm" >

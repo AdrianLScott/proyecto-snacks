@@ -68,11 +68,16 @@ export class SellerPage {
   }
 
   hacerRecarga(){
+    var re = /^[0-9a-fA-F]+$/;
+    if(!re.test(this.clienteAC.value)) {
+      return this.presentAlert("Cliente invalido, intente de nuevo");
+    }
+    re.lastIndex = 0;
     this.confirmRecarga().then((result: any) => {
       if (result.buttonIndex == 1){
         let loading = this.loadingCtrl.create();
         let datos = [{
-          id_cliente: this.clienteAC.value,
+          id_cliente: parseInt(this.clienteAC.value, 16),
           monto: this.saldoAC.value,
           id_empleado: this.id_empleado,
           pin: result.input1,
@@ -123,7 +128,12 @@ export class SellerPage {
     //alert.present();
 
   confirmRecarga(){
-    const msg = `Recarga por el monto de $${this.saldoAC.value} al cliente ${this.clienteAC.value}`;
+    var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    });
+    const monto = formatter.format(this.saldoAC.value);
+    const msg = `Recarga por el monto de $${monto} al cliente ${this.clienteAC.value}`;
     return this.pinDialog.prompt('PIN de seguridad', msg, ['Confirmar', 'Cancelar']);
   }
 

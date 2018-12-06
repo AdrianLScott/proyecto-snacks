@@ -9,7 +9,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalsProvider {
   saldo = 0.0;
+  badge : boolean =false;
+  badgeCarrito : number = null;
   constructor() {
   }
-
+  
 }

@@ -113,6 +113,9 @@ export class CartModalPage {
       //abre el cargando mientras carga los datos
       let loading = this.loadingCtrl.create();
       loading.present();
+      this.obtenerUsuario().then(
+        (response)=>{this.obtenerSaldo();}
+      );
       this.pedProv.getDetallesPedidos(this.idPedido).subscribe(
         //al obtener los datos, se guardan en this.pedidos y el cargando se cierra
         (data)=> {this.tienda = data;this.getProductos();this.obtenerUsuario();loading.dismiss(); },

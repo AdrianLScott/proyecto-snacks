@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { GlobalsProvider } from '../../providers/globals/globals';
 import { StoresPage } from '../stores/stores';
 import { NotificationsPage } from '../notifications/notifications';
 import { CartPage } from '../cart/cart';
@@ -21,14 +21,13 @@ export class TabsPage {
   tab1Root: any = StoresPage;
   tab2Root: any = NotificationsPage;
   tab3Root: any = CartPage;
-
   myIndex: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public global: GlobalsProvider) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TabsPage');
+  
+  resetBadge(){
+    this.global.badgeCarrito=null;
   }
 
 }

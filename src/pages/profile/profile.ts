@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UsuariosProvider } from '../../providers/usuarios/usuarios';
 import {Storage} from '@ionic/storage';
 import { Toast } from '@ionic-native/toast';
@@ -19,8 +19,7 @@ codigoID;
     public navParams: NavParams, 
     public provUser: UsuariosProvider,
     public storage: Storage,
-    public toast: Toast,
-    public loadingCtrl: LoadingController) {
+    public toast: Toast) {
   }
  
   ionViewWillEnter() {
@@ -32,11 +31,9 @@ codigoID;
         //si encuentra id, jala los pedidos del usuario de la base de datos
         this.idUsuario = Number(idUser);
         //abre el cargando mientras carga los datos
-        let loading = this.loadingCtrl.create();
-        loading.present();
         this.provUser.getUserData(this.idUsuario).subscribe(
           //al obtener los datos, se guardan en this.datosUsuario y el cargando se cierra
-          (data)=> {this.datosUsuario = data[0]; loading.dismiss();this.codigoID=(Number(this.datosUsuario.id)).toString(16); },
+          (data)=> {this.datosUsuario = data[0];;this.codigoID=(Number(this.datosUsuario.id)).toString(16); },
           //Si no, muestra el error
           (error)=> {this.showMSG("Hubo un error de conexión, compruebe su conexión a internet.");}
         );

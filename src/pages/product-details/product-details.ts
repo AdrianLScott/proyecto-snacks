@@ -157,6 +157,7 @@ export class ProductDetailsPage {
 					  addPixelsY: -80  // added a negative value to move it up a bit (default 0)
 					}
 				  ).subscribe();
+					this.globals.badgeCarrito = this.globals.badgeCarrito + 1;
 				  this.navCtrl.pop();
 			}).catch(e=>{console.log("falló: "+e)});
 

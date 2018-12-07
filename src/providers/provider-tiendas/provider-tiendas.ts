@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import *  as AppConfig from '../../app/main';
+import {Storage} from '@ionic/storage';
 
 /*
   Generated class for the Proovedor1Provider provider.
@@ -10,12 +11,13 @@ import *  as AppConfig from '../../app/main';
 */
 @Injectable()
 export class ProviderTiendasProvider {
+  constructor(public http: HttpClient, public storage: Storage) {
 
-  constructor(public http: HttpClient) {
   }
 
-  obtenerTiendas(){
-  	return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getStores);
+  obtenerTiendas(idEvento){
+    return this.http.get(AppConfig.cfg.apiUrl+AppConfig.cfg.user.getStores+'?idEvento='+idEvento);
+
   }
 
 }

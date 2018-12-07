@@ -198,6 +198,7 @@ export class CartPage {
 
   ionViewWillEnter(){
     this.validarDatos();
+    this.globals.badgeCarrito = null;
   }
 
   irCarrito(i, estatus, idEmpresa) {
@@ -213,5 +214,6 @@ export class CartPage {
       refresher.complete();
     }, 2000);
   }
+
 
 }

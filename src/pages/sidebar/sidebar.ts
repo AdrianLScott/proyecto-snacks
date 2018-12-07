@@ -1,7 +1,7 @@
 import { TabsSellerPage } from './../tabs-seller/tabs-seller';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, AlertController, App, Platform, ViewController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, Nav, AlertController, App, Platform, ViewController, NavParams, Events } from 'ionic-angular';
 import { LoginPage } from './../login/login';
 import { Storage } from '@ionic/storage';
 import { OneSignal } from '@ionic-native/onesignal';
@@ -37,7 +37,12 @@ export class SidebarPage {
               public storage: Storage,
               public viewController: ViewController,
               public navParams:NavParams,
-              private onesignal: OneSignal) {
+              private onesignal: OneSignal,
+              public events: Events) {
+    const clase = this;
+    events.subscribe('saldo:update', function(){
+      clase.ionViewWillEnter();
+    })
   }
   ionViewWillEnter(){
     this.tipo_usuario = this.navParams.get('tipo_usuario');    

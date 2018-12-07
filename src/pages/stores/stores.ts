@@ -1,6 +1,6 @@
 import { GlobalsProvider } from './../../providers/globals/globals';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, Events } from 'ionic-angular';
 import { ProviderTiendasProvider } from '../../providers/provider-tiendas/provider-tiendas';
 import { ProductsPage } from '../products/products';
 import * as AppConfig from './../../app/main';
@@ -17,7 +17,7 @@ export class StoresPage {
 	tiendas;
   apiURL;
   banderaBuscar: boolean = false;
-  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider,public loadingCtrl: LoadingController, public globals: GlobalsProvider) {
+  constructor(public navCtrl: NavController,public proveedor: ProviderTiendasProvider,public loadingCtrl: LoadingController, public globals: GlobalsProvider,public events: Events) {
     this.apiURL = AppConfig.cfg.api_baseURL;
   }
 
@@ -37,6 +37,7 @@ export class StoresPage {
       refresher.complete();
     }, 2000);
   }
+  ;
 
   openBuscar(){
     if (this.banderaBuscar) {
@@ -45,6 +46,7 @@ export class StoresPage {
       this.banderaBuscar = true;
     }
   }
+  
   
 
 }

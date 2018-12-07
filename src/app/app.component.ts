@@ -11,6 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { NoEventPage } from '../pages/no-event/no-event';
+import { Events } from 'ionic-angular';
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,7 +20,7 @@ export class MyApp {
   rootPage:any;
   rootPageParams:any;
   token: any;  
-  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private utility: UtilityProvider, public toast: Toast, public globals: GlobalsProvider,public userProv: UsuariosProvider) {
+  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private utility: UtilityProvider, public toast: Toast, public globals: GlobalsProvider,public userProv: UsuariosProvider, public events: Events) {
 
     this.validateRootPage(statusBar, splashScreen, false);
     
@@ -37,6 +38,8 @@ export class MyApp {
           clase.setSaldo();
         };
         var notificationReceivedHandler = function(jsonData) {
+          //clase.rootPageParams = {tipo_usuario: "Cliente" }
+          clase.events.publish('saldo:update');
           clase.setSaldo();
         }
 

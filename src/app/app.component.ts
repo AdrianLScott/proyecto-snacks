@@ -39,7 +39,6 @@ export class MyApp {
         };
         var notificationReceivedHandler = function(jsonData) {
           //clase.rootPageParams = {tipo_usuario: "Cliente" }
-          clase.events.publish('saldo:update');
           clase.setSaldo();
         }
 
@@ -65,22 +64,32 @@ export class MyApp {
                 if(tipo_usuario == 4){
                   this.setSaldo();
                   this.rootPage= SidebarPage;
-                  this.rootPageParams = {tipo_usuario: "Cliente" }
+                  this.storage.set('evento', data).then(()=>{
+                    this.rootPageParams = {tipo_usuario: "Cliente"}
+                  }).catch(e=>{console.log("falló: "+e)});
                 }
                 else{
-                  this.rootPage = LoginPage;
+                  this.storage.set('evento', data).then(()=>{
+                    this.rootPage = LoginPage;
+                  }).catch(e=>{console.log("falló: "+e)});
                 }
               },
               (error)=>{
-                this.rootPage = LoginPage;
+                this.storage.set('evento', data).then(()=>{
+                  this.rootPage = LoginPage;
+                }).catch(e=>{console.log("falló: "+e)});
               }
             )
           }
           else{
-            this.rootPage = LoginPage;
+            this.storage.set('evento', data).then(()=>{
+              this.rootPage = LoginPage;
+            }).catch(e=>{console.log("falló: "+e)});
           }
         }).catch(e=>{
-          this.rootPage = LoginPage;
+          this.storage.set('evento', data).then(()=>{
+              this.rootPage = LoginPage;
+            }).catch(e=>{console.log("falló: "+e)});
         })
         statusbar.hide();
         splashscreen.hide();

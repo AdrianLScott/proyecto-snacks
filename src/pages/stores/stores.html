@@ -11,20 +11,19 @@
       <div style="float:right;font-size: 17px; padding-top: 3px;">${{globals.saldo}}</div>
       <ion-icon name="ios-cash-outline" style="font-size:25px; margin-right: 5px;float:right; align-self: center"></ion-icon>
     </ion-title>
-    <!--
+    
     <ion-buttons end>
       <button ion-button icon-only (click)="openBuscar()">
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
-  -->
+  
   </ion-navbar>
 </ion-header>
 
 
 <ion-content class="card-background-page">
-    <!--<ion-searchbar *ngIf="banderaBuscar"></ion-searchbar>-->
-
+    <ion-searchbar *ngIf="banderaBuscar" (ionInput)="buscarItems($event)"></ion-searchbar>
     <ion-refresher (ionRefresh)="doRefresh($event)">
       <ion-refresher-content pullingIcon="ios-arrow-round-down-outline" pullingText="Desliza hacia abajo para actualizar">   
       </ion-refresher-content>

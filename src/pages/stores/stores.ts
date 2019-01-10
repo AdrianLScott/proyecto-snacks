@@ -17,6 +17,7 @@ export class StoresPage {
 
 	tiendas;
   apiURL;
+  respaldo: any;
   banderaBuscar: boolean = false;
   constructor(public storage: Storage, public navCtrl: NavController,public proveedor: ProviderTiendasProvider,public loadingCtrl: LoadingController, public globals: GlobalsProvider) {
     this.apiURL = AppConfig.cfg.api_baseURL;
@@ -25,7 +26,7 @@ export class StoresPage {
   ionViewDidLoad(){
     this.storage.get('evento').then((evento)=>{
       this.proveedor.obtenerTiendas(evento).subscribe(
-        (data)=> {this.tiendas = data;},
+        (data)=> {this.tiendas = data;this.respaldo = data},
         (error)=> {console.log(error);})
     });
     
@@ -47,6 +48,18 @@ export class StoresPage {
       this.banderaBuscar = false;
     } else {
       this.banderaBuscar = true;
+    }
+  }
+
+  buscarItems(ev: any) {
+    this.tiendas = this.respaldo;
+    // set val to the value of the searchbar
+    const val = ev.target.value;
+    //if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.tiendas = this.tiendas.filter((item: any) => {
+        return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
     }
   }
   

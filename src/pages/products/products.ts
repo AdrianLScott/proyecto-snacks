@@ -23,6 +23,8 @@ export class ProductsPage {
 	productos;
   banderaBuscar: boolean = false;
   apiURL;
+  searchQuery: string = '';
+  respaldo: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController, public app:App, public globals: GlobalsProvider) {
     this.tienda = navParams.data.tienda;
@@ -30,11 +32,9 @@ export class ProductsPage {
   }
 
   ionViewDidLoad() {
-    let loading = this.loadingCtrl.create();
-    loading.present();
     this.proveedor.obtenerProductos(this.tienda.id)
   	.subscribe(
-  		(data)=> {this.productos = data;loading.dismiss();},
+  		(data)=> {this.productos = data;this.respaldo=data},
   		(error)=> {console.log(error);}
   	)
   }
@@ -43,7 +43,6 @@ export class ProductsPage {
     this.navCtrl.push(ProductDetailsPage,{
       producto: producto,
       tienda: this.tienda});
-  	//this.navCtrl.push(ProductDetailsPage
   }
   openBuscar(){
     if (this.banderaBuscar) {
@@ -53,4 +52,15 @@ export class ProductsPage {
     }
   }
 
+  buscarItems(ev: any) {
+    this.productos = this.respaldo;
+    // set val to the value of the searchbar
+    const val = ev.target.value;
+    //if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.productos = this.productos.filter((item: any) => {
+        return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }
 }

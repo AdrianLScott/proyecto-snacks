@@ -52,10 +52,6 @@ export class SellerPage {
     this.saldoAC = this.formgroup.controls['saldo'];
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SellerPage');
-  }
-
   /**
    * Para verificar que coincidan el campo cliente y cliente_conf
    * @param group 
@@ -85,7 +81,6 @@ export class SellerPage {
           loading.present();
           this.sellerProvider.hacerRecarga(datos).subscribe(
             response=>{
-              console.log("wut");
               console.log(response);
               let alertContent;
               if(response==1){
@@ -133,7 +128,7 @@ export class SellerPage {
       currency: 'USD'
     });
     const monto = formatter.format(this.saldoAC.value);
-    const msg = `Recarga por el monto de $${monto} al cliente ${this.clienteAC.value}`;
+    const msg = `Recarga por el monto de ${monto} al cliente ${this.clienteAC.value}`;
     return this.pinDialog.prompt('PIN de seguridad', msg, ['Confirmar', 'Cancelar']);
   }
 

@@ -43,5 +43,8 @@
     </ion-list>
   </ion-card-content>
 </ion-card>
-
+<ion-refresher (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content pullingIcon="ios-arrow-round-down-outline" pullingText="Desliza hacia abajo para actualizar">   
+  </ion-refresher-content>
+</ion-refresher>
 </ion-content>

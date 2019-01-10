@@ -10,4 +10,12 @@ page-notifications {
 	#notif{
 		
 	}
+	ion-label{
+		white-space: unset;
+		overflow-wrap: break-word;
+	}
+
+	.listElement{
+		height: 105px;
+	}
 }

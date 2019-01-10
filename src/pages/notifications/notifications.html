@@ -29,7 +29,7 @@
 <ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let notif of notificaciones">
-      <ion-item class="item-remove-animate" id="notif">
+      <ion-item class="item-remove-animate listElement" id="notif">
           <ion-row>
               <ion-col>
                 <h2 iontext>{{notif.titulo}}</h2>  
@@ -67,9 +67,9 @@
 
 <!--  <button (click)="sendPedido()">Realizar pedido</button> -->
  <ion-refresher (ionRefresh)="doRefresh($event)">
-  <ion-refresher-content pullingIcon="arrow-dropdown"
+  <ion-refresher-content pullingIcon="ios-arrow-round-down-outline"
   pullingText="Desliza hacia abajo para actualizar"
-  refreshingText="Cargando..." >
+  >
       
   </ion-refresher-content>
 </ion-refresher>

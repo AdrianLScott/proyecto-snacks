@@ -69,7 +69,7 @@
 
 		  <ion-item>
 		    <ion-label floating>Contraseña</ion-label>
-		    <ion-input type="password" formControlName="pass"></ion-input>
+		    <ion-input type="password" formControlName="pass" (ionChange)="confPassAC.setValue('');"></ion-input>
 		  </ion-item>
 		  <div class="validation-errors">
 		  	<ng-container *ngFor="let validation of validation_messages.pass" >

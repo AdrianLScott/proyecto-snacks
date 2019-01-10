@@ -96,7 +96,7 @@ export class RegisterPage {
       this.authService.register(this.data).then(
         
         (data)=>{
-          if(data == 1){
+          if(data.success){
             this.toast.showWithOptions(
             {
               message: "Registro exitoso",
@@ -104,7 +104,8 @@ export class RegisterPage {
               position: 'bottom',
               addPixelsY: -80
             }).subscribe();
-            this.navCtrl.setRoot(SidebarPage);
+            console.log(data);
+            this.navCtrl.setRoot(SidebarPage,{id_empleado: data.id,tipo_usuario: 'Cliente'});
           }
           else if(data!==undefined){
             const alert = this.alertCtrl.create({

@@ -31,4 +31,9 @@ page-profile {
         color: white;
         font-size: 1.0em;
       }
+
+      ion-label{
+        white-space: unset;
+        overflow-wrap: break-word;
+      }
 }

@@ -56,7 +56,7 @@ export class AuthProvider {
           this.saveData(data);
           let rs = data.json();
           this.idToken = rs.token;
-          return 1;
+          return {success: true, id: rs.id, user_type: rs.user_type};
         }
         else{
           return json_obj['error'];

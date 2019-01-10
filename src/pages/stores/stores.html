@@ -26,10 +26,8 @@
     <!--<ion-searchbar *ngIf="banderaBuscar"></ion-searchbar>-->
 
     <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content pullingIcon="arrow-dropdown"
-        pullingText="Desliza hacia abajo para actualizar"        
-        refreshingText="Cargando..." >
-        </ion-refresher-content>
+      <ion-refresher-content pullingIcon="ios-arrow-round-down-outline" pullingText="Desliza hacia abajo para actualizar">   
+      </ion-refresher-content>
     </ion-refresher>
     <ion-grid>
         <ion-row wrap>

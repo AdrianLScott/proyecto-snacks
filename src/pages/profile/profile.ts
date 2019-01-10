@@ -1,3 +1,4 @@
+import { GlobalsProvider } from './../../providers/globals/globals';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UsuariosProvider } from '../../providers/usuarios/usuarios';
@@ -19,7 +20,8 @@ codigoID;
     public navParams: NavParams, 
     public provUser: UsuariosProvider,
     public storage: Storage,
-    public toast: Toast) {
+    public toast: Toast,
+    public globals: GlobalsProvider) {
   }
  
   ionViewWillEnter() {
@@ -33,13 +35,10 @@ codigoID;
         //abre el cargando mientras carga los datos
         this.provUser.getUserData(this.idUsuario).subscribe(
           //al obtener los datos, se guardan en this.datosUsuario y el cargando se cierra
-          (data)=> {this.datosUsuario = data[0];;this.codigoID=(Number(this.datosUsuario.id)).toString(16); },
+          (data)=> {this.datosUsuario = data[0];this.codigoID=(Number(this.datosUsuario.id)).toString(16); },
           //Si no, muestra el error
           (error)=> {this.showMSG("Hubo un error de conexión, compruebe su conexión a internet.");}
         );
-        
- 
-
       }else{
         this.showMSG("No se encontró el usuario");
       }
@@ -54,6 +53,14 @@ codigoID;
         addPixelsY: -80  // added a negative value to move it up a bit (default 0)
       }
     ).subscribe();
+  }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      this.ionViewWillEnter();
+      this.globals.saldo = this.datosUsuario.saldo
+      refresher.complete();
+    }, 2000);
   }
 
 

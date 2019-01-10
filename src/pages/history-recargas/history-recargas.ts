@@ -29,17 +29,16 @@ export class HistoryRecargasPage {
   }
 
   doInfinite(): Promise<any> {
-    console.log('Begin async operation');
-
     return new Promise((resolve) => {
       setTimeout(() => {
-        this.getHistorial();
-        resolve();
+        this.getHistorial(function(){
+          resolve();
+        });
       }, 500);
     })
   }
 
-  getHistorial(){
+  getHistorial(fn?){
     const rows_limit = 10; //Numero de resultados
     const data = {
       id_empleado: this.id_empleado,
@@ -59,6 +58,9 @@ export class HistoryRecargasPage {
             this.historial = data;
           }
           this.items_count = this.historial.length;
+        }
+        if(typeof fn !== 'undefined' && typeof fn == "function"){
+          fn()
         }
       });
   }

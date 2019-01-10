@@ -28,12 +28,10 @@
   </ion-header>
   
   <ion-content>
-      <ion-refresher (ionRefresh)="doRefresh($event)">
-          <ion-refresher-content pullingIcon="arrow-dropdown"
-          pullingText="Deliza hacia abajo para actualizar"
-          refreshingText="Cargando..." >
-          </ion-refresher-content>
-        </ion-refresher>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="ios-arrow-round-down-outline" pullingText="Desliza hacia abajo para actualizar">   
+      </ion-refresher-content>
+    </ion-refresher>
     <!--*********************AQUI EMPIEZA EL PRIMER SEGMENTO QUE ES EL DE EL CARRITO-->
     <div [ngSwitch]="category" (tabChanged)="onTabChanged($event)" class="swipe-area">
       <div  *ngSwitchCase="'carrito'">

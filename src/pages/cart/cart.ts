@@ -197,7 +197,6 @@ export class CartPage {
   }
 
   ionViewWillEnter(){
-    this.validarDatos();
     this.globals.badgeCarrito = null;
   }
 

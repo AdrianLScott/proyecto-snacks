@@ -24,7 +24,12 @@
 
 
 <ion-content >
-    <ion-searchbar *ngIf="banderaBuscar" (ionInput)="buscarItems($event)"></ion-searchbar>
+		<ion-searchbar *ngIf="banderaBuscar" (ionInput)="buscarItems($event)"></ion-searchbar>
+		<ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="ios-arrow-round-down-outline" pullingText="Desliza hacia abajo para actualizar">   
+      </ion-refresher-content>
+		</ion-refresher>
+		<ion-spinner name="crescent" style="width: 100%!important; margin-top:5%;" *ngIf="banderaCargando">Cargando...</ion-spinner>
 	<ion-list>
 	  <button ion-item *ngFor="let producto of productos" (click)="viewProduct(producto)">
 		<ion-grid>		 	

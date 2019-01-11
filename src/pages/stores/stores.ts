@@ -14,7 +14,7 @@ import {Storage} from '@ionic/storage';
   templateUrl: 'stores.html',
 })
 export class StoresPage {
-
+  banderaCargando: boolean= true;
 	tiendas;
   apiURL;
   respaldo: any;
@@ -26,8 +26,8 @@ export class StoresPage {
   ionViewDidLoad(){
     this.storage.get('evento').then((evento)=>{
       this.proveedor.obtenerTiendas(evento).subscribe(
-        (data)=> {this.tiendas = data;this.respaldo = data},
-        (error)=> {console.log(error);})
+        (data)=> {this.tiendas = data;this.respaldo = data;this.banderaCargando=false},
+        (error)=> {console.log(error);this.banderaCargando=false})
     });
     
   }
@@ -41,7 +41,7 @@ export class StoresPage {
       refresher.complete();
     }, 2000);
   }
-  ;
+  
 
   openBuscar(){
     if (this.banderaBuscar) {

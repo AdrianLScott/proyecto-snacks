@@ -28,6 +28,7 @@
       <ion-refresher-content pullingIcon="ios-arrow-round-down-outline" pullingText="Desliza hacia abajo para actualizar">   
       </ion-refresher-content>
     </ion-refresher>
+    <ion-spinner name="crescent" style="width: 100%!important; margin-top:5%;" *ngIf="banderaCargando">Cargando...</ion-spinner>
     <ion-grid>
         <ion-row wrap>
           <ion-col col-12 col-sm-6 cold-md-4 *ngFor = "let tienda of tiendas" (click)="objetosTienda(tienda)">

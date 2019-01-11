@@ -23,6 +23,7 @@ export class NotificationsPage {
   notificaciones:any = [];
   messages = [];
   value: any;
+  banderaCargando: boolean = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toast: Toast,
               public notifProvider: NotificationsProvider, public storage: Storage, public popoverCtrl: PopoverController,
               public globals: GlobalsProvider) {
@@ -56,11 +57,13 @@ export class NotificationsPage {
               const arrayFecha = fecha[0].split("-");
               this.notificaciones[index].fecha = arrayFecha[2]+"/"+arrayFecha[1]+"/"+arrayFecha[0];
               this.notificaciones[index].hora = fecha[1].substr(0, 5);
+              this.banderaCargando=false;
             }
           }
         )
       }
       else{
+        this.banderaCargando=false;
         return false;
       }
     })

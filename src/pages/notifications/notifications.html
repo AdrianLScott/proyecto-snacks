@@ -27,6 +27,7 @@
 
 
 <ion-content>
+  <ion-spinner name="crescent" style="width: 100%!important; margin-top:5%;" *ngIf="banderaCargando">Cargando...</ion-spinner>
   <ion-list>
     <ion-item-sliding *ngFor="let notif of notificaciones">
       <ion-item class="item-remove-animate listElement" id="notif">

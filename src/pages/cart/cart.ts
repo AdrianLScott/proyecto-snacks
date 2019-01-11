@@ -182,9 +182,6 @@ export class CartPage {
     //console.log("Se va a eliminar el pedido: "+this.idPedido);
   }
 
-  ionViewWillLoad(){
-    this.validarDatos();
-  }
   toastMsg(msg){
     this.toast.showWithOptions(
       {
@@ -197,6 +194,7 @@ export class CartPage {
   }
 
   ionViewWillEnter(){
+    this.validarDatos();
     this.globals.badgeCarrito = null;
   }
 

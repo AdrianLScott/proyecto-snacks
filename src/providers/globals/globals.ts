@@ -11,6 +11,7 @@ export class GlobalsProvider {
   saldo = 0.0;
   badge : boolean =false;
   badgeCarrito : number = null;
+  badgePedidos: number = null;
   constructor() {
   }
   

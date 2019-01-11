@@ -17,8 +17,8 @@
         <ion-segment-button value="carrito">
           Carrito
         </ion-segment-button>
-        <ion-segment-button value="proceso">
-          En proceso
+        <ion-segment-button value="proceso" (click)="resetBadge()">
+          En proceso <ion-badge color="badge" *ngIf="this.globals.badgePedidos" >{{this.globals.badgePedidos}}</ion-badge>
         </ion-segment-button>
         <ion-segment-button value="historial">
           Historial
@@ -34,6 +34,7 @@
     </ion-refresher>
     <!--*********************AQUI EMPIEZA EL PRIMER SEGMENTO QUE ES EL DE EL CARRITO-->
     <div [ngSwitch]="category" (tabChanged)="onTabChanged($event)" class="swipe-area">
+      
       <div  *ngSwitchCase="'carrito'">
       <ion-list>
           <ion-item-sliding *ngFor="let tienda of cartItems; let i = index" (click)="irCarrito(i, 'SinConfirmar', tienda[0].tienda.id)">

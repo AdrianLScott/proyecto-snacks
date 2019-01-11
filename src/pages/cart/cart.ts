@@ -197,6 +197,9 @@ export class CartPage {
     this.validarDatos();
     this.globals.badgeCarrito = null;
   }
+  resetBadge(){
+    this.globals.badgePedidos = null;
+  }
 
   irCarrito(i, estatus, idEmpresa) {
     const modal = this.modalCtrl.create(CartModalPage, {index: i, pag: this, estatus :estatus, idEmpresa: idEmpresa});

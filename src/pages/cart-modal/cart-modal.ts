@@ -274,7 +274,7 @@ export class CartModalPage {
         idEmpresa: this.idTienda,
         pedido: this.cartItems,
         idUsuario: this.idUsuario,
-        total: this.total
+        total: this.total,
       };
       
       let socket = socketIo(AppConfig.cfg.nodeServer, {reconnection: false});
@@ -284,6 +284,7 @@ export class CartModalPage {
             if (confirmation) {
               clase.quitarTienda();
               clase.showToast("El pedido se ha realizado correctamente");
+              clase.globals.badgePedidos = clase.globals.badgePedidos + 1;
               loading.dismiss();
             } else {
               clase.showToast("Error. El pedido no se ha podido realizar");

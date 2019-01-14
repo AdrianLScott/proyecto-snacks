@@ -25,6 +25,7 @@ export class ProductsPage {
   apiURL;
   searchQuery: string = '';
   respaldo: any;
+  banderaCargando: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public proveedor: ProviderProductosProvider,public loadingCtrl: LoadingController, public app:App, public globals: GlobalsProvider) {
     this.tienda = navParams.data.tienda;
@@ -34,7 +35,7 @@ export class ProductsPage {
   ionViewDidLoad() {
     this.proveedor.obtenerProductos(this.tienda.id)
   	.subscribe(
-  		(data)=> {this.productos = data;this.respaldo=data},
+  		(data)=> {this.productos = data;this.respaldo=data; this.banderaCargando=false},
   		(error)=> {console.log(error);}
   	)
   }
@@ -50,6 +51,16 @@ export class ProductsPage {
     } else {
       this.banderaBuscar = true;
     }
+  }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      this.proveedor.obtenerProductos(this.tienda.id)
+      .subscribe(
+        (data)=> {this.productos = data;this.respaldo=data; refresher.complete();this.banderaCargando=false},
+        (error)=> {console.log(error);refresher.complete();}
+      )
+    }, 2000);
   }
 
   buscarItems(ev: any) {

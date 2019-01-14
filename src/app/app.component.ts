@@ -6,7 +6,6 @@ import { SidebarPage } from './../pages/sidebar/sidebar';
 import { LoginPage } from './../pages/login/login';
 import { AuthProvider } from './../providers/auth/auth';
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -20,37 +19,12 @@ export class MyApp {
   rootPage:any;
   rootPageParams:any;
   token: any;  
-  constructor(private storage: Storage, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private utility: UtilityProvider, public toast: Toast, public globals: GlobalsProvider,public userProv: UsuariosProvider, public events: Events) {
+  constructor(private storage: Storage, statusBar: StatusBar, splashScreen: SplashScreen, private auth:AuthProvider, private utility: UtilityProvider, public toast: Toast, public globals: GlobalsProvider,public userProv: UsuariosProvider, public events: Events) {
 
     this.validateRootPage(statusBar, splashScreen, false);
     
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
 
-      // OneSignal Code start:
-      // Enable to debug issues:
-      if(platform.is('core') || platform.is('mobileweb')) {
-        console.log("Platform is core or is mobile web");
-      } else {
-        const clase = this;
-        var notificationOpenedCallback = function(jsonData) {
-          clase.setSaldo();
-        };
-        var notificationReceivedHandler = function(jsonData) {
-          //clase.rootPageParams = {tipo_usuario: "Cliente" }
-          clase.setSaldo();
-        }
-
-        window["plugins"].OneSignal
-          .startInit("9ba5748e-6561-4bdf-8c4c-77d4766fbde8", "108844902326")
-          .handleNotificationOpened(notificationOpenedCallback)
-          .handleNotificationReceived(notificationReceivedHandler)
-          .endInit(); 
-      }
-    });
   }
-
 
   validateRootPage(statusbar, splashscreen, hasFailed:boolean){
     const failed:boolean = hasFailed;

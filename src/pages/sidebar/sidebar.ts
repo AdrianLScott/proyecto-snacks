@@ -1,3 +1,5 @@
+import { GlobalsProvider } from './../../providers/globals/globals';
+import { UsuariosProvider } from './../../providers/usuarios/usuarios';
 import { TabsSellerPage } from './../tabs-seller/tabs-seller';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
@@ -38,11 +40,48 @@ export class SidebarPage {
               public viewController: ViewController,
               public navParams:NavParams,
               private onesignal: OneSignal,
-              public events: Events) {
-    const clase = this;
-    events.subscribe('saldo:update', function(){
-      clase.ionViewWillEnter();
-    })
+              public events: Events,
+              public userProv: UsuariosProvider,
+              public globals: GlobalsProvider) {
+                platform.ready().then(() => {
+                  // Okay, so the platform is ready and our plugins are available.
+                  // Here you can do any higher level native things you might need.
+            
+                  // OneSignal Code start:
+                  // Enable to debug issues:
+            
+                  if(platform.is('core') || platform.is('mobileweb')) {
+                    console.log("Platform is core or is mobile web");
+                  } else {
+                    const clase = this;
+                    var notificationOpenedCallback = function(jsonData) {
+                      //Para redirigir cuando se abra la notificación
+                      if(typeof jsonData.notification.payload.additionalData !== 'undefined'){
+                        let indexPage = jsonData.notification.payload.additionalData.indexPage
+                        if(typeof indexPage !== 'undefined'){
+                          clase.nav.getActiveChildNavs()[0].select(1);
+                        }
+                      }
+                      
+                    };
+                    var notificationReceivedHandler = function(jsonData) {
+                      //clase.rootPageParams = {tipo_usuario: "Cliente" }
+                      //clase.nav.getActiveChildNavs()[0].select(1);
+                      clase.setSaldo()
+                    }
+            
+                    window["plugins"].OneSignal
+                      .startInit("9ba5748e-6561-4bdf-8c4c-77d4766fbde8", "108844902326")
+                      .handleNotificationOpened(notificationOpenedCallback)
+                      .handleNotificationReceived(notificationReceivedHandler)
+                      .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.None)
+                      .endInit(); 
+                  }
+                });
+                const clase = this;
+                events.subscribe('saldo:update', function(){
+                  clase.ionViewWillEnter();
+                })
   }
   ionViewWillEnter(){
     this.tipo_usuario = this.navParams.get('tipo_usuario');    
@@ -148,6 +187,18 @@ export class SidebarPage {
     ]
   });
   alert.present();
+}
+
+setSaldo(){
+  this.storage.get('id').then(id => {
+    if(id){
+      this.userProv.getUserSaldo(id).subscribe(
+        res => {
+          this.globals.saldo = res[0].saldo;
+        }
+      );
+    }
+  })
 }
 
 

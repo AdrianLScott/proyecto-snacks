@@ -1,3 +1,4 @@
+import { ModalNotifsPage } from './../pages/modal-notifs/modal-notifs';
 import { PopNotificationsComponent } from './../components/pop-notifications/pop-notifications';
 import { NoEventPage } from './../pages/no-event/no-event';
 import { PinDialog } from '@ionic-native/pin-dialog';
@@ -67,6 +68,7 @@ export function getAuthHttp(http) {
     HistoryRecargasPage,
     NoEventPage,
     PopNotificationsComponent,
+    ModalNotifsPage
   ],
   imports: [
     BrowserModule,
@@ -94,6 +96,7 @@ export function getAuthHttp(http) {
     HistoryRecargasPage,
     NoEventPage,
     PopNotificationsComponent,
+    ModalNotifsPage
   ],
   providers: [
     StatusBar,

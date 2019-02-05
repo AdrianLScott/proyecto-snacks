@@ -76,7 +76,7 @@ export class SellerPage {
           id_cliente: parseInt(this.clienteAC.value, 16),
           monto: this.saldoAC.value,
           id_empleado: this.id_empleado,
-          pin: result.input1,
+          pin: 1234,
         }];
           loading.present();
           this.sellerProvider.hacerRecarga(datos).subscribe(
@@ -91,6 +91,7 @@ export class SellerPage {
                 const notificacion = {
                   title: "Recarga exitosa",
                   msg: "Has recibido una recarga de "+formatter.format(this.saldoAC.value), 
+                  type: 4, //Tipo de notificacion
                   id_cliente: this.clienteAC.value};
                   //No importa si falla lo de las notificaciones, con que se haya aplicado bien el saldo
                   this.sellerProvider.sendNotificacion(notificacion).subscribe();

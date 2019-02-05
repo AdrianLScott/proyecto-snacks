@@ -157,7 +157,9 @@ export class CartModalPage {
   }
 
   close(){
-    this.paginaAnterior.validarDatos();
+    if(typeof this.paginaAnterior.validarDatos !== 'undefined'){
+      this.paginaAnterior.validarDatos();
+    }
     this.viewController.dismiss();
   }
   //esta es solo para remover los productos de el pedido (solo con estatus SinConfirmar)

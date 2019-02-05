@@ -1,9 +1,11 @@
+import { PedidosProvider } from './../../providers/pedidos/pedidos';
+import { ModalNotifsPage } from './../modal-notifs/modal-notifs';
 import { GlobalsProvider } from './../../providers/globals/globals';
 import { UsuariosProvider } from './../../providers/usuarios/usuarios';
 import { TabsSellerPage } from './../tabs-seller/tabs-seller';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, AlertController, App, Platform, ViewController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, Nav, AlertController, App, Platform, ViewController, NavParams, Events, Tab, ModalController } from 'ionic-angular';
 import { LoginPage } from './../login/login';
 import { Storage } from '@ionic/storage';
 import { OneSignal } from '@ionic-native/onesignal';
@@ -42,7 +44,9 @@ export class SidebarPage {
               private onesignal: OneSignal,
               public events: Events,
               public userProv: UsuariosProvider,
-              public globals: GlobalsProvider) {
+              public globals: GlobalsProvider,
+              public modalCtrl: ModalController,
+              public pedidoProv: PedidosProvider) {
                 platform.ready().then(() => {
                   // Okay, so the platform is ready and our plugins are available.
                   // Here you can do any higher level native things you might need.
@@ -55,19 +59,12 @@ export class SidebarPage {
                   } else {
                     const clase = this;
                     var notificationOpenedCallback = function(jsonData) {
-                      //Para redirigir cuando se abra la notificación
-                      if(typeof jsonData.notification.payload.additionalData !== 'undefined'){
-                        let indexPage = jsonData.notification.payload.additionalData.indexPage
-                        if(typeof indexPage !== 'undefined'){
-                          clase.nav.getActiveChildNavs()[0].select(1);
-                        }
-                      }
-                      
+                      clase.notificationAction(jsonData.notification.payload)
                     };
                     var notificationReceivedHandler = function(jsonData) {
-                      //clase.rootPageParams = {tipo_usuario: "Cliente" }
-                      //clase.nav.getActiveChildNavs()[0].select(1);
-                      clase.setSaldo()
+                      if(jsonData.isAppInFocus){
+                        clase.notificationAction(jsonData.payload)
+                      }
                     }
             
                     window["plugins"].OneSignal
@@ -189,17 +186,47 @@ export class SidebarPage {
   alert.present();
 }
 
-setSaldo(){
+setSaldo(fn = undefined){
   this.storage.get('id').then(id => {
     if(id){
       this.userProv.getUserSaldo(id).subscribe(
         res => {
           this.globals.saldo = res[0].saldo;
+          if(typeof fn !== 'undefined')
+            fn()
         }
       );
     }
   })
 }
 
+notificationAction(notifData){
+  if(typeof notifData !== 'undefined'){
+    /**
+     * El valor de type va a ser para los siguientes valores:
+     * 1 = Notificaciones de pedidos listos
+     * 2 = Notificaciones de pedidos entregados
+     * 3 = Notificaciones de pedidos cancelados
+     * 4 = Notificaciones de recargas
+     */
+    if(typeof notifData.additionalData.type !== 'undefined' && (notifData.additionalData.type === '1' || notifData.additionalData.type === '2' || notifData.additionalData.type === '3')){
+        const idPedido = notifData.additionalData.idPedido;
+        const txtEstatus = notifData.additionalData.estatus;
+        const idEmpresa = notifData.additionalData.idEmpresa;
+        const notifTitle = notifData.title
+        const notifMsg = notifData.body
+        const modal = this.modalCtrl.create(ModalNotifsPage, {idPedido: idPedido, estatus :txtEstatus, notifType: notifData.additionalData.type, notifMsg: notifMsg, title: notifTitle, idEmpresa: idEmpresa});
+        modal.present();  
+    }
+    else if(typeof notifData.additionalData.type !== 'undefined' && notifData.additionalData.type == '4'){
+      let _class = this;
+      this.setSaldo(function(){
+        const modal = _class.modalCtrl.create(ModalNotifsPage,{monto: notifData.additionalData.monto, notifType: notifData.additionalData.type, saldo: _class.globals.saldo});
+        modal.present();  
+      })
+    }
+    
+  }
+}
 
 }
